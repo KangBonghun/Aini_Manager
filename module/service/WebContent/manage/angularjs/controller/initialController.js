@@ -137,6 +137,14 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
 		vm.toggleEditSaveBtn($(evt.currentTarget), 'save');
 	};
 	
+	vm.onBlurScore = function(evt) {
+		var value = parseInt($(event.target).val());
+		
+		if(value > 120) {
+			$(event.target).val(120).trigger('change');
+		}
+	};
+	
 	vm.init();
 }
 ainiApp.controller( 'initialController', [

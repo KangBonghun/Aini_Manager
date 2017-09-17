@@ -34,9 +34,10 @@
                     	<span class="step-score-sub">/120</span>
                     </div>
                     <div class="edit" style="display: none;">
-						<select class="form-control step-score" ng-model="student.firstStepScore" ng-options="score for score in initialCtrl.stepScores" required="" style="display: inline-block;">
-							<option value="" disabled selected hidden>스텝점수 선택</option>
-						</select>
+<!-- 						<select class="form-control step-score" ng-model="student.firstStepScore" ng-options="score for score in initialCtrl.stepScores" required="" style="display: inline-block;"> -->
+<!-- 							<option value="" disabled selected hidden>스텝점수 선택</option> -->
+<!-- 						</select> -->
+						<input class="form-control step-score" type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" ng-model="student.firstStepScore" ng-blur="initialCtrl.onBlurScore($event)" placeholder="스텝점수">
 						<span class="step-score-sub">/120</span>
                     </div>
                 </div>

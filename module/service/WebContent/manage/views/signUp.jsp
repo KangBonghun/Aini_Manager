@@ -47,7 +47,7 @@
                                     <div class="row_group">
                                         <div id="nmDiv" class="join_row">
                                             <span class="ps_box">
-												<input type="text" id="nm" name="nm" maxlength="40" value="" onblur="checkSignValidation('nm');" placeholder="이름" class="int"> 
+												<input type="text" id="nm" name="nm" maxlength="40" value="" onblur="checkSignValidation('nm');" placeholder="이름(실명)" class="int"> 
 											</span>
                                             <div id="nmMsg" class="error" style="display:none">필수 정보입니다.</div>
                                         </div>
