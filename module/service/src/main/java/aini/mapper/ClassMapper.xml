@@ -103,8 +103,8 @@
 	
 	<select id="getUserClass" parameterType="map" resultType="map">
 		SELECT
-			uc.user_id as userId, 
-			uc.class_id as classId,  
+			uc.user_id AS userId, 
+			uc.class_id AS classId,  
 			uc.study_goal AS studyGoal, 
 			uc.first_evaluation_date AS firstEvaluationDate, 
 			uc.first_step_score AS firstStepScore, 
@@ -112,18 +112,26 @@
 			uc.last_evaluation_date AS lastEvaluationDate, 
 			uc.last_step_score AS lastStepScore, 
 			uc.last_step AS lastStep,
-			u.user_name AS userName,
+			IFNULL(u.user_name, uc.user_id) AS userName,
 			u.mobile_number AS mobileNumber,
 			u.email AS email
 		FROM
-			user_class uc
-		INNER JOIN
-			user u on uc.user_id = u.user_id
-		WHERE
-			class_id = #{classId}
-			<if test="userType!=null">
-				AND u.user_type = #{userType}
-			</if>
+			(
+			SELECT
+				*
+			FROM
+				user_class
+			WHERE
+ 				class_id = #{classId}
+ 			<if test="userType!=null">
+ 				AND user_type = #{userType}
+ 			</if>
+ 			<if test="userId!=null">
+ 				AND user_id = #{userId}
+ 			</if>			
+			) uc
+		LEFT JOIN
+			user u ON uc.user_id = u.user_id
 	</select>
 	
 	<insert id="insertClassInfo" parameterType="map" useGeneratedKeys="true" keyProperty="class_id">
@@ -311,7 +319,10 @@
 				</if>
 				<if test="classId!=null">
 					class_id,
-				</if> 
+				</if>
+				<if test="userType!=null">
+					user_type,
+				</if>  
 				<if test="studyGoal!=null">
 					study_goal,
 				</if> 
@@ -344,6 +355,9 @@
 				<if test="classId!=null">
 					#{classId},
 				</if> 
+				<if test="userType!=null">
+					#{userType},
+				</if>  
 				<if test="studyGoal!=null">
 					#{studyGoal},
 				</if> 
@@ -374,6 +388,9 @@
 			user_class 
 		SET
 			<trim suffixOverrides=",">	
+				<if test="userType!=null">
+					user_type = #{userType},
+				</if> 
 				<if test="studyGoal!=null">
 					study_goal = #{studyGoal},
 				</if> 
@@ -411,17 +428,10 @@
 				<if test="classId">
 					AND class_id = #{classId}
 				</if>
+				<if test="userType">
+					AND user_type = #{userType}
+				</if>
 			</trim>
-	</delete>
-	
-	<delete id="deleteUserClassByUserType" parameterType="map">
-		DELETE uc FROM
-			user_class uc
-		INNER JOIN
-			user u ON uc.user_id = u.user_id
-		WHERE
-			u.user_type = #{userType}
-			AND class_id = #{classId}
 	</delete>
 	
 	<update id="updateClassDate" parameterType="map">

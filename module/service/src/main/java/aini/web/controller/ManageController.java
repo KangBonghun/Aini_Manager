@@ -398,7 +398,7 @@ public class ManageController
 
         return result;
     }
-
+    
     /**
      * 월간 보고서 업데이트
      * 
@@ -425,7 +425,7 @@ public class ManageController
 
         return student;
     }
-
+    
     /**
      * 회원 정보 조회
      * 
@@ -612,4 +612,57 @@ public class ManageController
         return updateCount;
     }
     
+    /**
+     * 최초평가 수강생 목록 조회
+     * 
+     * @param param
+     * @return
+     * 
+     * @author "KangBongHoon"
+     * @create-date : 2017. 9. 6.
+     */
+    @RequestMapping(value = "/get-initial-student-list", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Map<String, Object>> getInitialStudentList(@RequestBody Map<String, Object> param)
+    {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+
+        try
+        {
+            result = classService.getUserClass(param);
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage(), e);
+        }
+
+        return result;
+    }
+    
+    /**
+     * 최초평가 업데이트
+     * 
+     * @param param
+     * @return
+     * 
+     * @author "KangBongHoon"
+     * @create-date : 2017. 9. 6.
+     */
+    @RequestMapping(value = "/update-initial-student", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateInitialStudent(@RequestBody Map<String, Object> param)
+    {
+        Map<String, Object> student = null;
+
+        try
+        {
+            student = classService.updateUserClass(param);
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage(), e);
+        }
+
+        return student;
+    }
 }

@@ -191,6 +191,8 @@ function checkController( $rootScope, $scope, $element, $state, $stateParams, $t
 				vm.unbindHandler && vm.unbindHandler();
 				
 				vm.selectedClassDate = param.newDate;
+				
+				vm.onChangeDate(vm.selectedClassDate);
 			});
 			
 			vm.loadClassDate();

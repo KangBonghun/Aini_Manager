@@ -4,19 +4,17 @@
 	<select id="getCheckStudentList" parameterType="map" resultType="map">
 		SELECT
 			uc.class_id AS classId,
-			u.user_id AS userId,
-			u.user_name AS userName,
+			uc.user_id AS userId,
+			IFNULL(u.user_name, uc.user_id) AS userName,
 			cs.status AS status,
 			cs.description AS memo,
 			#{classDate} AS classDate
 		FROM
-			user_class uc
-		INNER JOIN 
-			user u ON uc.user_id = u.user_id AND u.user_type = 'STUDENT'
+			(SELECT * FROM user_class WHERE class_id = #{classId} AND user_type = 'STUDENT') uc
 		LEFT JOIN
-			attendance cs ON u.user_id = cs.user_id AND cs.class_date = #{classDate}
-		WHERE
-			uc.class_id = #{classId}
+			attendance cs ON uc.user_id = cs.user_id  AND cs.class_date = #{classDate}
+		LEFT JOIN 
+			user u ON uc.user_id = u.user_id
 	</select>
 	
 	<update id="updateCheckStudent" parameterType="map">

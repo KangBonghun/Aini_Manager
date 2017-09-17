@@ -9,11 +9,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.stereotype.Service;
 
 import aini.mapper.ReportMapper;
+import aini.util.CommonUtil;
 
 @Service
 public class ReportService
@@ -113,7 +112,7 @@ public class ReportService
 
             totalScore = (Integer) student.get("totalScore");
 
-            applyScore = getStepApplyScore(totalScore);
+            applyScore = CommonUtil.getApplyScoreOfTotalScore(totalScore);
 
             stepScore += applyScore;
         }
@@ -139,8 +138,8 @@ public class ReportService
         {
             for(Map<String, Object> monthlyReport : monthlyReportList)
             {
-                String compareValue1 = String.valueOf(monthlyReport.get("year")) + String.valueOf(monthlyReport.get("month"));
-                String compareValue2 = String.valueOf(student.get("year")) + String.valueOf(student.get("month"));
+                String compareValue1 = String.valueOf(monthlyReport.get("year")) + String.format("%02d", Integer.valueOf(String.valueOf(monthlyReport.get("month"))));
+                String compareValue2 = String.valueOf(student.get("year")) + String.format("%02d", Integer.valueOf(String.valueOf(student.get("month"))));
                 
                 if(compareValue1.compareTo(compareValue2) < 0)
                 {
@@ -187,73 +186,6 @@ public class ReportService
     {
         Double stepScore = Double.valueOf(String.valueOf(student.get("stepScore")));
 
-        return getStep(stepScore);
-    }
-
-    /**
-     * 스텝 점수에 해당하는 스텝을 반환한다.
-     * 
-     * @param stepScore
-     * @return
-     * 
-     * @author KangBongHoon
-     * @create-date : 2017. 8. 25.
-     */
-    private Integer getStep(Double stepScore)
-    {
-        Integer step = 1;
-
-        ExpressionParser parser = new SpelExpressionParser();
-
-        List<Map<String, Object>> languageStepList = sqlSession.getMapper(ReportMapper.class).getLanguageStep();
-
-        for (Map<String, Object> languageStep : languageStepList)
-        {
-            String condition = (String) languageStep.get("stepCondition");
-
-            condition = condition.replaceAll("\\$VALUE\\$", String.valueOf(stepScore));
-
-            if (parser.parseExpression(condition).getValue(Boolean.class))
-            {
-                step = (Integer) languageStep.get("step");
-
-                break;
-            }
-        }
-
-        return step;
-    }
-
-    /**
-     * 종합 점수에 따른 가점을 반환한다.
-     * 
-     * @param totalScore
-     * @return
-     * 
-     * @author KangBongHoon
-     * @create-date : 2017. 8. 25.
-     */
-    private Double getStepApplyScore(Integer totalScore)
-    {
-        Double applyScore = 0d;
-
-        ExpressionParser parser = new SpelExpressionParser();
-
-        List<Map<String, Object>> stepApplyScoreList = sqlSession.getMapper(ReportMapper.class).getStepApplyScore();
-
-        for (Map<String, Object> stepApplyScore : stepApplyScoreList)
-        {
-            String condition = (String) stepApplyScore.get("applyCondition");
-
-            condition = condition.replaceAll("\\$VALUE\\$", String.valueOf(totalScore));
-
-            if (parser.parseExpression(condition).getValue(Boolean.class))
-            {
-                applyScore = Double.valueOf(String.valueOf(stepApplyScore.get("applyScore")));
-                break;
-            }
-        }
-
-        return applyScore;
+        return CommonUtil.getStopOfStepScore(stepScore);
     }
 }

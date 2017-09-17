@@ -111,8 +111,8 @@
 			<table class="table table-bordered">
 	            <tbody>
 	                <tr ng-repeat="student in vm.classInfo.studentList track by $index">
-	                    <td><span class="lbl-name">{{ student.userName }}</span></td>
-	                    <td>
+<!-- 	                    <td><span class="lbl-name">{{ student.userName }}</span></td> -->
+	                    <td style="padding-left:15px;">
 	                    	<div>
 	                    		<input class="form-control" placeholder="이메일" ng-model="student.userId" ng-blur="vm.getStudentName(student.userId)"></input>
 	                    	</div>

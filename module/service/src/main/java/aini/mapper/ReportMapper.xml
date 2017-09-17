@@ -7,8 +7,8 @@
 			uc.first_evaluation_date AS firstEvaluationDate,
 			uc.first_step_score AS firstStepScore,
 			uc.first_step AS firstStep,
-			u.user_id AS userId,
-			u.user_name AS userName,
+			uc.user_id AS userId,
+			IFNULL(u.user_name, uc.user_id) AS userName,
 			u.user_type AS userType, 
 			u.mobile_number AS mobileNumber, 
 			u.email AS email, 
@@ -27,13 +27,11 @@
 			rt.attendance AS attendance,
 			rt.change_datetime AS changeDatetime
 		FROM
-			user_class uc
-		INNER JOIN
-			user u ON uc.user_id = u.user_id AND u.user_type = 'STUDENT'
+			(SELECT * FROM user_class WHERE class_id = #{classId} AND user_type = 'STUDENT') uc
+		LEFT JOIN
+			user u ON uc.user_id = u.user_id
 		LEFT JOIN
 			monthly_report rt ON uc.class_id = rt.class_id AND uc.user_id = rt.user_id AND rt.year = #{year} AND rt.month = #{month} 
-		WHERE
-			uc.class_id = #{classId}
 	</select>
 	
 	<update id="updateReportStudent" parameterType="map">

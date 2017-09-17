@@ -3,7 +3,6 @@ package aini.web.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import aini.mapper.ClassMapper;
+import aini.util.CommonUtil;
 import aini.util.UserDetailsHelper;
 import aini.vo.UserVO;
 
@@ -102,6 +102,8 @@ public class ClassService
         }
         else
         {
+        	
+        	param.put("registDatetime", null);
             param.put("changeDatetime", Calendar.getInstance().getTime());  //수정시각 설정
             
             updateCount = sqlSession.getMapper(ClassMapper.class).updateClassInfo(param);
@@ -158,27 +160,26 @@ public class ClassService
             //담당 강사 업데이트
             if(param.containsKey("teacherId") && param.get("teacherId") != null && !param.get("teacherId").toString().isEmpty())
             {
-                String teacherId = param.get("teacherId").toString();
                 Map<String, Object> teacherClass = new HashMap<String, Object>();
                 teacherClass.put("classId", classId);
                 teacherClass.put("userType", "TEACHER");
-                teacherClass.put("userId", teacherId);
+                sqlSession.getMapper(ClassMapper.class).deleteUserClass(teacherClass);
                 
-                sqlSession.getMapper(ClassMapper.class).deleteUserClassByUserType(teacherClass);
+                String teacherId = param.get("teacherId").toString();
+                teacherClass.put("userId", teacherId);
                 sqlSession.getMapper(ClassMapper.class).insertUserClass(teacherClass);
             }
             
             //담당 매니저 업데이트
             if(param.containsKey("managerId") && param.get("managerId") != null && !param.get("managerId").toString().isEmpty())
             {
-                String managerId = param.get("managerId").toString();
-                
                 Map<String, Object> managerClass = new HashMap<String, Object>();
                 managerClass.put("classId", classId);
                 managerClass.put("userType", "MANAGER");
-                managerClass.put("userId", managerId);
+                sqlSession.getMapper(ClassMapper.class).deleteUserClass(managerClass);
                 
-                sqlSession.getMapper(ClassMapper.class).deleteUserClassByUserType(managerClass);
+                String managerId = param.get("managerId").toString();
+                managerClass.put("userId", managerId);
                 sqlSession.getMapper(ClassMapper.class).insertUserClass(managerClass);
             }
         }
@@ -190,15 +191,37 @@ public class ClassService
             studentClass.put("classId", classId);
             studentClass.put("userType", "STUDENT");
             
-            sqlSession.getMapper(ClassMapper.class).deleteUserClassByUserType(studentClass);
+            List<Map<String, Object>> prvStudentList = getUserClass(studentClass);
+            
+            Map<String, Object> prvStudentMap = new HashMap<String, Object>();
+            for(Map<String, Object> prvStudent : prvStudentList)
+            {
+            	prvStudentMap.put((String) prvStudent.get("userId"), prvStudent);
+            }
             
             List<Map<String, Object>> studentList = (List<Map<String, Object>>) param.get("studentList");
             
             for(Map<String, Object> student : studentList)
             {
-                studentClass.put("userId", student.get("userId"));
-                
-                sqlSession.getMapper(ClassMapper.class).insertUserClass(studentClass);
+            	String userId = (String) student.get("userId");
+            	
+            	studentClass.put("userId", userId);
+            	
+            	List<Map<String, Object>> existStudent = getUserClass(studentClass);
+            	
+            	if(existStudent == null || existStudent.size() == 0)
+            	{
+            		sqlSession.getMapper(ClassMapper.class).insertUserClass(studentClass);
+            	}
+            	
+            	prvStudentMap.remove(userId);
+            }
+            
+            for(String userId : prvStudentMap.keySet())
+            {
+            	studentClass.put("userId", userId);
+            	
+            	sqlSession.getMapper(ClassMapper.class).deleteUserClass(studentClass);
             }
         }
         
@@ -255,4 +278,17 @@ public class ClassService
         
         
     }
+
+	public Map<String, Object> updateUserClass(Map<String, Object> param)
+	{
+		Map<String, Object> student = (Map<String, Object>) param.get("student");
+		
+		student.put("firstEvaluationDate", new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime()));
+		student.put("firstStepScore", student.get("firstStepScore") == null ? 0 : student.get("firstStepScore"));
+		student.put("firstStep", CommonUtil.getStopOfStepScore(student.get("firstStepScore")));
+		
+		sqlSession.getMapper(ClassMapper.class).updateUserClass(student);
+		
+		return student;
+	}
 }

@@ -4,9 +4,10 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
     vm.classes = [];
     vm.classMonths = [];
     vm.students = [];
+    
+    vm.stepScores = [];
 
     vm.selectedClassId;
-    vm.selectedClassMonth;
     
     /**
      * 초기화
@@ -14,7 +15,19 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
     vm.init = function() {
         $.preLoadImages('/manage/assets/sp_alert.png');
         
+        vm.initStepScore();
+        
         vm.loadClasses();
+    };
+    
+    vm.initStepScore = function() {
+    	var tmp = [];
+    	
+    	for(var i = 0; i<=120; i++) {
+    		tmp.push(i);
+    	}
+    	
+    	vm.stepScores = tmp;
     };
     
     /**
@@ -36,20 +49,14 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
 	 * 수강생 로드
 	 */
     vm.loadStudents = function() {
-    	if(!vm.selectedClassMonth) {
-    		vm.students = [];
-    		return;
-    	}
-    	
     	var param = {
     			classId : vm.selectedClassId,
-    			year : vm.selectedClassMonth.year,
-    			month : vm.selectedClassMonth.month,
+    			userType : 'STUDENT',
 		};
     	
     	visibleLoader(true);
     	
-    	RemoteHttp.controller('/manage').url('/get-report-student-list').methods('post').param(param).request().then(function(data){
+    	RemoteHttp.controller('/manage').url('/get-initial-student-list').methods('post').param(param).request().then(function(data){
     		if(data) {
     			vm.students = data;
     		}
@@ -88,24 +95,14 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
 			target.parents('.btn_group').find('.edit-btn').hide();
 			target.parents('.btn_group').find('.save-btn, .cancel-btn').show();
 			
-			target.parents('.rpt-box').find('.rpt-score .score:not(.total)').hide();
-			target.parents('.rpt-box').find('.rpt-score .input-score').show();
-			
-			target.parents('.rpt-box').find('.rpt-content .txt').hide();
-			target.parents('.rpt-box').find('.rpt-content .txt-area').show();
-			
-			target.parents('.rpt-box').find('.refer').show();
+			target.parents('.rpt-box').find('.rpt-content .no-edit').hide();
+			target.parents('.rpt-box').find('.rpt-content .edit').show();
 		} else {
 			target.parents('.btn_group').find('.edit-btn').show();
 			target.parents('.btn_group').find('.save-btn, .cancel-btn').hide();
 			
-			target.parents('.rpt-box').find('.rpt-score .score').show();
-			target.parents('.rpt-box').find('.rpt-score .input-score').hide();
-			
-			target.parents('.rpt-box').find('.rpt-content .txt').show();
-			target.parents('.rpt-box').find('.rpt-content .txt-area').hide();
-			
-			target.parents('.rpt-box').find('.refer').hide();
+			target.parents('.rpt-box').find('.rpt-content .no-edit').show();
+			target.parents('.rpt-box').find('.rpt-content .edit').hide();
 		}
 	};
 	
@@ -117,7 +114,7 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
 				student : student,
 		};
 		
-		RemoteHttp.controller('/manage').url('/update-report-student').methods('post').param(param).request().then(function(data){
+		RemoteHttp.controller('/manage').url('/update-initial-student').methods('post').param(param).request().then(function(data){
 			if(data) {
 				var idx = vm.students.findIndex(function(e){
 					return e.userId == data.userId;
@@ -138,17 +135,6 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
 		});
 		
 		vm.toggleEditSaveBtn($(evt.currentTarget), 'save');
-	};
-	
-	/**
-	 * 입력 점수 최대값 체크
-	 */
-	vm.onBlurScore = function(evt) {
-		var value = parseInt($(event.target).val());
-		
-		if(value > 25) {
-			$(event.target).val(25).trigger('change');
-		}
 	};
 	
 	vm.init();

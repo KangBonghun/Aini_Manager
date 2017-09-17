@@ -702,16 +702,18 @@ color: #555;
     line-height: 1.928em;
 }
 
-.rpt-wrapper .rpt-box .rpt-title .strong {
+.rpt-wrapper .rpt-box .rpt-title .strong,
+.rpt-wrapper .rpt-box .rpt-title .step-score {
 	color: #3F8EF8;
 }
 
-.rpt-wrapper .rpt-box .rpt-title .weak {
+.rpt-wrapper .rpt-box .rpt-title .weak,
+.rpt-wrapper .rpt-box .rpt-title .study-goal {
     color: #BE54FB;
 }
 
 .rpt-wrapper .rpt-box .rpt-content {
-	
+	margin-bottom: 10px;
 }
 
 .rpt-wrapper .rpt-box .rpt-content .txt {
@@ -745,6 +747,24 @@ color: #555;
     -webkit-appearance: none;
     resize: none;
     display:none;
+}
+
+.rpt-wrapper .rpt-box .rpt-content .edit .step-score {
+	    display: inline-block;
+    width: calc(100% - 50px);
+}
+
+.rpt-wrapper .rpt-box .rpt-content .edit .step-score-sub {
+	display: inline-block;
+    width: 45px;
+    text-align: center;
+    font-size: 20px;
+    color: #999;
+}
+
+.rpt-wrapper .rpt-box .rpt-content .no-edit .step-score {
+	font-size: 25px;
+	font-weight: 700;
 }
 
 .rpt-wrapper .rpt-box .rpt-score .input-score {
@@ -1231,6 +1251,14 @@ color: #555;
 .ico-arrow {
 	background: url(../assets/arrow.png) no-repeat;
 }        
+
+.initial-date {
+    font-size: 12px;
+    display: inline-block;
+    vertical-align: bottom;
+    padding-left: 10px;
+    color: #666;
+}
 
 @media (min-width: 768px) {
 	.fixed-box-wrapper,

@@ -23,8 +23,6 @@ public interface ClassMapper
     
     public Integer deleteUserClass(Map<String, Object> param);
 
-    public void deleteUserClassByUserType(Map<String, Object> managerClass);
-
     public void deleteClassDate(Map<String, Object> classDateParam);
 
     public void insertClassDate(Map<String, Object> classDateParam);

@@ -184,6 +184,7 @@ ainiApp.directive('reportInfoDirective', function() {
 		    };
 		    
 		    vm.getStudentName = function(userId) {
+		    	return; //기능 막음
 		    	RemoteHttp.controller('/manage').url('/get-user-info2').param({userId:userId}).methods('post').request().then(function(data){
 		    		var userName = '';
 		    		

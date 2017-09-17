@@ -10,66 +10,42 @@
     </div>
 
     <div class="box-body load-data-wrapper">
-    	<div class="no-data" ng-if="!initialCtrl.selectedClassMonth">강의를 선택해주세요.</div>
+    	<div class="no-data" ng-if="!initialCtrl.selectedClassId">강의를 선택해주세요.</div>
         <ul class="rpt-wrapper">
             <li class="rpt-box" ng-repeat="student in initialCtrl.students">
                 <div class="rpt-info">
                     <span class="user">{{ student.userName }}</span>
-                    <div class="step" ng-show="student.step">
-                    	<span>{{ 'STEP ' +  student.step }}</span>
-                    	<span class="v-bar"></span>
-                    	<span class="step-score">{{ student.stepScore + '점' }}</span>
+                    <div class="initial-date">
+                    	<span>최초 평가일</span>
+                    	<span>|</span>
+                    	<span>{{ getDateToLabel(student.firstEvaluationDate) || ' - ' }}</span>
                     </div>
                     <div class="btn_group" style="float: right;">
                         <button type="button" class="edit-btn" ng-click="initialCtrl.onEdit($event)">수정</button>
-<!--                         <button type="button" class="cancel-btn" ng-click="onCancel($event)">취소</button> -->
                         <button type="button" class="save-btn" ng-click="initialCtrl.onSave($event, student)">저장</button>
                     </div>
                 </div>
-                <div class="rpt-score">
-                	<div class="refer">
-                		<span>※항목 당 최대 점수는 25점입니다.</span>
-                	</div>
-				    <ul>
-						<li>
-						    <p class="title">발음</p>
-						    <p class="score">{{ student.pronunciation }}</p>
-						    <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" class="input-score" ng-model="student.pronunciation" ng-blur="initialCtrl.onBlurScore($event)">
-						</li>
-						<li>
-						    <p class="title">어휘</p>
-						    <p class="score">{{ student.vocabulary }}</p>
-						    <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" class="input-score"  ng-model="student.vocabulary" ng-blur="initialCtrl.onBlurScore($event)">
-						</li>
-						<li>
-						    <p class="title">문법</p>
-						    <p class="score">{{ student.grammar }}</p>
-						    <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" class="input-score"  ng-model="student.grammar" ng-blur="initialCtrl.onBlurScore($event)">
-						</li>
-						<li>
-						    <p class="title">이해력</p>
-						    <p class="score">{{ student.intelligibility }}</p>
-						    <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" class="input-score"  ng-model="student.intelligibility" ng-blur="initialCtrl.onBlurScore($event)">
-						</li>
-						<li>
-						    <p class="title">총점</p>
-						    <p class="score total">{{ student.pronunciation +  student.vocabulary + student.grammar + student.intelligibility }}</p>
-						</li>
-					</ul>
-				</div>
                 <div class="rpt-title">
-                    <span class="strong">강점</span>
+                    <span class="step-score">스텝점수</span>
                 </div>
                 <div class="rpt-content">
-                    <p class="txt"> {{ student.strength }} </p>
-                    <textarea cols="30" rows="10" class="txt-area" ng-model="student.strength"></textarea>
+                    <div class="txt no-edit">
+                    	<span class="step-score">{{ student.firstStepScore }}</span>
+                    	<span class="step-score-sub">/120</span>
+                    </div>
+                    <div class="edit" style="display: none;">
+						<select class="form-control step-score" ng-model="student.firstStepScore" ng-options="score for score in initialCtrl.stepScores" required="" style="display: inline-block;">
+							<option value="" disabled selected hidden>스텝점수 선택</option>
+						</select>
+						<span class="step-score-sub">/120</span>
+                    </div>
                 </div>
                 <div class="rpt-title">
-                    <span class="weak">보완점</span>
+                    <span class="study-goal">학습목표</span>
                 </div>
                 <div class="rpt-content">
-                    <p class="txt"> {{ student.weakness }} </p>
-                    <textarea cols="30" rows="10" class="txt-area" ng-model="student.weakness"></textarea>
+                    <p class="txt no-edit"> {{ student.studyGoal }} </p>
+                    <textarea cols="30" rows="10" class="txt-area edit" ng-model="student.studyGoal"></textarea>
                 </div>
             </li>
         </ul>

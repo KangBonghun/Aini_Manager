@@ -85,7 +85,7 @@ ainiApp.directive('reportViewDirective', function() {
         	
         	
         	/**
-        	 * 스탭 차트 생성
+        	 * 스텝 차트 생성
         	 */
         	vm.makeStepChart = function(step) {
         		if(!vm.stepChart) {
@@ -153,7 +153,7 @@ ainiApp.directive('reportViewDirective', function() {
         	
         	
         	/**
-        	 * 스탭 점수 차트 생성
+        	 * 스텝 점수 차트 생성
         	 */
         	vm.makeStepScoreChart = function(data) {
         		if(!vm.stepScoreChart) {
@@ -239,7 +239,7 @@ ainiApp.directive('reportViewDirective', function() {
         	};	
         	
         	/**
-        	 * 월간 스탭 차트 생성
+        	 * 월간 스텝 차트 생성
         	 */
         	vm.makeMonthlyStepChart = function(data) {
         		if(!vm.monthlyStepChart) {

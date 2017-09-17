@@ -21,7 +21,7 @@ ainiApp.config(function ($stateProvider) {
          .state('initial', {
              url: '/initial',
              templateUrl: 'views/initial.html',
-             controller : 'reportController as initialCtrl'
+             controller : 'initialController as initialCtrl'
          })
          .state('reportView', {
              url: '/reportView',
