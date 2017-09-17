@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="aini.mapper.ClassMapper">
+	<select id="getClassList" parameterType="map" resultType="map">
+		SELECT
+			c.class_id AS classId, 
+			c.class_name AS className, 
+			c.association_id AS association, 
+			c.start_date AS startDate, 
+			c.end_date AS endDate, 
+			c.monday AS monday, 
+			c.tuesday AS tuesday, 
+			c.wednesday AS wednesday, 
+			c.thursday AS thursday, 
+			c.friday AS friday, 
+			c.saturday AS saturday, 
+			c.sunday AS sunday,
+			c.active AS active,
+			c.start_time AS startTime,
+			c.end_time AS endTime,
+			c.language AS language,
+			c.regist_datetime AS registDatetime,
+			c.change_datetime AS changeDatetime
+		FROM 
+			class c
+		<if test="userType!='ADMIN'">
+			INNER JOIN
+				user_class uc ON c.class_id = uc.class_id AND uc.user_id = #{userId}
+<!-- 			INNER JOIN -->
+<!-- 				user u ON uc.user_id = u.user_id AND u.user_type='TEACHER' -->
+		</if>
+		<if test="active!=null">
+			WHERE
+				c.active = #{active}
+		</if>
+		ORDER BY
+			c.regist_datetime DESC
+	</select>
+	
+	<select id="getClassDateList" parameterType="map" resultType="map">
+		SELECT
+			class_id AS classId,
+			class_date AS classDate
+		FROM 
+			class_date
+		WHERE
+			class_id = #{classId} 
+	</select>
+	
+	<insert id="insertClassDate" parameterType="map">
+		INSERT INTO class_date 
+			(
+			class_id, 
+			class_date
+			)
+		VALUES
+			(
+			#{classId}, 
+			#{classDate}
+			)
+	</insert>
+	
+	<delete id="deleteClassDate" parameterType="map">
+		DELETE FROM
+			class_date 
+		<where>
+			<trim suffixOverrides=",">
+				<if test="classId!=null">
+					AND class_id = #{classId} 
+				</if>
+				<if test="classDate!=null">
+					AND class_date = #{classDate}
+				</if>
+			</trim>
+		</where>
+	</delete>
+	
+	<select id="getClassInfo" parameterType="int" resultType="map">
+		SELECT
+			c.class_id AS classId, 
+			c.class_name AS className, 
+			c.association_id AS association, 
+			c.start_date AS startDate, 
+			c.end_date AS endDate, 
+			c.monday AS monday, 
+			c.tuesday AS tuesday, 
+			c.wednesday AS wednesday, 
+			c.thursday AS thursday, 
+			c.friday AS friday, 
+			c.saturday AS saturday, 
+			c.sunday AS sunday,
+			c.active AS active,
+			c.start_time AS startTime,
+			c.end_time AS endTime,
+			c.language AS language,
+			c.regist_datetime AS registDatetime,
+			c.change_datetime AS changeDatetime
+		FROM
+			class c
+		WHERE
+			c.class_id = #{classId}
+	</select>
+	
+	<select id="getUserClass" parameterType="map" resultType="map">
+		SELECT
+			uc.user_id as userId, 
+			uc.class_id as classId,  
+			uc.study_goal AS studyGoal, 
+			uc.first_evaluation_date AS firstEvaluationDate, 
+			uc.first_step_score AS firstStepScore, 
+			uc.first_step AS firstStep, 
+			uc.last_evaluation_date AS lastEvaluationDate, 
+			uc.last_step_score AS lastStepScore, 
+			uc.last_step AS lastStep,
+			u.user_name AS userName,
+			u.mobile_number AS mobileNumber,
+			u.email AS email
+		FROM
+			user_class uc
+		INNER JOIN
+			user u on uc.user_id = u.user_id
+		WHERE
+			class_id = #{classId}
+			<if test="userType!=null">
+				AND u.user_type = #{userType}
+			</if>
+	</select>
+	
+	<insert id="insertClassInfo" parameterType="map" useGeneratedKeys="true" keyProperty="class_id">
+		INSERT INTO class 
+			(
+			<trim suffixOverrides=",">
+				<if test="className != null">
+					class_name, 
+				</if>
+				<if test="associationId != null">
+					association_id, 
+				</if>
+				<if test="startDate != null">
+					start_date, 
+				</if>
+				<if test="endDate != null">
+					end_date, 
+				</if>
+				<if test="monday != null">
+					monday, 
+				</if>
+				<if test="tuesday != null">
+					tuesday, 
+				</if>
+				<if test="wednesday != null">
+					wednesday,
+				</if>
+				<if test="thursday != null">
+					thursday, 
+				</if>
+				<if test="friday != null">
+					friday, 
+				</if>
+				<if test="saturday != null">
+					saturday, 
+				</if>
+				<if test="sunday != null">
+					sunday, 
+				</if>
+				<if test="active != null">
+					active, 
+				</if>
+				<if test="startTime != null">
+					start_time, 
+				</if>
+				<if test="endTime != null">
+					end_time,
+				</if>
+				<if test="language != null">
+					language,
+				</if>
+				<if test="registDatetime != null">
+					regist_datetime,
+				</if>
+				<if test="changeDatetime != null">
+					change_datetime,
+				</if>
+			</trim>
+			)
+		VALUES
+			(
+			<trim suffixOverrides=",">
+				<if test="className != null">
+					#{className},
+				</if>
+				<if test="associationId != null">
+					#{associationId},				
+				</if>
+				<if test="startDate != null">
+					#{startDate},				
+				</if>
+				<if test="endDate != null">
+					#{endDate},				
+				</if>
+				<if test="monday != null">
+					#{monday},				
+				</if>
+				<if test="tuesday != null">
+					#{tuesday},				
+				</if>
+				<if test="wednesday != null">
+					#{wednesday},				
+				</if>
+				<if test="thursday != null">
+					#{thursday},				
+				</if>
+				<if test="friday != null">
+					#{friday},				
+				</if>
+				<if test="saturday != null">
+					#{saturday},				
+				</if>
+				<if test="sunday != null">
+					#{sunday},				
+				</if>
+				<if test="active != null">
+					#{active},				
+				</if>
+				<if test="startTime != null">
+					#{startTime},				
+				</if>
+				<if test="endTime != null">
+					#{endTime},				
+				</if>
+				<if test="language != null">
+					#{language},				
+				</if>
+				<if test="registDatetime != null">
+					#{registDatetime},				
+				</if>
+				<if test="changeDatetime != null">
+					#{changeDatetime},				
+				</if>
+			</trim>
+			)
+	</insert>
+	
+	<update id="updateClassInfo" parameterType="map">
+		UPDATE
+			class 
+		SET
+			<trim suffixOverrides=",">
+				<if test="className != null">
+					class_name = #{className},
+				</if>
+				<if test="associationId != null">
+					association_id = #{associationId},				
+				</if>
+				<if test="startDate != null">
+					start_date = #{startDate},				
+				</if>
+				<if test="endDate != null">
+					end_date = #{endDate},				
+				</if>
+				<if test="monday != null">
+					monday = #{monday},				
+				</if>
+				<if test="tuesday != null">
+					tuesday = #{tuesday},				
+				</if>
+				<if test="wednesday != null">
+					wednesday = #{wednesday},				
+				</if>
+				<if test="thursday != null">
+					thursday = #{thursday},				
+				</if>
+				<if test="friday != null">
+					friday = #{friday},				
+				</if>
+				<if test="saturday != null">
+					saturday = #{saturday},				
+				</if>
+				<if test="sunday != null">
+					sunday = #{sunday},				
+				</if>
+				<if test="active != null">
+					active = #{active},				
+				</if>
+				<if test="startTime != null">
+					start_time = #{startTime},				
+				</if>
+				<if test="endTime != null">
+					end_time = #{endTime},				
+				</if>
+				<if test="language != null">
+					language = #{language},				
+				</if>
+				<if test="registDatetime != null">
+					regist_datetime = #{registDatetime},				
+				</if>
+				<if test="changeDatetime != null">
+					change_datetime = #{changeDatetime},				
+				</if>
+			</trim>
+		WHERE
+			class_id = #{classId}
+	</update>
+	
+	<insert id="insertUserClass" parameterType="map">
+		INSERT INTO user_class 
+			(
+			<trim suffixOverrides=",">
+				<if test="userId!=null">
+					user_id, 
+				</if>
+				<if test="classId!=null">
+					class_id,
+				</if> 
+				<if test="studyGoal!=null">
+					study_goal,
+				</if> 
+				<if test="firstEvaluationDate!=null">
+					first_evaluation_date,
+				</if> 
+				<if test="firstStepScore!=null">
+					first_step_score,
+				</if> 
+				<if test="firstStep!=null">
+					first_step,
+				</if> 
+				<if test="lastEvaluationDate!=null">
+					last_evaluation_date,
+				</if> 
+				<if test="lastStepScore!=null">
+					last_step_score,
+				</if> 
+				<if test="lastStep!=null">
+					last_step
+				</if>
+			</trim>
+			)
+		VALUES
+			(
+			<trim suffixOverrides=",">
+				<if test="userId!=null">
+					#{userId}, 
+				</if>
+				<if test="classId!=null">
+					#{classId},
+				</if> 
+				<if test="studyGoal!=null">
+					#{studyGoal},
+				</if> 
+				<if test="firstEvaluationDate!=null">
+					#{firstEvaluationDate},
+				</if> 
+				<if test="firstStepScore!=null">
+					#{firstStepScore},
+				</if> 
+				<if test="firstStep!=null">
+					#{firstStep},
+				</if> 
+				<if test="lastEvaluationDate!=null">
+					#{lastEvaluationDate},
+				</if> 
+				<if test="lastStepScore!=null">
+					#{lastStepScore},
+				</if> 
+				<if test="lastStep!=null">
+					#{lastStep}
+				</if>
+			</trim>
+			)
+	</insert>
+	
+	<update id="updateUserClass" parameterType="map">
+		UPDATE
+			user_class 
+		SET
+			<trim suffixOverrides=",">	
+				<if test="studyGoal!=null">
+					study_goal = #{studyGoal},
+				</if> 
+				<if test="firstEvaluationDate!=null">
+					first_evaluation_date = #{firstEvaluationDate},
+				</if> 
+				<if test="firstStepScore!=null">
+					first_step_score = #{firstStepScore},
+				</if> 
+				<if test="firstStep!=null">
+					first_step = #{firstStep},
+				</if> 
+				<if test="lastEvaluationDate!=null">
+					last_evaluation_date = #{lastEvaluationDate},
+				</if> 
+				<if test="lastStepScore!=null">
+					last_step_score = #{lastStepScore},
+				</if> 
+				<if test="lastStep!=null">
+					last_step = #{lastStep}
+				</if>
+			</trim>
+		WHERE
+			user_id = #{userId} AND class_id = #{classId}
+	</update>
+	
+	<delete id="deleteUserClass" parameterType="map">
+		DELETE FROM
+			user_class 
+		WHERE
+			<trim prefixOverrides="AND">
+				<if test="userId">
+					AND user_id = #{userId}
+				</if>
+				<if test="classId">
+					AND class_id = #{classId}
+				</if>
+			</trim>
+	</delete>
+	
+	<delete id="deleteUserClassByUserType" parameterType="map">
+		DELETE uc FROM
+			user_class uc
+		INNER JOIN
+			user u ON uc.user_id = u.user_id
+		WHERE
+			u.user_type = #{userType}
+			AND class_id = #{classId}
+	</delete>
+	
+	<update id="updateClassDate" parameterType="map">
+		UPDATE
+			class_date
+		SET
+			class_date = #{newDate}
+		WHERE
+			class_id = #{classId} AND class_date = #{oldDate}
+	</update>
+	
+	<update id="updateAttendanceDate" parameterType="map">
+
+		UPDATE
+			attendance 
+		SET
+			class_date = #{newDate} 
+		WHERE
+			class_id = #{classId} AND class_date = #{oldDate}
+	</update>
+</mapper>

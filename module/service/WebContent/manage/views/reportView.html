@@ -1,0 +1,19 @@
+<div class="report-page">
+    <div class="form-group select-wrapper">
+        <div>
+            <select class="form-control" ng-model="reportViewCtrl.selectedClassId" ng-change="reportViewCtrl.onChangeClass()" ng-options="class.classId as class.className for class in reportViewCtrl.classes">
+			<option value="" disabled selected hidden>강의 선택</option>
+		</select>
+        </div>
+        <div>
+            <select class="form-control" style="border-left: 1px solid #d2d6de;" ng-model="reportViewCtrl.selectedClassMonth" ng-change="reportViewCtrl.onChangeDate()" ng-options="classMonth as classMonth.label for classMonth in reportViewCtrl.classMonths">
+			<option value="" disabled selected hidden>월 선택</option>
+		</select>
+        </div>
+    </div>
+
+    <div class="box-body load-data-wrapper">
+    	<div class="no-data" ng-if="!reportViewCtrl.selectedClassMonth">강의와 날짜를 선택해주세요.</div>
+    	<report-view-directive></report-view-directive>
+    </div>
+</div>

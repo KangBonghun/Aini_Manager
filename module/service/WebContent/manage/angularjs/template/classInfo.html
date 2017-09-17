@@ -1,0 +1,131 @@
+<div id="class_info_detail_box" class="class-info-detail-wrapper fixed-box-wrapper">
+	<div class="header">
+		<p class="title">{{ vm.isNew ? '강의추가' : '강의수정' }}</p>
+		<a class="do-btn" ng-click="vm.onSaveClassInfo()">저장</a>
+		<a class="close-btn" ng-click="onPopupClassInfo(false)" ></a>
+	</div>
+	<div class="contents class">
+		<div class="tab-wrapper">
+			<ul class="tab-lst">
+				<li class="tab-item">
+					<a id="tab_class" href="#" class="tab-item-btn on" ng-click="vm.onClickTab('CLASS')">강의</a>
+				</li>
+				<li class="tab-item">
+					<a id="tab_student" href="#" class="tab-item-btn" ng-click="vm.onClickTab('STUDENT')">수강생</a>
+				</li>
+			</ul>
+		</div>
+		<div class="class-info-edit-wrapper">
+			<table class="table table-bordered">
+	            <colgroup>
+	                <col width="120px">
+	                <col width="*">
+	            </colgroup>
+	            <tbody>
+	                <tr>
+	                    <td>강의명</td>
+						<td><input id="class_name" type="text" class="form-control" required></input></td>	                    
+	                </tr>
+	                <tr>
+	                    <td>언어</td>
+						<td>
+							<div class="language-wrapper">
+								<select class="form-control" ng-model="vm.classInfo.language" ng-options="lang.code as lang.label for lang in language" required>
+									<option value="" disabled selected hidden>언어 선택</option>
+								</select>
+							</div>
+						</td>	                    
+	                </tr>
+	                <tr>
+	                	<td>수업일</td>
+						<td class="day-checkbox-list-wrapper">
+							<div class="day-checkbox-wrapper" ng-style="{ 'z-index' : vm.classInfo.monday == 'Y' ? 20 : 10 }">
+								<input id="day_mon" class="day-checkbox" type="checkbox" ng-model="vm.classInfo.monday" ng-true-value="'Y'" ng-false-value="'N'">
+								<label for="day_mon" class="day-label">월</label> 
+							</div>
+							<div class="day-checkbox-wrapper" ng-style="{ 'z-index' : vm.classInfo.tuesday == 'Y' ? 20 : 10 }">
+								<input id="day_tue" class="day-checkbox" type="checkbox" ng-model="vm.classInfo.tuesday" ng-true-value="'Y'" ng-false-value="'N'">
+								<label for="day_tue" class="day-label">화</label> 
+							</div>
+							<div class="day-checkbox-wrapper" ng-style="{ 'z-index' : vm.classInfo.wednesday == 'Y' ? 20 : 10 }">
+								<input id="day_wed" class="day-checkbox" type="checkbox" ng-model="vm.classInfo.wednesday" ng-true-value="'Y'" ng-false-value="'N'">
+								<label for="day_wed" class="day-label">수</label> 
+							</div>
+							<div class="day-checkbox-wrapper" ng-style="{ 'z-index' : vm.classInfo.thursday == 'Y' ? 20 : 10 }">
+								<input id="day_thu" class="day-checkbox" type="checkbox" ng-model="vm.classInfo.thursday" ng-true-value="'Y'" ng-false-value="'N'">
+								<label for="day_thu" class="day-label">목</label> 
+							</div>
+							<div class="day-checkbox-wrapper" ng-style="{ 'z-index' : vm.classInfo.friday == 'Y' ? 20 : 10 }">
+								<input id="day_fri" class="day-checkbox" type="checkbox" ng-model="vm.classInfo.friday" ng-true-value="'Y'" ng-false-value="'N'">
+								<label for="day_fri" class="day-label">금</label> 
+							</div>
+							<div class="day-checkbox-wrapper" ng-style="{ 'z-index' : vm.classInfo.saturday == 'Y' ? 20 : 10 }">
+								<input id="day_sat" class="day-checkbox" type="checkbox" ng-model="vm.classInfo.saturday" ng-true-value="'Y'" ng-false-value="'N'">
+								<label for="day_sat" class="day-label">토</label> 
+							</div>
+							<div class="day-checkbox-wrapper" ng-style="{ 'z-index' : vm.classInfo.sunday == 'Y' ? 20 : 10 }">
+								<input id="day_sun" class="day-checkbox" type="checkbox" ng-model="vm.classInfo.sunday" ng-true-value="'Y'" ng-false-value="'N'">
+								<label for="day_sun" class="day-label">일</label> 
+							</div>
+						</td>
+	                </tr>
+	                <tr>
+	                    <td>수업시간</td>
+						<td>
+<!-- 							<input type="text" class="form-control" value="{{ vm.classInfo.startTime }}"></input> -->
+							<input id="start_time" class="form-control class-time-scroll" placeholder="시작시간" onfocus="this.blur();" aria-required="true" aria-invalid="false">
+							<span>-</span>
+							<input id="end_time" class="form-control class-time-scroll" placeholder="종료시간" onfocus="this.blur();" aria-required="true" aria-invalid="false">
+						</td>	                    
+	                </tr>
+	                <tr>
+	                    <td>교육기간(시작)</td>
+						<td><input id="start_date" class="form-control class-date-scroll" placeholder="시작일" onfocus="this.blur();" aria-required="true" aria-invalid="false"></td>	                    
+	                </tr>
+	                <tr>
+	                    <td>교육기간(종료)</td>
+						<td><input id="end_date" class="form-control class-date-scroll" placeholder="종료일" onfocus="this.blur();" aria-required="true" aria-invalid="false"></td>	                    
+	                </tr>
+	                <tr>
+	                    <td>담당매니저</td>
+						<td><input id="manager_id" type="text" class="form-control" placeholder="이메일"></input></td>	                    
+	                </tr>
+	                <tr>
+	                    <td>담당강사</td>
+						<td><input id="teacher_id" type="text" class="form-control" placeholder="이메일"></input></td>	                    
+	                </tr>
+	                <tr>
+	                    <td>수강여부</td>
+						<td>
+							<span id="activeLabel" style="padding-left:12px;">수강종료</span>
+							<div class="input-switch">
+								<input type="checkbox" id="active" class="input" ng-click="vm.setActiveLabel()"/>
+								<label for="active" class="switch"></label>
+							</div>
+						</td>	                    
+                	</tr>
+	            </tbody>
+	        </table>
+		</div>
+		<div class="class-student-edit-wrapper">
+			<table class="table table-bordered">
+	            <tbody>
+	                <tr ng-repeat="student in vm.classInfo.studentList track by $index">
+	                    <td><span class="lbl-name">{{ student.userName }}</span></td>
+	                    <td>
+	                    	<div>
+	                    		<input class="form-control" placeholder="이메일" ng-model="student.userId" ng-blur="vm.getStudentName(student.userId)"></input>
+	                    	</div>
+	                    </td>
+	                    <td>
+	                    	<a href="#" class="btn-del" ng-click="vm.onClickDeleteStudent($index)"></a>
+	                    </td>
+	                </tr>
+	            </tbody>
+	        </table>
+	        <div class="btn-add-student">
+				<a href="#" ng-click="vm.onClickAddStudent()">수강생 추가</a>
+			</div>
+		</div>
+	</div>
+</div>

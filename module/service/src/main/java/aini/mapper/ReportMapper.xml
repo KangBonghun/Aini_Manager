@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="aini.mapper.ReportMapper">
+	<select id="getReportStudentList" parameterType="map" resultType="map">
+		SELECT
+			uc.class_id AS classId,
+			uc.first_evaluation_date AS firstEvaluationDate,
+			uc.first_step_score AS firstStepScore,
+			uc.first_step AS firstStep,
+			u.user_id AS userId,
+			u.user_name AS userName,
+			u.user_type AS userType, 
+			u.mobile_number AS mobileNumber, 
+			u.email AS email, 
+			u.association_id AS associationId, 
+			#{year} AS year,
+			#{month} AS month,
+			rt.step_score AS stepScore,
+			rt.step AS step,
+			rt.pronunciation AS pronunciation,
+			rt.grammar AS grammar,
+			rt.vocabulary AS vocabulary,
+			rt.intelligibility AS intelligibility,
+			rt.total_score AS totalScore,
+			rt.strength AS strength,
+			rt.weakness AS weakness,
+			rt.attendance AS attendance,
+			rt.change_datetime AS changeDatetime
+		FROM
+			user_class uc
+		INNER JOIN
+			user u ON uc.user_id = u.user_id AND u.user_type = 'STUDENT'
+		LEFT JOIN
+			monthly_report rt ON uc.class_id = rt.class_id AND uc.user_id = rt.user_id AND rt.year = #{year} AND rt.month = #{month} 
+		WHERE
+			uc.class_id = #{classId}
+	</select>
+	
+	<update id="updateReportStudent" parameterType="map">
+		INSERT INTO monthly_report 
+			(
+			user_id, 
+			class_id, 
+			year, 
+			month, 
+			step_score,
+			step,
+			pronunciation,
+			grammar,
+			vocabulary,
+			intelligibility,
+			total_score,
+			strength, 
+			weakness, 
+			change_datetime
+			)
+			VALUES
+			(
+			#{userId}, 
+			#{classId}, 
+			#{year}, 
+			#{month}, 
+			#{stepScore},
+			#{step},
+			#{pronunciation},
+			#{grammar},
+			#{vocabulary},
+			#{intelligibility},
+			#{totalScore},
+			#{strength}, 
+			#{weakness}, 
+			#{changeDatetime}
+			)
+		ON DUPLICATE KEY UPDATE
+			step_score=#{stepScore},
+			step=#{step},  
+			pronunciation=#{pronunciation}, 
+			grammar=#{grammar}, 
+			vocabulary=#{vocabulary}, 
+			intelligibility=#{intelligibility}, 
+			total_score=#{totalScore}, 
+			strength=#{strength}, 
+			weakness=#{weakness}, 
+			change_datetime=#{changeDatetime}
+	</update>
+	
+	<select id="getLanguageStep" resultType="map">
+		SELECT
+			step AS step, 
+			step_condition AS stepCondition, 
+			orderby_index AS orderbyIndex
+		FROM 
+			language_step 
+		ORDER BY
+			orderby_index
+	</select>
+	
+	<select id="getStepApplyScore" resultType="map">
+		SELECT
+			id AS id, 
+			apply_condition AS applyCondition, 
+			apply_score AS applyScore, 
+			orderby_index AS orderbyIndex
+		FROM 
+			step_apply_score 
+		ORDER BY
+			orderby_index
+	</select>
+	
+	<select id="getMonthlyReport" parameterType="map" resultType="map">
+		SELECT
+			user_id AS userId, 
+			class_id AS classId, 
+			year AS year, 
+			month AS month, 
+			step_score AS stepScore, 
+			step AS step, 
+			pronunciation AS pronunciation, 
+			grammar AS grammar, 
+			vocabulary AS vocabulary, 
+			intelligibility AS intelligibility, 
+			total_score AS totalScore, 
+			strength AS strength, 
+			weakness AS weakness, 
+			attendance AS attendance, 
+			change_datetime AS changeDatetime
+		FROM 
+			monthly_report 
+		<where>
+			<if test="userId != null">
+				AND user_id = #{userId}
+			</if>
+			<if test="classId != null">
+				AND class_id = #{classId}
+			</if>
+			<if test="year != null">
+				AND year = #{year}
+			</if>
+			<if test="month != null">
+				AND month = #{month}
+			</if>
+		</where>
+		ORDER BY
+			year DESC, month DESC
+	</select>
+</mapper>

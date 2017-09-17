@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ 	<!-- 마이바티스 구성 파일입니다. 모든 모듈들이 참고하는 설정파일입니다. 수정시 주의해주세요. -->
+    <settings>  
+        <setting name="cacheEnabled"              value="true"/>  
+        <setting name="lazyLoadingEnabled"        value="false"/>  
+        <setting name="multipleResultSetsEnabled" value="true"/>  
+        <setting name="useColumnLabel"            value="true"/>  
+        <setting name="useGeneratedKeys"          value="false"/> 
+        <setting name="mapUnderscoreToCamelCase"  value="true"/>   
+        <setting name="defaultExecutorType"       value="REUSE"/>  
+        <setting name="callSettersOnNulls"		  value="true"/>
+<!--         <setting name="defaultStatementTimeout"   value="25000"/>   -->
+    </settings>
+    
+    <typeHandlers>
+        <!--  java.sql.Timestamp 를 java.util.Date 형으로 반환 -->
+        <typeHandler javaType="java.sql.Timestamp" handler="org.apache.ibatis.type.DateTypeHandler"/>
+        <typeHandler javaType="java.sql.Time"      handler="org.apache.ibatis.type.DateTypeHandler"/>
+        <typeHandler javaType="java.sql.Date"      handler="org.apache.ibatis.type.DateTypeHandler"/>
+        <typeHandler javaType="java.lang.String"   handler="org.apache.ibatis.type.ClobTypeHandler" jdbcType="CLOB"/>
+    </typeHandlers>
+    
+    <!-- 프로바이더 설정입니다. Oracle, Mysql만 작업되어있습니다. -->
+    <databaseIdProvider type="VENDOR">
+	  <property name="Oracle" value="oracle" />
+	  <property name="PostgreSQL" value="postgre" />
+	  <property name="Tibero" value="tibero" />
+	  <property name="MySQL" value="mysql" />
+	</databaseIdProvider>
+ 
+</configuration>

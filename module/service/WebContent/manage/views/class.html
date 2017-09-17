@@ -1,0 +1,67 @@
+<div class="class-page">
+    <a href="javascript:window.scrollTo(0,0);" class="scroll-top"></a>
+    
+    
+    <div class="form-group select-wrapper">
+        <div>
+            <select class="form-control" ng-model="classCtrl.selectedActive" ng-change="classCtrl.onChangeActive()">
+            	<option value="" disabled selected hidden>수강상태 선택</option>
+				<option value="Y">수강중</option>
+				<option value="N">수강종료</option>
+				<option value="ALL">모두</option>
+			</select>
+        </div>
+    </div>
+
+    <div class="box-body load-data-wrapper">
+    	<div class="no-data" ng-if="!classCtrl.selectedActive">수강상태를 선택해주세요.</div>
+	    <div class="class-info-box" style="height:auto;" ng-repeat="classInfo in classCtrl.classes track by $index">
+			<a class="class-info-edit-btn" ng-click="onPopupClassInfo(true, classInfo)"></a>
+			<p class="title">{{ classInfo.className }}</p>
+			<div>
+				<ul class="class-info-lst">
+					<li>
+						<span>언어</span>
+						<span class="ng-binding">{{ getLanguageLabel(classInfo.language) }}</span>
+					</li>
+					<li>
+						<span>수업시간</span>
+						<span class="ng-binding">{{ classInfo.classDateLabel }}</span>
+					</li>
+					<li>
+						<span>교육기간</span>
+						<span class="ng-binding">{{ classInfo.startDateLabel + ' ~ ' + classInfo.endDateLabel }}</span>
+					</li>
+					<li>
+						<span>총수업일</span>
+						<span class="ng-binding">{{ classInfo.dateCount + '일' }}</span>
+					</li>
+					<li>
+						<span>수강인원</span>
+						<span class="ng-binding">{{ classInfo.studentCount + '명' }}</span>
+					</li>
+					<li>
+						<span>담당매니저</span>
+						<span class="ng-binding">{{ classInfo.managerName }}</span>
+					</li>
+					<li>
+						<span>담당강사</span>
+						<span class="ng-binding">{{ classInfo.teacherName }}</span>
+					</li>
+					<li>
+						<span>E-Mail</span>
+						<span class="ng-binding">{{ classInfo.teacherEmail }}</span>
+					</li>
+					<li>
+						<span>수강상태</span>
+						<span class="ng-binding">{{ classInfo.active=='Y' ? '수강중' : '수강종료' }}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+    </div>
+    <div id="save_btn" class="save-btn-wrapper fixed-box-wrapper">
+        <button type="button" ng-click="onPopupClassInfo(true)"><span>강의추가</span></button>
+    </div>
+</div>
+<report-info-directive></report-info-directive>

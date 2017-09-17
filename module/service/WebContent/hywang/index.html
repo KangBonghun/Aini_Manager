@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 ,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi">    
+    <title>아이니에듀케이션</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="css/reset.css" type="text/css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="js/js.js"></script>    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    onload = window.open("ad/ad.html", "x","width=950, height=600, scrollbars=yes, titlebar=no, status=no, resizable=yes,")        
+//        onclick="window.open('http://www.naver.com/','window2','location=yes,directories=yes,toolbar=yes,menubar=yes,scrollbars=yes,status=yes,resizable=yes');"
+    </script>
+	  <script>
+        // web, 모바일 판독
+        var filter = "win16|win32|win64|mac|macintel";
+        
+        // 모바일 테스트용
+      //  var filter = "win16|win32|win64|mac";
+        if ( navigator.platform  ) {
+            if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
+                location.href = "mindex.html"; //모바일 페이지 경로
+            } 
+        }
+    
+         </script> 	
+    
+</head>
+<body>    
+	
+	<div id="bg001"></div>
+    <div id="bg002">
+		<div class="btnT01"><a href="/counseling" target="_blank"><img src="img/btn001.jpg" /></a></div>
+	</div>
+	<div id="bg003">
+		<div class="btnT02"><a href="/counseling" target="_blank"><img src="img/btn002.jpg" /></a></div>
+		<div class="btnT03"><a href="/counseling" target="_blank"><img src="img/btn002.jpg" /></a></div>
+	</div>
+	<div id="bg004"></div>
+</body>
+</html>

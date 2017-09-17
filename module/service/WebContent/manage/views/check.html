@@ -1,0 +1,174 @@
+<div class="check-page">
+    <a href="javascript:window.scrollTo(0,0);" class="scroll-top"></a>
+    <div class="form-group select-wrapper">
+    	<div>
+	        <select class="form-control" ng-model="checkCtrl.selectedClassId" ng-change="checkCtrl.onChangeClass()" ng-options="class.classId as class.className for class in checkCtrl.classes">
+				<option value="" disabled selected hidden>강의 선택</option>
+			</select>
+		</div>
+		<div>
+			<select class="form-control" style="border-left:1px solid #d2d6de;" ng-model="checkCtrl.selectedClassDate" ng-change="checkCtrl.onChangeDate(checkCtrl.selectedClassDate)">
+				<option value="" disabled selected hidden creation-complete="onCreationCompleteClassDate">수강일 선택</option>
+				<option label="{{ getDateToLabel(classDate.classDate, 'yyyy-MM-dd (e)') }}" value="{{ classDate.classDate }}" creation-complete="onCreationCompleteClassDate" ng-repeat="classDate in checkCtrl.classDates">{{ getDateToLabel(classDate.classDate, 'yyyy-MM-dd (e)') }}</option>
+			</select>
+		</div>
+    </div>
+    
+	<!-- <div class="class-info-box" ng-if="checkCtrl.students.length > 0">
+		<a class="class-info-box-toggle-btn no-more" ng-click="checkCtrl.onToggleClassInfo()"></a>
+		<p class="title">강의 정보</p>
+		<div>
+			<ul class="class-info-lst">
+				<li>
+					<span>강의명</span>
+					<span class="ng-binding">{{ checkCtrl.classInfo.className }}</span>
+				</li>
+				<li>
+					<span>언어</span>
+					<span class="ng-binding">{{ getLanguageLabel(checkCtrl.classInfo.language) }}</span>
+				</li>
+				<li>
+					<span>수업시간</span>
+					<span class="ng-binding">{{ checkCtrl.classInfo.classDate }}</span>
+				</li>
+				<li>
+					<span>교육기간</span>
+					<span class="ng-binding">{{ checkCtrl.classInfo.startDate + ' ~ ' + checkCtrl.classInfo.endDate }}</span>
+				</li>
+				<li>
+					<span>총수업일</span>
+					<span class="ng-binding">{{ checkCtrl.classInfo.dateCount + '일' }}</span>
+				</li>
+				<li>
+					<span>수강인원</span>
+					<span class="ng-binding">{{ checkCtrl.classInfo.studentCount + '명' }}</span>
+				</li>
+				<li>
+					<span>담당매니저</span>
+					<span class="ng-binding">{{ checkCtrl.classInfo.managerName }}</span>
+				</li>
+				<li>
+					<span>담당강사</span>
+					<span class="ng-binding">{{ checkCtrl.classInfo.teacherName }}</span>
+				</li>
+				<li>
+					<span>E-Mail</span>
+					<span class="ng-binding">{{ checkCtrl.classInfo.teacherEmail }}</span>
+				</li>
+			</ul>
+		</div>
+	</div> -->
+	
+	<div class="btn_comm" ng-if="checkCtrl.students.length > 0">
+		<a href="#" onclick="$('#class_info_back').addClass('active')">
+			<span class="ico ico-info"></span>강의정보
+		</a>
+		<a href="#" onclick="$('#move_date_back').addClass('active')">
+			<span class="ico ico-arrow"></span>수강일 변경
+			<span class="point_col"></span>
+		</a>
+	</div>
+
+    <div class="box-body load-data-wrapper">
+        <table class="table table-bordered" style="border:none;border-top: 1px solid #e1e1e1;" ng-show="checkCtrl.students.length > 0">
+            <colgroup>
+                <col width="120px">
+                <col width="*">
+<!--                 <col width="40px"> -->
+            </colgroup>
+            <!-- <thead style="border-bottom:2px solid #e1e1e1">
+            	<tr>
+            		<th>이름</th>
+            		<th>출석상태</th>
+            	</tr>
+            </thead> -->
+            <tbody>
+                <tr ng-repeat="student in checkCtrl.students track by $index">
+                    <td><span>{{ student.userName }}</span></td>
+                    <td>
+                    	<div class="check-select-wrapper">
+                    		<select class="form-control" ng-model="student.status" required>
+                    			<option value="" disabled selected hidden>선택해주세요.</option>
+								<option value="O">출석</option>
+								<option value="L">지각</option>
+								<option value="X">결석</option>
+								<option value="W">업무</option>
+								<option value="E">교육</option>
+								<option value="V">휴가</option>
+							</select>
+                    	</div>
+<!--                         <ul class="nav_u"> -->
+<!--                             <li class="nav_l"> -->
+<!--                                 <a class="nav_a attend" ng-class="student.status=='AT' ? 'active' : ''" ng-click="student.status='AT'"><span>출석</span></a> -->
+<!--                             </li> -->
+<!--                             <li class="nav_l"> -->
+<!--                                 <a class="nav_a late" ng-class="student.status=='LA' ? 'active' : ''" ng-click="student.status='LA'"><span>지각</span></a> -->
+<!--                             </li> -->
+<!--                             <li class="nav_l"> -->
+<!--                                 <a class="nav_a absent" ng-class="student.status=='AB' ? 'active' : ''" ng-click="student.status='AB'"><span>결석</span></a> -->
+<!--                             </li> -->
+<!--                         </ul> -->
+<!--                         <input type="text" class="memo-input form-control" ng-model="student.memo"></input> -->
+                    </td>
+<!--                     <td class="memo-btn"><a ng-click="onToggleMemo($event, student.memo)"><i class="fa fa-commenting-o" style="color: #999;" aria-hidden="true"></i></a></td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="no-data" ng-if="!checkCtrl.selectedClassDate">강의와 날짜를 선택해주세요.</div>
+    <div id="class_info_back" class="pop-background">
+	    <div class="class-info-box more pop">
+			<a href="#" class="pop-box-close-btn" ng-click="checkCtrl.closePopup('INFO');"></a>
+			<p class="title">{{ checkCtrl.classInfo.className }}</p>
+			<div>
+				<ul class="class-info-lst">
+					<li>
+						<span>언어</span>
+						<span>{{ getLanguageLabel(checkCtrl.classInfo.language) }}</span>
+					</li>
+					<li>
+						<span>수업시간</span>
+						<span>{{ checkCtrl.classInfo.classDate }}</span>
+					</li>
+					<li>
+						<span>교육기간</span>
+						<span>{{ checkCtrl.classInfo.startDate + ' ~ ' + checkCtrl.classInfo.endDate }}</span>
+					</li>
+					<li>
+						<span>총수업일</span>
+						<span>{{ checkCtrl.classInfo.dateCount + '일' }}</span>
+					</li>
+					<li>
+						<span>수강인원</span>
+						<span>{{ checkCtrl.classInfo.studentCount + '명' }}</span>
+					</li>
+					<li>
+						<span>담당매니저</span>
+						<span>{{ checkCtrl.classInfo.managerName }}</span>
+					</li>
+					<li>
+						<span>담당강사</span>
+						<span>{{ checkCtrl.classInfo.teacherName }}</span>
+					</li>
+					<li>
+						<span>E-Mail</span>
+						<span>{{ checkCtrl.classInfo.teacherEmail }}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="move_date_back" class="pop-background">	
+		<div class="move-date-box pop">	
+			<a href="#" class="pop-box-close-btn" ng-click="checkCtrl.closePopup('MOVE_DATE');"></a>
+			<p class="title ng-binding">수강일 변경</p>
+			<div>
+				<input id="change_date" class="form-control class-date-scroll" placeholder="변경일" onfocus="this.blur();" aria-required="true" aria-invalid="false" readonly=""></input>
+				<a href="#" class="move-date-save-btn" ng-click="checkCtrl.onClickChangeClassDate()" ng-class="checkCtrl.changeClassDate ? '' : 'disabled'"><span>변경</span></a>
+			</div>
+		</div>
+	</div>
+    <div id="save_btn" class="save-btn-wrapper fixed-box-wrapper" ng-show="checkCtrl.students.length>0">
+        <button type="button" ng-click="checkCtrl.onSave()"><span>저장</span></button>
+    </div>
+</div>

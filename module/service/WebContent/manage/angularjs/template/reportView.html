@@ -1,0 +1,144 @@
+<ul class="rpt-wrapper" ng-show="vm.reportData">
+	<li class="rpt-box summary">
+		<p class="title">종합평가</p>
+		<div style="margin: 0 -5px;">
+			<ul>
+				<li class="score">
+					<p>Test Score</p>
+					<p style="vertical-align: bottom;font-size: 15px;">
+						<b style="font-size:22px">{{ vm.reportData.summary.score || '-' }}</b>/100
+					</p>
+				</li>
+				<li class="rank">
+					<p>상위 백분율</p>
+					<p style="vertical-align: bottom;font-size: 15px;">
+						<b style="font-size:22px;">{{ vm.reportData.summary.rank || '-' }}</b>%
+					</p>
+				</li>
+				<li class="level">
+					<p>스텝</p>
+					<p style="vertical-align: bottom;font-size: 15px;">
+						<b style="font-size:21px;">STEP {{ vm.reportData.summary.step || '-' }}</b>
+					</p>
+				</li>
+			</ul>
+		</div>
+	</li>
+	<li class="rpt-box class-info">
+		<p class="title">강의 정보</p>
+		<div>
+       		<ul class="lst">
+				<li>
+					<span>강의명</span>
+					<span>{{ vm.reportData.class.name || '-' }}</span>
+				</li>
+				<li>
+					<span>수업시간</span>
+					<span>{{ vm.reportData.class.time || '-' }}</span>
+				</li>
+				<li>
+					<span>교육기간</span>
+					<span>{{ vm.reportData.class.startDate || '-' }} ~ {{ vm.reportData.class.endDate || '-' }}</span>
+				</li>
+				<li>
+					<span>총수업일</span>
+					<span>{{ vm.reportData.class.day || '-' }}일</span>
+				</li>
+				<li>
+					<span>담당매니저</span>
+					<span>{{ vm.reportData.class.manager || '-' }}</span>
+				</li>
+				<li>
+					<span>담당강사</span>
+					<span>{{ vm.reportData.class.teacher || '-' }}</span>
+				</li>
+				<li>
+					<span>E-Mail</span>
+					<span>{{ vm.reportData.class.email || '-' }}</span>
+				</li>
+			</ul>
+		</div>
+	</li>
+	<li class="rpt-box goal">
+		<p class="title">학습목표</p>
+		<div class="contents">
+			<p>{{ vm.reportData.goal.goal || '-' }}</p>
+		</div>
+	</li>
+	<li class="rpt-box step">
+		<div style="margin-bottom:10px;">
+			<p class="title">랭귀지 스텝</p>
+		</div>
+		<div style="padding-bottom: 10px;margin-bottom: 10px;">
+			<p class="sub-title">스텝</p>
+			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">STEP {{ vm.reportData.step.step || '-' }}</p>
+			<div id="stepChart"></div>
+		</div>
+		<div style="padding-bottom: 10px;margin-bottom: 10px;">
+			<p class="sub-title">점수</p>
+			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">
+           		<span>{{ vm.reportData.step.score || '-' }}</span>
+           		<span style="font-size: 20px;font-weight: 400;margin-left: -10px;">/120</span>
+           	</p>
+           	<div id="stepScoreChart"></div>
+		</div>
+		<div>
+			<p class="sub-title">월간 스텝</p>
+           	<div id="monthlyStepChart"></div>
+		</div>
+	</li>
+	<li class="rpt-box score">
+		<div style="margin-bottom:10px;">
+			<p class="title">나의 점수</p>
+		</div>
+		<div style="padding-bottom: 10px;margin-bottom: 10px;">
+			<p class="sub-title">이번달 점수</p>
+			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">
+				<span>{{ vm.reportData.score.totalScore || '-' }}</span>
+           		<span style="font-size: 20px;font-weight: 400;margin-left: -10px;">/100</span>
+           	</p>
+			<div id="tete" style="text-align:center;">
+				<ul style="display: table;width: 100%;">
+					<li style="display: table-cell;width: 50%;">
+						<div id="pronunciationChart"></div>
+					</li>
+					<li style="display: table-cell;width: 50%;">
+						<div id="vocabularyChart"></div>
+					</li>
+				</ul>
+				<ul style="display: table;width: 100%;">
+					<li style="display: table-cell;width: 50%;">
+						<div id="grammarChart"></div>
+					</li>
+					<li style="display: table-cell;width: 50%;">
+						<div id="intelligibilityChart"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div>
+			<p class="sub-title">월간 점수</p>
+			<div id="monthlyScoreChart"></div>
+		</div>
+	</li>
+	<li class="rpt-box comment">
+		<p class="title">강점 및 보완점</p>
+		<div class="strength">
+			<p>강점</p>
+			<p>{{ vm.reportData.comment.strength || '-' }}</p>
+		</div>
+		<div class="weakness">
+			<p>보완점</p>
+			<p>{{ vm.reportData.comment.weakness || '-' }}</p>
+		</div>
+	</li>
+	<li class="rpt-box attendance">
+		<div style="margin-bottom:10px;">
+			<p class="title">출석율</p>
+		</div>
+		<div>
+			<p class="sub-title">월간 출석율</p>
+           	<div id="attendanceRateChart"></div>
+		</div>
+	</li>
+</ul>

@@ -1,0 +1,19 @@
+
+@import url(http://fonts.googleapis.com/css family=Open+Sans:300,300italic);
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+body { margin:0 auto; background: #fff; font-family: '맑은고딕', sans-serif; overflow-y: auto; overflow-x: hidden; letter-spacing: -0.8px; }
+
+
+#bg001 { background-image: url(../img/001.jpg); background-position: top center; height: 1124px; width: 100%; }
+
+#bg002 { background-image: url(../img/002.jpg); background-position: top center; height: 1214px; width: 100%; }
+
+#bg003 { background-image: url(../img/003.jpg); background-position: top center; height: 5100px; width: 100%; }
+
+#bg004 { background-image: url(../img/004.jpg); background-position: top center; height: 398px; width: 100%; }
+
+.btnT01 { position: relative; top: 90px; text-align: center; }
+.btnT02 { position: relative; top: 1230px; text-align: center; }
+.btnT03 { position: relative; top: 4700px; text-align: center; }

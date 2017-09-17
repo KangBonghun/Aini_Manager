@@ -1,0 +1,82 @@
+<div class="report-page">
+    <a href="javascript:window.scrollTo(0,0);" class="scroll-top"></a>
+    
+    <div class="form-group select-wrapper">
+        <div>
+            <select class="form-control" ng-model="reportCtrl.selectedClassId" ng-change="reportCtrl.onChangeClass()" ng-options="class.classId as class.className for class in reportCtrl.classes">
+			<option value="" disabled selected hidden>강의 선택</option>
+		</select>
+        </div>
+        <div>
+            <select class="form-control" style="border-left: 1px solid #d2d6de;" ng-model="reportCtrl.selectedClassMonth" ng-change="reportCtrl.onChangeDate()" ng-options="classMonth as classMonth.label for classMonth in reportCtrl.classMonths">
+			<option value="" disabled selected hidden>월 선택</option>
+		</select>
+        </div>
+    </div>
+
+    <div class="box-body load-data-wrapper">
+    	<div class="no-data" ng-if="!reportCtrl.selectedClassMonth">강의와 날짜를 선택해주세요.</div>
+        <ul class="rpt-wrapper">
+            <li class="rpt-box" ng-repeat="student in reportCtrl.students">
+                <div class="rpt-info">
+                    <span class="user">{{ student.userName }}</span>
+                    <div class="step" ng-show="student.step">
+                    	<span>{{ 'STEP ' +  student.step }}</span>
+                    	<span class="v-bar"></span>
+                    	<span class="step-score">{{ student.stepScore + '점' }}</span>
+                    </div>
+                    <div class="btn_group" style="float: right;">
+                        <button type="button" class="edit-btn" ng-click="reportCtrl.onEdit($event)">수정</button>
+<!--                         <button type="button" class="cancel-btn" ng-click="onCancel($event)">취소</button> -->
+                        <button type="button" class="save-btn" ng-click="reportCtrl.onSave($event, student)">저장</button>
+                    </div>
+                </div>
+                <div class="rpt-score">
+                	<div class="refer">
+                		<span>※항목 당 최대 점수는 25점입니다.</span>
+                	</div>
+				    <ul>
+						<li>
+						    <p class="title">발음</p>
+						    <p class="score">{{ student.pronunciation }}</p>
+						    <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" class="input-score" ng-model="student.pronunciation" ng-blur="reportCtrl.onBlurScore($event)">
+						</li>
+						<li>
+						    <p class="title">어휘</p>
+						    <p class="score">{{ student.vocabulary }}</p>
+						    <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" class="input-score"  ng-model="student.vocabulary" ng-blur="reportCtrl.onBlurScore($event)">
+						</li>
+						<li>
+						    <p class="title">문법</p>
+						    <p class="score">{{ student.grammar }}</p>
+						    <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" class="input-score"  ng-model="student.grammar" ng-blur="reportCtrl.onBlurScore($event)">
+						</li>
+						<li>
+						    <p class="title">이해력</p>
+						    <p class="score">{{ student.intelligibility }}</p>
+						    <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" class="input-score"  ng-model="student.intelligibility" ng-blur="reportCtrl.onBlurScore($event)">
+						</li>
+						<li>
+						    <p class="title">총점</p>
+						    <p class="score total">{{ student.pronunciation +  student.vocabulary + student.grammar + student.intelligibility }}</p>
+						</li>
+					</ul>
+				</div>
+                <div class="rpt-title">
+                    <span class="strong">강점</span>
+                </div>
+                <div class="rpt-content">
+                    <p class="txt"> {{ student.strength }} </p>
+                    <textarea cols="30" rows="10" class="txt-area" ng-model="student.strength"></textarea>
+                </div>
+                <div class="rpt-title">
+                    <span class="weak">보완점</span>
+                </div>
+                <div class="rpt-content">
+                    <p class="txt"> {{ student.weakness }} </p>
+                    <textarea cols="30" rows="10" class="txt-area" ng-model="student.weakness"></textarea>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
