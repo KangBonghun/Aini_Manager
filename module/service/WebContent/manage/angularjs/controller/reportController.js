@@ -49,7 +49,7 @@ function reportController( $rootScope, $scope, $element, $state, $stateParams, $
     		while(endDate > startDate) {
     			tmpClassMonths.push({
     				year : startDate.getFullYear(),
-    				month : startDate.getMonth()+1,
+    				month : pad(startDate.getMonth()+1, 2),
     				label : startDate.getFullYear() + '-' + pad(startDate.getMonth()+1, 2),
     			});
     			

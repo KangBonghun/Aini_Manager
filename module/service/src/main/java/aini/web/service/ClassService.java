@@ -50,25 +50,28 @@ public class ClassService
     {
         Integer classId = Integer.valueOf(String.valueOf(param.get("classId")));
         
+        Map<String, Object> classParam = new HashMap<String, Object>();
+        classParam.put("classId", classId);
+        
         Map<String, Object> classInfo = sqlSession.getMapper(ClassMapper.class).getClassInfo(classId);
         
-        List<Map<String, Object>> classDateList = getClassDateList(param);
+        List<Map<String, Object>> classDateList = getClassDateList(classParam);
         
-        param.put("userType", "STUDENT");
-        List<Map<String, Object>> studentClass = getUserClass(param);
+        classParam.put("userType", "STUDENT");
+        List<Map<String, Object>> studentClass = getUserClass(classParam);
         
-        param.put("userType", "TEACHER");
-        List<Map<String, Object>> teacherClass = getUserClass(param);
+        classParam.put("userType", "TEACHER");
+        List<Map<String, Object>> teacherClass = getUserClass(classParam);
         
-        param.put("userType", "MANAGER");
-        List<Map<String, Object>> managerClass = getUserClass(param);
+        classParam.put("userType", "MANAGER");
+        List<Map<String, Object>> managerClass = getUserClass(classParam);
         
         classInfo.put("dateCount", classDateList == null ? 0 : classDateList.size());
         classInfo.put("studentList", studentClass);
         classInfo.put("studentCount", studentClass == null ? 0 : studentClass.size());
         classInfo.put("teacherId", teacherClass == null || teacherClass.isEmpty() ? "" : teacherClass.get(0).get("userId"));
         classInfo.put("teacherName", teacherClass == null || teacherClass.isEmpty() ? "" : teacherClass.get(0).get("userName"));
-        classInfo.put("teacherEmail", teacherClass == null || teacherClass.isEmpty() ? "" : teacherClass.get(0).get("email"));
+        classInfo.put("teacherEmail", teacherClass == null || teacherClass.isEmpty() ? "" : teacherClass.get(0).get("userId"));
         classInfo.put("managerId", managerClass == null || managerClass.isEmpty() ? "" : managerClass.get(0).get("userId"));
         classInfo.put("managerName", managerClass == null || managerClass.isEmpty() ? "" : managerClass.get(0).get("userName"));
         

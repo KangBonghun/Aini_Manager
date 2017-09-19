@@ -28,6 +28,11 @@ ainiApp.config(function ($stateProvider) {
              templateUrl: 'views/reportView.html',
              controller : 'reportViewController as reportViewCtrl'
          })
+         .state('reportViewMain', {
+             url: '/reportViewMain',
+             templateUrl: 'views/reportViewMain.html',
+             controller : 'reportViewMainController as reportViewMainCtrl'
+         })
          .state('class', {
              url: '/class',
              templateUrl: 'views/class.html',

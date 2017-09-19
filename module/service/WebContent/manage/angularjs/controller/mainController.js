@@ -65,9 +65,23 @@ function mainController( $rootScope, $scope, $element, $state, RemoteHttp) {
 		return newDate != null ? newDate.format(format || 'yyyy-MM-dd') : '';
 	};
 	
+	$scope.getDatetimeToLabel = function(datetime, format) {
+		var newDate = $scope.datetimeToNewDate(datetime);
+		
+		return newDate != null ? newDate.format(format || 'yyyy-MM-dd HH:mm:ss') : '';
+	};
+	
 	$scope.classDateToNewDate = function(classDate) {
 		if(classDate) {
 			return new Date(classDate.substring(0,4), classDate.substring(4,6)-1, classDate.substring(6,8));
+		} else {
+			return null;
+		}
+	};
+	
+	$scope.datetimeToNewDate = function(datetime) {
+		if(datetime) {
+			return new Date(parseInt(datetime));
 		} else {
 			return null;
 		}

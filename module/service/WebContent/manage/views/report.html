@@ -16,6 +16,7 @@
 
     <div class="box-body load-data-wrapper">
     	<div class="no-data" ng-if="!reportCtrl.selectedClassMonth">강의와 날짜를 선택해주세요.</div>
+    	<div class="no-data" ng-if="reportCtrl.selectedClassId && reportCtrl.selectedClassMonth && reportCtrl.students.length < 1">수강생이 없습니다.</div>
         <ul class="rpt-wrapper">
             <li class="rpt-box" ng-repeat="student in reportCtrl.students">
                 <div class="rpt-info">

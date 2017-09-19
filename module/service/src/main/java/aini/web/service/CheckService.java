@@ -19,11 +19,29 @@ public class CheckService
     @Autowired
     private SqlSession sqlSession;
     
+    /**
+     * 출석 체크 할 수강생 목록 조회
+     *
+     * @param param
+     * @return
+     * 
+     * @author "KangBongHoon"
+     * @create-date : 2017. 9. 19.
+     */
     public List<Map<String, Object>> getCheckStudentList(Map<String, Object> param)
     {
         return sqlSession.getMapper(CheckMapper.class).getCheckStudentList(param);
     }
 
+    /**
+     * 수강생의 출석 상태 업데이트
+     *
+     * @param param
+     * @return
+     * 
+     * @author "KangBongHoon"
+     * @create-date : 2017. 9. 19.
+     */
     public int updateCheckStudent(Map<String, Object> param)
     {
         int updateCount = 0;

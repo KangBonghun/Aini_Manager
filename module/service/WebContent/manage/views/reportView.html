@@ -14,6 +14,6 @@
 
     <div class="box-body load-data-wrapper">
     	<div class="no-data" ng-if="!reportViewCtrl.selectedClassMonth">강의와 날짜를 선택해주세요.</div>
-    	<report-view-directive></report-view-directive>
+    	<report-view-directive ng-show="reportViewCtrl.selectedClassMonth"></report-view-directive>
     </div>
 </div>

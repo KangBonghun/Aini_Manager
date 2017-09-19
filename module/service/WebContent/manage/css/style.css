@@ -558,6 +558,7 @@ color: #555;
 }
 
 .rpt-wrapper .rpt-box .rpt-info {
+	padding-bottom: 5px;
 	margin-bottom: 10px;
 	min-height:35px;
 	border-bottom: 1px solid #eeeeee;
@@ -709,12 +710,24 @@ color: #555;
 }
 
 .rpt-wrapper .rpt-box .rpt-title .weak,
-.rpt-wrapper .rpt-box .rpt-title .study-goal {
+.rpt-wrapper .rpt-box .rpt-title .study-goal,
+.rpt-wrapper .rpt-box .rpt-title .step {
     color: #BE54FB;
+}
+
+.rpt-wrapper .rpt-box .rpt-title.main {
+	float: left;
+    width: 50%;
+    text-align: left;
 }
 
 .rpt-wrapper .rpt-box .rpt-content {
 	margin-bottom: 10px;
+}
+
+.rpt-wrapper .rpt-box .rpt-content.main {
+    overflow: hidden;
+    font-size: 18px;
 }
 
 .rpt-wrapper .rpt-box .rpt-content .txt {
@@ -723,6 +736,12 @@ color: #555;
     word-break: break-all;
     color: #555;
 /*     display:none; */
+}
+
+.rpt-wrapper .rpt-box .rpt-content .txt.main {
+    float: left;
+    width: 50%;
+    text-align: right;
 }
 
 .class-wrapper .class-box .class-content {
@@ -791,7 +810,7 @@ color: #555;
 .move-date-box .title {
 	font-weight: 700;
     font-size: 18px;
-/*     margin-bottom: 10px; */
+    margin-bottom: 10px;
     color: #555;
     height: 25px;
 }
@@ -941,6 +960,7 @@ color: #555;
     fill: white !important;
 }
 
+.show-hide-box-warpper,
 .class-info-detail-wrapper {
 	top:100%;
 	height: 100%;
@@ -951,12 +971,14 @@ color: #555;
 	color: #555;
 }
 
+.show-hide-box-warpper .header,
 .class-info-detail-wrapper .header {
     width: 100%;
     height: 55px;
 	position: relative;
 }
 
+.show-hide-box-warpper .header .title,
 .class-info-detail-wrapper .header .title {
 	width: 100%;
     position: absolute;
@@ -981,6 +1003,7 @@ color: #555;
     right: 0;
 }
 
+.show-hide-box-warpper .header .close-btn,
 .class-info-detail-wrapper .header .close-btn {
     position: absolute;
     height: 55px;
@@ -996,6 +1019,7 @@ color: #555;
     cursor: pointer;
 }
 
+.show-hide-box-warpper > .contents,
 .class-info-detail-wrapper .contents {
     position: absolute;
     padding-bottom: 50px;
@@ -1204,7 +1228,7 @@ color: #555;
 .btn_comm {
     display: table;
     width: 100%;
-    border-top: 1px solid #f1f1f2;
+    border-top: 1px solid #e1e1e1;
     background: #fff;
 }
 
@@ -1260,6 +1284,16 @@ color: #555;
     vertical-align: bottom;
 /*     padding-left: 10px; */
     color: #666;
+}
+
+.check-name {
+	width: 50%;	
+}
+
+.check-name > span {
+	word-wrap: normal;
+    word-break: break-all;
+    white-space: normal;
 }
 
 @media (min-width: 768px) {

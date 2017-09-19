@@ -34,6 +34,42 @@
 			monthly_report rt ON uc.class_id = rt.class_id AND uc.user_id = rt.user_id AND rt.year = #{year} AND rt.month = #{month} 
 	</select>
 	
+	<select id="getReportStudent" parameterType="map" resultType="map">
+		SELECT
+			uc.class_id AS classId,
+			uc.study_goal AS studyGoal,
+			uc.first_evaluation_date AS firstEvaluationDate,
+			uc.first_step_score AS firstStepScore,
+			uc.first_step AS firstStep,
+			uc.user_id AS userId,
+			IFNULL(u.user_name, uc.user_id) AS userName,
+			u.user_type AS userType, 
+			u.mobile_number AS mobileNumber, 
+			u.email AS email, 
+			u.association_id AS associationId, 
+			#{year} AS year,
+			#{month} AS month,
+			rt.step_score AS stepScore,
+			rt.step AS step,
+			rt.pronunciation AS pronunciation,
+			rt.grammar AS grammar,
+			rt.vocabulary AS vocabulary,
+			rt.intelligibility AS intelligibility,
+			rt.total_score AS totalScore,
+			rt.strength AS strength,
+			rt.weakness AS weakness,
+			rt.attendance AS attendance,
+			rt.change_datetime AS changeDatetime
+		FROM
+			(SELECT * FROM user_class WHERE class_id = #{classId} AND user_type = 'STUDENT') uc
+		LEFT JOIN
+			user u ON uc.user_id = u.user_id
+		LEFT JOIN
+			monthly_report rt ON uc.class_id = rt.class_id AND uc.user_id = rt.user_id AND rt.year = #{year} AND rt.month = #{month}
+		WHERE
+			rt.user_id = #{userId}
+	</select>
+	
 	<update id="updateReportStudent" parameterType="map">
 		INSERT INTO monthly_report 
 			(
@@ -140,5 +176,59 @@
 		</where>
 		ORDER BY
 			year DESC, month DESC
+	</select>
+	
+	<select id="getMonthlyHist" parameterType="map" resultType="map">
+		SELECT
+			user_id AS userId, 
+			class_id AS classId, 
+			year AS year, 
+			month AS month, 
+			step_score AS stepScore, 
+			step AS step, 
+			pronunciation AS pronunciation, 
+			grammar AS grammar, 
+			vocabulary AS vocabulary, 
+			intelligibility AS intelligibility, 
+			total_score AS totalScore, 
+			strength AS strength, 
+			weakness AS weakness, 
+			attendance AS attendance, 
+			change_datetime AS changeDatetime
+		FROM
+			monthly_report
+		WHERE
+			user_id = #{userId}
+			AND class_id = #{classId} 
+			AND year <![CDATA[<=]]> #{year}
+			AND month <![CDATA[<=]]> #{month}
+		ORDER BY
+			year DESC, month DESC
+		LIMIT 6
+	</select>
+	
+	<select id="getClassDateList" parameterType="map" resultType="map">
+		SELECT
+			class_id AS classId , 
+			class_date AS classDate
+		FROM
+			class_date
+		WHERE
+			class_id = #{classId}
+			AND class_date LIKE CONCAT(#{year},#{month},'%')
+	</select>
+	
+	<select id="getAttendanceStudent" parameterType="map" resultType="map">
+		SELECT
+			user_id AS userId, 
+			class_id AS classId, 
+			class_date AS classDate, 
+			status AS status
+		FROM
+			attendance
+		WHERE
+			user_id = #{userId}
+			AND class_id = #{classId}
+			AND class_date LIKE CONCAT(#{year},#{month},'%')
 	</select>
 </mapper>

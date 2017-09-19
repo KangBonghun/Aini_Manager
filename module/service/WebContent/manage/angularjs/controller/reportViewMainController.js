@@ -1,4 +1,4 @@
-function reportViewController( $rootScope, $scope, $element, $state, $stateParams, $timeout, RemoteHttp) {
+function reportViewMainController( $rootScope, $scope, $element, $state, $stateParams, $timeout, RemoteHttp) {
 	var vm = this;
 	
     vm.classes = [];
@@ -7,18 +7,6 @@ function reportViewController( $rootScope, $scope, $element, $state, $stateParam
 
     vm.selectedClassId;
     vm.selectedClassMonth;
-    
-    vm.stepChart;
-    vm.stepScoreChart;
-    vm.monthlyStepChart;
-    vm.pronunciationChart;
-    vm.vocabularyChart;
-    vm.grammarChart;
-    vm.intelligibilityChart;
-    vm.monthlyScoreChart;
-    vm.attendanceRateChart;
-    
-    vm.reportData;
     
     /**
      * 초기화
@@ -75,7 +63,7 @@ function reportViewController( $rootScope, $scope, $element, $state, $stateParam
      * 강의 변경
      */
 	vm.onChangeClass = function() {
-		$scope.initReport();
+		vm.students = [];
 		
 		vm.loadClassMonth();
     };
@@ -85,13 +73,39 @@ function reportViewController( $rootScope, $scope, $element, $state, $stateParam
      */
 	vm.onChangeDate = function() {
 		if(vm.selectedClassMonth) {
-			$scope.loadReport($rootScope.userInfo.userId, vm.selectedClassId, vm.selectedClassMonth.year, vm.selectedClassMonth.month);
+			vm.loadStudents();
 		}
 	};
 	
+	/**
+	 * 수강생 로드
+	 */
+	vm.loadStudents = function() {
+    	if(!vm.selectedClassMonth) {
+    		vm.students = [];
+    		return;
+    	}
+    	
+    	var param = {
+    			classId : vm.selectedClassId,
+    			year : vm.selectedClassMonth.year,
+    			month : vm.selectedClassMonth.month,
+		};
+    	
+    	visibleLoader(true);
+    	
+    	RemoteHttp.controller('/manage').url('/get-report-student-list').methods('post').param(param).request().then(function(data){
+    		if(data) {
+    			vm.students = data;
+    		}
+    		
+    		visibleLoader(false);
+    	});
+    };
+	
 	vm.init();
 }
-ainiApp.controller( 'reportViewController', [
+ainiApp.controller( 'reportViewMainController', [
     '$rootScope',
     '$scope',
     '$element',
@@ -99,4 +113,4 @@ ainiApp.controller( 'reportViewController', [
     '$stateParams',
     '$timeout',
     'RemoteHttp',
-    reportViewController] );
+    reportViewMainController] );

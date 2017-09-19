@@ -1,4 +1,6 @@
-<ul class="rpt-wrapper" ng-show="vm.reportData">
+<div id="report_detail_box">
+<div class="no-data" ng-if="!vm.reportData">작성된 보고서가 없습니다.</div>
+<ul class="rpt-wrapper">
 	<li class="rpt-box summary">
 		<p class="title">종합평가</p>
 		<div style="margin: 0 -5px;">
@@ -6,19 +8,19 @@
 				<li class="score">
 					<p>Test Score</p>
 					<p style="vertical-align: bottom;font-size: 15px;">
-						<b style="font-size:22px">{{ vm.reportData.summary.score || '-' }}</b>/100
+						<b style="font-size:22px">{{ vm.reportData.reportInfo.totalScore || '-' }}</b>/100
 					</p>
 				</li>
 				<li class="rank">
 					<p>상위 백분율</p>
 					<p style="vertical-align: bottom;font-size: 15px;">
-						<b style="font-size:22px;">{{ vm.reportData.summary.rank || '-' }}</b>%
+						<b style="font-size:22px;">{{ vm.reportData.reportInfo.rank || '-' }}</b>%
 					</p>
 				</li>
 				<li class="level">
 					<p>스텝</p>
 					<p style="vertical-align: bottom;font-size: 15px;">
-						<b style="font-size:21px;">STEP {{ vm.reportData.summary.step || '-' }}</b>
+						<b style="font-size:21px;">STEP {{ vm.reportData.reportInfo.step || '-' }}</b>
 					</p>
 				</li>
 			</ul>
@@ -28,33 +30,41 @@
 		<p class="title">강의 정보</p>
 		<div>
        		<ul class="lst">
-				<li>
+       			<li>
 					<span>강의명</span>
-					<span>{{ vm.reportData.class.name || '-' }}</span>
+					<span>{{ vm.reportData.classInfo.className }}</span>
+				</li>
+				<li>
+					<span>언어</span>
+					<span>{{ getLanguageLabel(vm.reportData.classInfo.language) }}</span>
 				</li>
 				<li>
 					<span>수업시간</span>
-					<span>{{ vm.reportData.class.time || '-' }}</span>
+					<span>{{ vm.reportData.classInfo.classDate }}</span>
 				</li>
 				<li>
 					<span>교육기간</span>
-					<span>{{ vm.reportData.class.startDate || '-' }} ~ {{ vm.reportData.class.endDate || '-' }}</span>
+					<span>{{ vm.reportData.classInfo.startDate + ' ~ ' + vm.reportData.classInfo.endDate }}</span>
 				</li>
-				<li>
-					<span>총수업일</span>
-					<span>{{ vm.reportData.class.day || '-' }}일</span>
-				</li>
-				<li>
-					<span>담당매니저</span>
-					<span>{{ vm.reportData.class.manager || '-' }}</span>
-				</li>
+<!-- 				<li> -->
+<!-- 					<span>총수업일</span> -->
+<!-- 					<span>{{ vm.reportData.classInfo.dateCount + '일' }}</span> -->
+<!-- 				</li> -->
+<!-- 				<li> -->
+<!-- 					<span>수강인원</span> -->
+<!-- 					<span>{{ vm.reportData.classInfo.studentCount + '명' }}</span> -->
+<!-- 				</li> -->
+<!-- 				<li> -->
+<!-- 					<span>담당매니저</span> -->
+<!-- 					<span>{{ vm.reportData.classInfo.managerName }}</span> -->
+<!-- 				</li> -->
 				<li>
 					<span>담당강사</span>
-					<span>{{ vm.reportData.class.teacher || '-' }}</span>
+					<span>{{ vm.reportData.classInfo.teacherName }}</span>
 				</li>
 				<li>
 					<span>E-Mail</span>
-					<span>{{ vm.reportData.class.email || '-' }}</span>
+					<span>{{ vm.reportData.classInfo.teacherEmail }}</span>
 				</li>
 			</ul>
 		</div>
@@ -62,7 +72,7 @@
 	<li class="rpt-box goal">
 		<p class="title">학습목표</p>
 		<div class="contents">
-			<p>{{ vm.reportData.goal.goal || '-' }}</p>
+			<p>{{ vm.reportData.reportInfo.studyGoal || '-' }}</p>
 		</div>
 	</li>
 	<li class="rpt-box step">
@@ -71,13 +81,13 @@
 		</div>
 		<div style="padding-bottom: 10px;margin-bottom: 10px;">
 			<p class="sub-title">스텝</p>
-			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">STEP {{ vm.reportData.step.step || '-' }}</p>
+			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">STEP {{ vm.reportData.reportInfo.step || '-' }}</p>
 			<div id="stepChart"></div>
 		</div>
 		<div style="padding-bottom: 10px;margin-bottom: 10px;">
 			<p class="sub-title">점수</p>
 			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">
-           		<span>{{ vm.reportData.step.score || '-' }}</span>
+           		<span>{{ vm.reportData.reportInfo.stepScore || '-' }}</span>
            		<span style="font-size: 20px;font-weight: 400;margin-left: -10px;">/120</span>
            	</p>
            	<div id="stepScoreChart"></div>
@@ -94,7 +104,7 @@
 		<div style="padding-bottom: 10px;margin-bottom: 10px;">
 			<p class="sub-title">이번달 점수</p>
 			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">
-				<span>{{ vm.reportData.score.totalScore || '-' }}</span>
+				<span>{{ vm.reportData.reportInfo.totalScore || '-' }}</span>
            		<span style="font-size: 20px;font-weight: 400;margin-left: -10px;">/100</span>
            	</p>
 			<div id="tete" style="text-align:center;">
@@ -125,11 +135,11 @@
 		<p class="title">강점 및 보완점</p>
 		<div class="strength">
 			<p>강점</p>
-			<p>{{ vm.reportData.comment.strength || '-' }}</p>
+			<p>{{ vm.reportData.reportInfo.strength || '-' }}</p>
 		</div>
 		<div class="weakness">
 			<p>보완점</p>
-			<p>{{ vm.reportData.comment.weakness || '-' }}</p>
+			<p>{{ vm.reportData.reportInfo.weakness || '-' }}</p>
 		</div>
 	</li>
 	<li class="rpt-box attendance">
@@ -142,3 +152,4 @@
 		</div>
 	</li>
 </ul>
+</div>

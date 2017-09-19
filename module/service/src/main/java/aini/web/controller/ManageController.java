@@ -665,4 +665,31 @@ public class ManageController
 
         return student;
     }
+    
+    /**
+     * 보고서 상세정보 조회
+     * 
+     * @param param
+     * @return
+     * 
+     * @author "KangBongHoon"
+     * @create-date : 2017. 9. 6.
+     */
+    @RequestMapping(value = "/get-report-detail-info", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getReportDetailInfo(@RequestBody Map<String, Object> param)
+    {
+        Map<String, Object> reportInfo = null;
+
+        try
+        {
+        	reportInfo = reportService.getReportDetailInfo(param);
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage(), e);
+        }
+
+        return reportInfo;
+    }
 }

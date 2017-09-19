@@ -70,7 +70,7 @@
 	</div>
 
     <div class="box-body load-data-wrapper">
-        <table class="table table-bordered" style="border:none;border-top: 1px solid #e1e1e1;" ng-show="checkCtrl.students.length > 0">
+        <table class="table table-bordered" style="border:none;border-top: 1px solid #e1e1e1;border-bottom: 1px solid #d2d6de;" ng-show="checkCtrl.students.length > 0">
             <colgroup>
                 <col width="120px">
                 <col width="*">
@@ -84,7 +84,7 @@
             </thead> -->
             <tbody>
                 <tr ng-repeat="student in checkCtrl.students track by $index">
-                    <td><span>{{ student.userName }}</span></td>
+                    <td class="check-name"><span>{{ student.userName }}</span></td>
                     <td>
                     	<div class="check-select-wrapper">
                     		<select class="form-control" ng-model="student.status" required>
@@ -116,6 +116,7 @@
         </table>
     </div>
     <div class="no-data" ng-if="!checkCtrl.selectedClassDate">강의와 날짜를 선택해주세요.</div>
+    <div class="no-data" ng-if="checkCtrl.selectedClassId && checkCtrl.selectedClassDate && checkCtrl.students.length < 1">수강생이 없습니다.</div>
     <div id="class_info_back" class="pop-background">
 	    <div class="class-info-box more pop">
 			<a href="#" class="pop-box-close-btn" ng-click="checkCtrl.closePopup('INFO');"></a>
@@ -161,7 +162,7 @@
 	<div id="move_date_back" class="pop-background">	
 		<div class="move-date-box pop">	
 			<a href="#" class="pop-box-close-btn" ng-click="checkCtrl.closePopup('MOVE_DATE');"></a>
-			<p class="title ng-binding">수강일 변경</p>
+			<p class="title">수강일 변경</p>
 			<div>
 				<input id="change_date" class="form-control class-date-scroll" placeholder="변경일" onfocus="this.blur();" aria-required="true" aria-invalid="false" readonly=""></input>
 				<a href="#" class="move-date-save-btn" ng-click="checkCtrl.onClickChangeClassDate()" ng-class="checkCtrl.changeClassDate ? '' : 'disabled'"><span>변경</span></a>

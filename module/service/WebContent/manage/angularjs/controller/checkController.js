@@ -106,6 +106,9 @@ function checkController( $rootScope, $scope, $element, $state, $stateParams, $t
      * 강의 변경
      */
 	vm.onChangeClass = function() {
+		vm.selectedClassDate = null;
+		vm.students = [];
+		
 		vm.loadClassDate();
 		vm.loadClassInfoDetail();
     };

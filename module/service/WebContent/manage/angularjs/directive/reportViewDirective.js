@@ -3,86 +3,158 @@ ainiApp.directive('reportViewDirective', function() {
         replace: true,
         templateUrl: 'angularjs/template/reportView.html',
         controllerAs: 'vm',
-        controller: function($rootScope, $scope, $element, $attrs, $timeout) {
+        controller: function($rootScope, $scope, $element, $attrs, $timeout, RemoteHttp) {
         	
         	var vm = this;
+        	
+        	vm.reportData = {};
+        	
+        	$scope.initReport = function() {
+        		vm.reportData = null;
+        	};
+        	
+        	/**
+        	 * 팝업
+        	 */
+        	$scope.onPopupReportView = function(visible, student) {
+		    	if(visible) {
+//		    		visibleLoader(true);
+		    		
+		    		if(student) {
+		    			$scope.loadReport(student.userId, student.classId, student.year, student.month);
+		    		}
+		    		
+		    		$('#report_view_box').animate({top:0}, 300, function(){
+//		    			visibleLoader(false);
+		    		});
+		    		
+		    		$('html, body').css({'overflow': 'hidden', 'height': '100%'});
+		    		
+		    		$(window).not('#report_view_box').on('scroll touchmove mousewheel', function(event) {
+		    			event.preventDefault();     event.stopPropagation();     return false;
+		    		});
+		    	} else {
+		    		vm.classInfo = {};
+					
+		    		$('#report_view_box').animate({top:'100%'}, 300, function(){
+		    			$('#report_detail_box').scrollTop(0);
+		    		});
+		    		
+		    		$('html, body').css({'overflow': 'auto', 'height': 'auto'});
+		    		$(window).not('#report_view_box').off('scroll touchmove mousewheel');
+		    	}
+		    };
         	
         	
         	/**
         	 * 보고서 조회
         	 */
-        	$scope.loadReport = function(userId, year, month) {
+        	$scope.loadReport = function(userId, classId, year, month) {
         		visibleLoader(true);
         		
-        		console.log(userId + ' | ' + year + ' | ' + month);
+        		var param = {
+        			userId : userId,
+//        			userId : 's1@aini.com',
+        			classId : classId,
+        			year : year,
+        			month : month,
+        		};
         		
-        		vm.reportData = {};
-        		
-        		var timeoutPromise = $timeout(function(){
-        			vm.reportData.summary = {};
-        			vm.reportData.summary.score = 88;
-        			vm.reportData.summary.rank = 10.25;
-        			vm.reportData.summary.step = 5;
+        		RemoteHttp.controller('/manage').url('/get-report-detail-info').param(param).methods('post').request().then(function(data){
+        			if(data) {
+        				
+        				$('#report_detail_box').find('.rpt-wrapper').show();
+        				
+        				data.classInfo = angular.extend(data.classInfo, {
+            				startDate : $scope.getDateToLabel(data.classInfo.startDate, 'yyyy-MM-dd'),
+            				endDate : $scope.getDateToLabel(data.classInfo.endDate, 'yyyy-MM-dd'),
+            				classDate : $scope.getClassDateLabel(data.classInfo) + ' ' + $scope.getClassTimeLabel(data.classInfo.startTime) + ' - ' + $scope.getClassTimeLabel(data.classInfo.endTime)
+            			});
+        				
+        				vm.reportData = data;
+        				
+        				vm.makeCharts();
+        			} else {
+        				vm.reportData = null;
+        				
+        				$('#report_detail_box').find('.rpt-wrapper').hide();
+        			}
         			
-        			vm.reportData.class = {};
-        			vm.reportData.class.name = '중국어초급반';
-        			vm.reportData.class.time = '월수금 7:40 - 8:40';
-        			vm.reportData.class.startDate = '2017-05-12';
-        			vm.reportData.class.endDate = '2017-07-20';
-        			vm.reportData.class.day = '11';
-        			vm.reportData.class.manager = '가나다';
-        			vm.reportData.class.teacher = '라마바';
-        			vm.reportData.class.email = 'aini@aini.co.kr';
-        			
-        			vm.reportData.goal = {};
-        			vm.reportData.goal.goal = '동해물과백두산이마르고닳도록하느님이보우하사우리나라만세';
-        			
-        			vm.reportData.step = {};
-        			vm.reportData.step.step = 8;
-        			vm.reportData.step.score = 20;
-        			vm.reportData.step.monthly = [2, 2, 3, 3, 4, 8];
-        			
-        			vm.reportData.score = {};
-        			vm.reportData.score.totalScore = 88;
-        			vm.reportData.score.pronunciation = 8;
-        			vm.reportData.score.vocabulary = 15;
-        			vm.reportData.score.grammar = 20;
-        			vm.reportData.score.intelligibility = 25;
-        			vm.reportData.score.monthly = {
-        					pronunciation: [10, 10, 10, 10, 10, 10],
-        					vocabulary: [10, 10, 10, 10, 10, 10],
-        					grammar: [25, 10, 10, 10, 10, 10],
-        					intelligibility: [10, 10, 10, 10, 10, 10],
-        			};
-        			
-        			vm.reportData.comment = {};
-        			vm.reportData.comment.strength = '이기상과이맘으로충성을다하여괴로우나즐거우나나라사랑하세';
-        			vm.reportData.comment.weakness = '남산위에저소나무철갑을두른듯바람서리불변함은우리기상일세';
-        			
-        			
-        			vm.reportData.attendance = {};
-        			vm.reportData.attendance.monthly = [2, 2, 3, 3, 4, 100];
-        			
-        			
-        			
-        			
-        			
-        			
-        			vm.makeStepChart(vm.reportData.step.step);
-        			vm.makeStepScoreChart(5);
-        			vm.makeMonthlyStepChart(vm.reportData.step.monthly);
-        			vm.makeScoreChart(vm.reportData.score);
-        			vm.makeMonthlyScoreChart(vm.reportData.score.monthly);
-        			vm.makeAttendanceRateChart(vm.reportData.attendance.monthly);
-        		}, 300);
-        		
-        		timeoutPromise.then(function(){
-        			visibleLoader(false);      
-        			$timeout.cancel(timeoutPromise);
+        			visibleLoader(false);
         		});
+        		
+//        		var timeoutPromise = $timeout(function(){
+//        			vm.reportData.summary = {};
+//        			vm.reportData.summary.score = 88;
+//        			vm.reportData.summary.rank = 10.25;
+//        			vm.reportData.summary.step = 5;
+//        			
+//        			vm.reportData.class = {};
+//        			vm.reportData.class.name = '중국어초급반';
+//        			vm.reportData.class.time = '월수금 7:40 - 8:40';
+//        			vm.reportData.class.startDate = '2017-05-12';
+//        			vm.reportData.class.endDate = '2017-07-20';
+//        			vm.reportData.class.day = '11';
+//        			vm.reportData.class.manager = '가나다';
+//        			vm.reportData.class.teacher = '라마바';
+//        			vm.reportData.class.email = 'aini@aini.co.kr';
+//        			
+//        			vm.reportData.goal = {};
+//        			vm.reportData.goal.goal = '동해물과백두산이마르고닳도록하느님이보우하사우리나라만세';
+//        			
+//        			vm.reportData.step = {};
+//        			vm.reportData.step.step = 8;
+//        			vm.reportData.step.score = 20;
+//        			vm.reportData.step.monthly = [2, 2, 3, 3, 4, 8];
+//        			
+//        			vm.reportData.score = {};
+//        			vm.reportData.score.totalScore = 88;
+//        			vm.reportData.score.pronunciation = 8;
+//        			vm.reportData.score.vocabulary = 15;
+//        			vm.reportData.score.grammar = 20;
+//        			vm.reportData.score.intelligibility = 25;
+//        			vm.reportData.score.monthly = {
+//        					pronunciation: [10, 10, 10, 10, 10, 10],
+//        					vocabulary: [10, 10, 10, 10, 10, 10],
+//        					grammar: [25, 10, 10, 10, 10, 10],
+//        					intelligibility: [10, 10, 10, 10, 10, 10],
+//        			};
+//        			
+//        			vm.reportData.comment = {};
+//        			vm.reportData.comment.strength = '이기상과이맘으로충성을다하여괴로우나즐거우나나라사랑하세';
+//        			vm.reportData.comment.weakness = '남산위에저소나무철갑을두른듯바람서리불변함은우리기상일세';
+//        			
+//        			
+//        			vm.reportData.attendance = {};
+//        			vm.reportData.attendance.monthly = [2, 2, 3, 3, 4, 100];
+//        			
+//        			
+//        			
+//        			
+//        			
+//        			
+//        			vm.makeStepChart(vm.reportData.step.step);
+//        			vm.makeStepScoreChart(5);
+//        			vm.makeMonthlyStepChart(vm.reportData.step.monthly);
+//        			vm.makeScoreChart(vm.reportData.score);
+//        			vm.makeMonthlyScoreChart(vm.reportData.score.monthly);
+//        			vm.makeAttendanceRateChart(vm.reportData.attendance.monthly);
+//        		}, 300);
+        		
+//        		timeoutPromise.then(function(){
+//        			visibleLoader(false);      
+//        			$timeout.cancel(timeoutPromise);
+//        		});
         	};
         	
-        	
+        	vm.makeCharts = function() {
+        		vm.makeStepChart(vm.reportData.reportInfo.step);
+    			vm.makeStepScoreChart(5);
+    			vm.makeMonthlyStepChart(vm.reportData.monthlyStep);
+    			vm.makeScoreChart(vm.reportData.reportInfo);
+    			vm.makeMonthlyScoreChart(vm.reportData.monthlyScore);
+    			vm.makeAttendanceRateChart(vm.reportData.monthlyAttendance);
+        	};
         	
         	/**
         	 * 스텝 차트 생성
@@ -200,6 +272,29 @@ ainiApp.directive('reportViewDirective', function() {
         					show: false
         				},
         				data: {
+        					json: {
+        						STEP: [0, 0, 0, 0, 0, 0],
+        					},
+        					types: {
+        						STEP: 'line',
+        					},
+        					colors: {
+        						STEP: '#B855FC',
+        					},
+        				},
+        				data: {
+//        					json: {
+//        						data1 : [1,1,2,1,3,4,4,5,5,4,3,4,40,60,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+//  					          	data2 : [0,0,0,0,0,0,0,0,0,0,0,20,40,60,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+//        					},
+//        					types: {
+//					        	  data1: 'area-spline',
+//					        	  data2: 'area-spline',
+//					          },
+//					          colors: {
+//					        	  data1: '#DFDFE3',
+//					        	  data2: '#5ea4ff',
+//					          },
         					columns: [
         					          ['data1', 0, 10, 5, 10, 25, 40, 60, 70, 50, 30, 25, 10, 5, 1, 6, 3, 0, 0, 0],
         					          ['data2', 0, 10, 5, 10, 25, 40, 60, 70, 50, 30, 25, 10, 5, 1, 6, 3, 0, 0, 0],
