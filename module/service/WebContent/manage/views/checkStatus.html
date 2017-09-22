@@ -1,0 +1,62 @@
+<div class="check-page">
+    <a href="javascript:window.scrollTo(0,0);" class="scroll-top"></a>
+    <div class="form-group select-wrapper">
+    	<div>
+	        <select class="form-control" ng-model="checkStatusCtrl.selectedClassId" ng-change="checkStatusCtrl.onChangeClass()" ng-options="class.classId as class.className for class in checkStatusCtrl.classes">
+				<option value="" disabled selected hidden>강의 선택</option>
+			</select>
+		</div>
+		<div>
+			<select class="form-control" style="border-left: 1px solid #d2d6de;" ng-model="checkStatusCtrl.selectedClassMonth" ng-change="checkStatusCtrl.onChangeDate()" ng-options="classMonth as classMonth.label for classMonth in checkStatusCtrl.classMonths">
+			<option value="" disabled selected hidden>월 선택</option>
+		</select>
+		</div>
+    </div>
+	
+	<p class="check-status-drag-ps">좌우로 드래그하세요</p>
+    <div class="box-body load-data-wrapper" style="border-top: 1px solid #d2d6de;border-bottom: 1px solid #d2d6de;">
+    	<div class="box-body">
+              <div class="table-responsive" style="border:none;margin-bottom:0;">
+                <table class="table no-margin check-status-table">
+                  <thead>
+<!--                   <tr> -->
+<!--                   	<th rowspan="2">수강생</th> -->
+<!--                     <th colspan="5">출결</th> -->
+<!--                     <th>날짜</th> -->
+<!--                   </tr> -->
+                  <tr>
+                  	<th>수강생</th>
+                  	<th>출석률</th>
+                    <th>출석</th>
+                    <th>결석</th>
+                    <th>업무</th>
+                    <th>교육</th>
+                    <th>휴가</th>
+                    <th>5</th>
+                    <th>12</th>
+                    <th>19</th>
+                    <th>26</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  	<tr>
+                  		<td>강봉훈</td>
+	                  	<td>88%</td>
+	                    <td>2</td>
+	                    <td>1</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>O</td>
+	                    <td>O</td>
+	                    <td>O</td>
+	                    <td>O</td>
+                  	</tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+    </div>
+    <div class="no-data" ng-if="!checkStatusCtrl.selectedClassMonth">강의와 날짜를 선택해주세요.</div>
+    <div class="no-data" ng-if="checkStatusCtrl.selectedClassId && checkStatusCtrl.selectedClassMonth && checkStatusCtrl.students.length < 1">수강생이 없습니다.</div>
+</div>

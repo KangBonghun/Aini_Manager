@@ -415,6 +415,7 @@ color: #555;
 .check-page .load-data-wrapper {
 	padding: 0;
 	background: white;
+/* 	border-bottom: 1px solid #d2d6de; */
 }
 
 .rpt-wrapper,
@@ -612,6 +613,7 @@ color: #555;
     vertical-align: top;
 }
 
+.class-info-edit-btn,
 .rpt-wrapper .rpt-box .rpt-info .edit-btn,
 .class-wrapper .class-box .class-info .edit-btn {
 	display: inline-block;
@@ -1103,7 +1105,7 @@ color: #555;
 
 
 
-.class-info-edit-btn {
+/* .class-info-edit-btn {
 	position: absolute;
     height: 55px;
     width: 55px;
@@ -1115,7 +1117,7 @@ color: #555;
     background: url(../assets/search2.svg) no-repeat center;
 	background-size: 16px;
     cursor: pointer;
-}
+} */
 
 .class-time-scroll {
     display: inline-block;
@@ -1296,6 +1298,42 @@ color: #555;
     white-space: normal;
 }
 
+.check-status-table {
+/* 	font-size: 0.9em; */
+}
+.check-status-table th,
+.check-status-table td {
+	text-align: center;
+/* 	border: 1px solid #e1e1e1 !important; */
+}
+
+.check-status-table th {
+/* 	font-weight: 400; */
+	font-size: 0.85em;
+	color: #777;	
+}
+
+.check-status-table tbody tr:nth-child(odd) {
+    background: #fafafa;
+}
+
+.check-status-table th:first-child,
+.check-status-table td:first-child {
+	width: 70px;
+	border-right: 1px solid #efefef;'
+}
+
+.check-status-table th:nth-child(7),
+.check-status-table td:nth-child(7) {
+	border-right: 1px solid #efefef;
+}
+
+.check-status-drag-ps {
+	text-align: right;
+	padding-right: 15px;
+	font-size: .9em;
+}
+
 @media (min-width: 768px) {
 	.fixed-box-wrapper,
 	.class-info-detail-wrapper {
@@ -1310,4 +1348,8 @@ color: #555;
 		right: auto;
 		left: auto;
 	} 
+	
+	.check-status-drag-ps {
+		display: none;
+	}
 }

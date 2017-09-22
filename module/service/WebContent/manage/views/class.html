@@ -17,7 +17,10 @@
     	<div class="no-data" ng-if="!classCtrl.selectedActive">수강상태를 선택해주세요.</div>
     	<div class="no-data" ng-if="classCtrl.selectedActive && classCtrl.classes.length < 1">강의가 없습니다.</div>
 	    <div class="class-info-box" style="height:auto;" ng-repeat="classInfo in classCtrl.classes track by $index">
-			<a class="class-info-edit-btn" ng-click="onPopupClassInfo(true, classInfo)"></a>
+<!-- 			<a class="class-info-edit-btn" ng-click="onPopupClassInfo(true, classInfo)"></a> -->
+			<div class="btn_group" style="float: right;">
+				<button type="button" class="class-info-edit-btn" ng-click="onPopupClassInfo(true, classInfo)">수정</button>
+			</div>
 			<p class="title">{{ classInfo.className }}</p>
 			<div>
 				<ul class="class-info-lst">

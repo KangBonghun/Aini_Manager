@@ -13,6 +13,11 @@ ainiApp.config(function ($stateProvider) {
             templateUrl: 'views/check.html',
             controller : 'checkController as checkCtrl'
         })
+        .state('checkStatus', {
+            url: '/checkStatus',
+            templateUrl: 'views/checkStatus.html',
+            controller : 'checkStatusController as checkStatusCtrl'
+        })
          .state('report', {
              url: '/report',
              templateUrl: 'views/report.html',

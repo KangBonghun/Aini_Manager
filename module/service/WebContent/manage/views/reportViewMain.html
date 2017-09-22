@@ -20,7 +20,8 @@
                 <div class="rpt-info">
                     <span class="user">{{ student.userName }}</span>
                     <div class="btn_group" style="float: right;" ng-if="student.changeDatetime">
-                    	<a class="class-info-edit-btn" ng-click="onPopupReportView(true, student)"></a>
+<!--                     	<a class="class-info-edit-btn" ng-click="onPopupReportView(true, student)"></a> -->
+                    	<button type="button" class="edit-btn" ng-click="onPopupReportView(true, student)">더보기</button>
                     </div>
                     <div class="initial-date">
                     	<span>평가시각</span>
