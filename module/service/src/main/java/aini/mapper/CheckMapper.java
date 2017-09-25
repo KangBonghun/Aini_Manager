@@ -8,4 +8,6 @@ public interface CheckMapper
     public List<Map<String, Object>> getCheckStudentList(Map<String, Object> param);
 
     public int updateCheckStudent(Map<String, Object> param);
+
+    public List<Map<String, Object>> getCheckStatusList(Map<String, Object> param);
 }

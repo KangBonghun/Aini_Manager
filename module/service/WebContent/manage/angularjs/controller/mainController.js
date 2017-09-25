@@ -38,20 +38,12 @@ function mainController( $rootScope, $scope, $element, $state, RemoteHttp) {
 	$scope.getMenuLabel = function(state) {
 		var label = '';
 		
-		switch (state) {
-		case 'check':
-			label = '출석 관리';
-			break;
-		case 'report':
-			label = '보고서 관리';
-			break;
-		case 'reportView':
-			label = '월간 보고서';
-			break;
-		case 'class':
-			label = '강의 관리';
-			break;			
-		}
+		$('.sidebar-menu  a').each(function(index, item){
+			if(item.hash.indexOf(state) > -1) {
+				label = $(item).find('span').text();
+				return false;
+			}
+		});
 		
 		return label;
 	};

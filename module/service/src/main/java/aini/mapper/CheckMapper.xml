@@ -15,6 +15,8 @@
 			attendance cs ON uc.user_id = cs.user_id  AND cs.class_date = #{classDate}
 		LEFT JOIN 
 			user u ON uc.user_id = u.user_id
+		ORDER BY
+			userName
 	</select>
 	
 	<update id="updateCheckStudent" parameterType="map">
@@ -39,4 +41,26 @@
 		ON DUPLICATE KEY UPDATE
 			status=#{status}, chg_check_date=#{chgCheckDate}, description=#{memo}
 	</update>
+	
+	<select id="getCheckStatusList" parameterType="map" resultType="map">
+		SELECT
+			c.class_id AS classId,
+			c.class_name AS className,
+			uc.user_id AS userId,
+			IFNULL(u.user_name, uc.user_id) AS userName,
+			cd.class_date AS classDate,
+			atd.status AS status
+		FROM
+			(SELECT * FROM class WHERE class_id = #{classId}) c
+		INNER JOIN
+			user_class uc ON c.class_id = uc.class_id AND uc.user_type = 'STUDENT'
+		LEFT JOIN
+			user u ON uc.user_id = u.user_id
+		LEFT JOIN
+			class_date cd ON c.class_id = cd.class_id AND class_date LIKE CONCAT(#{year},#{month},'%')
+		LEFT JOIN 
+			attendance atd ON uc.user_id = atd.user_id AND cd.class_id = atd.class_id AND cd.class_date = atd.class_date
+		ORDER BY
+			userName
+	</select>
 </mapper>

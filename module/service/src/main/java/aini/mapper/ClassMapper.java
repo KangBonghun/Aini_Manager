@@ -30,4 +30,6 @@ public interface ClassMapper
     public Integer updateClassDate(Map<String, Object> param);
 
     public void updateAttendanceDate(Map<String, Object> param);
+
+    public void updateClassStartEndDate(Map<String, Object> param);
 }

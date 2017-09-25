@@ -4,6 +4,7 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
     vm.classes = [];
     vm.classMonths = [];
     vm.students = [];
+    vm.classInfo = {};
     
     vm.stepScores = [];
 
@@ -64,12 +65,33 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
     		visibleLoader(false);
     	});
     };
+    
+    /**
+     * 강의 상세 정보 로드
+     */
+    vm.loadClassInfoDetail = function() {
+    	var param = {
+    			classId : vm.selectedClassId,
+		};
+    	
+    	RemoteHttp.controller('/manage').url('/get-clsas-info-detail').methods('post').param(param).request().then(function(data){
+    		if(data) {
+    			
+    			vm.classInfo = angular.extend(data, {
+    				startDate : $scope.getDateToLabel(data.startDate, 'yyyy-MM-dd'),
+    				endDate : $scope.getDateToLabel(data.endDate, 'yyyy-MM-dd'),
+    				classDate : $scope.getClassDateLabel(data) + ' ' + $scope.getClassTimeLabel(data.startTime) + ' - ' + $scope.getClassTimeLabel(data.endTime)
+    			});
+			}
+    	});
+    };
 	
 	/**
      * 강의 변경
      */
 	vm.onChangeClass = function() {
 		vm.loadStudents();
+		vm.loadClassInfoDetail();
     };
     
 	
@@ -142,6 +164,19 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
 		
 		if(value > 120) {
 			$(event.target).val(120).trigger('change');
+		}
+	};
+	
+	/**
+	 * 팝업 닫기
+	 */
+	vm.closePopup = function(type) {
+		if(type=='MOVE_DATE') {
+			$('#move_date_back').removeClass('active');
+			$('#change_date').val('');
+			vm.changeClassDate = ''; 
+		} else {
+			$('#class_info_back').removeClass('active');
 		}
 	};
 	

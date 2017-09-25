@@ -78,23 +78,57 @@
         <div class="menu">{{getMenuLabel($state.current.name)}}</div>
       </nav>
     </header>
-    <aside class="main-sidebar" style="background:#354052;">
-      <section class="sidebar">
-        <ul class="sidebar-menu">
-          <li class="header">Menu</li>
-<!--           <li ng-if="userInfo.userType=='ADMIN'"><a href="/manage/sign/sign-in"><i class="fa fa-home fa-lg"></i> <span>Home</span></a></li> -->
-          <li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a href="#/check"><i class="fa fa-calendar-check-o"></i> <span>출석관리</span></a></li>
-          <li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER'"><a href="#/checkStatus"><i class="fa fa-calendar-check-o"></i> <span>월간출석</span></a></li>
-          <li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a href="#/initial"><i class="fa fa-pencil"></i> <span>최초평가</span></a></li>
-          <li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a href="#/report"><i class="fa fa-file-text-o"></i> <span>보고서작성</span></a></li>
-          <li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER'"><a href="#/reportViewMain"><i class="fa fa-file-text-o"></i> <span>월간보고서</span></a></li>
-          <li ng-if="userInfo.userType=='STUDENT'"><a href="#/reportView"><i class="fa fa-file-text-o"></i> <span>월간보고서</span></a></li>
-<!--           <li ng-if="userInfo.userType=='ADMIN'"><a href="#"><i class="fa fa-address-book"></i> <span>사용자관리</span></a></li> -->
-          <li ng-if="userInfo.userType=='ADMIN'"><a href="#/class"><i class="fa fa-university"></i> <span>강의관리</span></a></li>
-          <li><a href="#" onclick="confirmLogout()"><i class="fa fa-share"></i> <span>로그아웃</span></a></li>
-        </ul>
-      </section>
-    </aside>
+	<aside class="main-sidebar" style="background:#354052;">
+		<section class="sidebar">
+			<ul class="sidebar-menu">
+				<li class="header">Menu</li>
+				<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER'">
+					<a href="#">
+						<i class="fa fa-calendar-check-o"></i>
+						<span>출석부</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/check"><i class="fa fa-circle-o"></i> <span>출석체크</span></a></li>
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER'"><a class="menu-item" href="#/checkStatus"><i class="fa fa-circle-o"></i> <span>월간출석</span></a></li>
+					</ul>
+				</li>
+				
+				<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'">
+					<a href="#">
+						<i class="fa fa-pencil"></i>
+						<span>평가</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/initial"><i class="fa fa-circle-o"></i> <span>최초평가</span></a></li>
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/report"><i class="fa fa-circle-o"></i> <span>월간평가</span></a></li>
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/initial"><i class="fa fa-circle-o"></i> <span>최종평가</span></a></li>
+					</ul>
+				</li>
+				
+				<li>
+					<a href="#">
+						<i class="fa fa-file-text-o"></i>
+						<span>보고서</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER'"><a class="menu-item" href="#/reportViewMain"><i class="fa fa-circle-o"></i> <span>월간보고서</span></a></li>
+						<li ng-if="userInfo.userType=='STUDENT'"><a href="#/reportView"><i class="fa fa-circle-o"></i> <span>월간보고서</span></a></li>
+					</ul>
+				</li>
+				<li ng-if="userInfo.userType=='ADMIN'"><a class="menu-item" href="#/class"><i class="fa fa-university"></i> <span>강의관리</span></a></li>
+				<li><a class="menu-item" href="#" onclick="confirmLogout()"><i class="fa fa-share"></i> <span>로그아웃</span></a></li>
+	        </ul>
+		</section>
+	</aside>
     <div class="content-wrapper">
       <div ui-view></div>
     </div>

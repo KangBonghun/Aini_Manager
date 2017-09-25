@@ -275,11 +275,11 @@ public class ClassService
 
     public Integer updateClassDate(Map<String, Object> param)
     {
+        sqlSession.getMapper(ClassMapper.class).updateClassStartEndDate(param);
+        
         sqlSession.getMapper(ClassMapper.class).updateAttendanceDate(param);
         
         return sqlSession.getMapper(ClassMapper.class).updateClassDate(param);
-        
-        
     }
 
 	public Map<String, Object> updateUserClass(Map<String, Object> param)

@@ -109,9 +109,19 @@
 			uc.first_evaluation_date AS firstEvaluationDate, 
 			uc.first_step_score AS firstStepScore, 
 			uc.first_step AS firstStep, 
+			uc.first_pronunciation_comment AS firstPronunciationComment, 
+			uc.first_grammar_comment AS firstGrammarComment, 
+			uc.first_vocabulary_comment AS firstVocabularyComment, 
+			uc.first_intelligibility_comment AS firstIntelligibilityComment, 
+			uc.first_comment AS firstComment, 
 			uc.last_evaluation_date AS lastEvaluationDate, 
 			uc.last_step_score AS lastStepScore, 
-			uc.last_step AS lastStep,
+			uc.last_step AS lastStep, 
+			uc.last_pronunciation_comment AS lastPronunciationComment, 
+			uc.last_grammar_comment AS lastGrammarComment, 
+			uc.last_vocabulary_comment AS lastVocabularyComment, 
+			uc.last_intelligibility_comment AS lastIntelligibilityComment, 
+			uc.last_comment AS lastComment, 
 			IFNULL(u.user_name, uc.user_id) AS userName,
 			u.mobile_number AS mobileNumber,
 			u.email AS email
@@ -132,6 +142,8 @@
 			) uc
 		LEFT JOIN
 			user u ON uc.user_id = u.user_id
+		ORDER BY
+			userName
 	</select>
 	
 	<insert id="insertClassInfo" parameterType="map" useGeneratedKeys="true" keyProperty="class_id">
@@ -387,30 +399,60 @@
 		UPDATE
 			user_class 
 		SET
-			<trim suffixOverrides=",">	
-				<if test="userType!=null">
-					user_type = #{userType},
-				</if> 
-				<if test="studyGoal!=null">
+			<trim suffixOverrides=",">
+				<if test="lastStep!=null">
 					study_goal = #{studyGoal},
-				</if> 
-				<if test="firstEvaluationDate!=null">
+				</if>
+				<if test="firstEvaluationDate!=null"> 
 					first_evaluation_date = #{firstEvaluationDate},
-				</if> 
-				<if test="firstStepScore!=null">
+				</if>
+				<if test="firstStepScore!=null"> 
 					first_step_score = #{firstStepScore},
-				</if> 
-				<if test="firstStep!=null">
+				</if>
+				<if test="firstStep!=null"> 
 					first_step = #{firstStep},
 				</if> 
-				<if test="lastEvaluationDate!=null">
+				<if test="firstPronunciationComment!=null">
+					first_pronunciation_comment = #{firstPronunciationComment},
+				</if>
+				<if test="firstGrammarComment!=null"> 
+					first_grammar_comment = #{firstGrammarComment},
+				</if>
+				<if test="firstVocabularyComment!=null"> 
+					first_vocabulary_comment = #{firstVocabularyComment},
+				</if>
+				<if test="firstIntelligibilityComment!=null"> 
+					first_intelligibility_comment = #{firstIntelligibilityComment},
+				</if>
+				<if test="firstComment!=null"> 
+					first_comment = #{firstComment},
+				</if>
+				<if test="lastEvaluationDate!=null"> 
 					last_evaluation_date = #{lastEvaluationDate},
-				</if> 
-				<if test="lastStepScore!=null">
+				</if>
+				<if test="lastStepScore!=null"> 
 					last_step_score = #{lastStepScore},
-				</if> 
-				<if test="lastStep!=null">
-					last_step = #{lastStep}
+				</if>
+				<if test="lastStep!=null"> 
+					last_step = #{lastStep},
+				</if>
+				<if test="lastPronunciationComment!=null"> 
+					last_pronunciation_comment = #{lastPronunciationComment},
+				</if>
+				<if test="lastGrammarComment!=null"> 
+					last_grammar_comment = #{lastGrammarComment},
+				</if>
+				<if test="lastVocabularyComment!=null"> 
+					last_vocabulary_comment = #{lastVocabularyComment},
+				</if>
+				<if test="lastIntelligibilityComment!=null"> 
+					last_intelligibility_comment = #{lastIntelligibilityComment},
+				</if>
+				<if test="lastComment!=null"> 
+					last_comment = #{lastComment},
+				</if>
+				<if test="userType!=null"> 
+					user_type = #{userType},
 				</if>
 			</trim>
 		WHERE
@@ -451,5 +493,16 @@
 			class_date = #{newDate} 
 		WHERE
 			class_id = #{classId} AND class_date = #{oldDate}
+	</update>
+	
+	<update id="updateClassStartEndDate" parameterType="map">
+		UPDATE
+			class 
+		SET
+			start_date = IF(#{newDate} <![CDATA[ < ]]> start_date , #{newDate}, start_date),
+			end_date = IF(#{newDate} <![CDATA[ > ]]> end_date , #{newDate}, end_date),
+			change_datetime = NOW()
+		WHERE
+			class_id = #{classId}
 	</update>
 </mapper>

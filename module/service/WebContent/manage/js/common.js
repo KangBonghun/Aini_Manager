@@ -240,8 +240,8 @@ function confirmLogout() {
 
 /******************************************** 메인화면 ********************************************/
 function onClickSidebarToggle() {
-	$('.sidebar li').unbind('click');
-	$('.sidebar li').on('click',function(){
+	$('.menu-item').unbind('click');
+	$('.menu-item').on('click',function(){
       $('.content-wrapper').click();
     });	
 }

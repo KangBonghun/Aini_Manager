@@ -9,6 +9,16 @@
         </div>
     </div>
 
+	<div class="btn_comm ng-scope" style="margin-bottom: 10px;border-bottom: 1px solid #e1e1e1;" ng-if="initialCtrl.students.length > 0">
+		<a href="#" onclick="$('#class_info_back').addClass('active')">
+			<span class="ico ico-info"></span>강의정보
+		</a>
+		<a target="_blank" href="/manage/assets/step.png">
+			<span class="ico ico-compass"></span>레벨 가이드
+			<span class="point_col"></span>
+		</a>
+	</div>
+
     <div class="box-body load-data-wrapper">
     	<div class="no-data" ng-if="!initialCtrl.selectedClassId">강의를 선택해주세요.</div>
     	<div class="no-data" ng-if="initialCtrl.selectedClassId && initialCtrl.students.length < 1">수강생이 없습니다.</div>
@@ -27,7 +37,7 @@
                     </div>
                 </div>
                 <div class="rpt-title">
-                    <span class="step-score">스텝점수</span>
+                    <span>스텝점수</span>
                 </div>
                 <div class="rpt-content">
                     <div class="txt no-edit">
@@ -39,17 +49,97 @@
 <!-- 							<option value="" disabled selected hidden>스텝점수 선택</option> -->
 <!-- 						</select> -->
 						<input class="form-control step-score" type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="" ng-model="student.firstStepScore" ng-blur="initialCtrl.onBlurScore($event)" placeholder="스텝점수">
-						<span class="step-score-sub">/120</span>
+<!-- 						<span class="step-score-sub">/120</span> -->
+						<div class="refer" style="display:block;">
+	                		<span>※최대 스텝 점수는 120점입니다.</span>
+	                	</div>
                     </div>
                 </div>
                 <div class="rpt-title">
-                    <span class="study-goal">학습목표</span>
+                    <span>학습목표</span>
                 </div>
                 <div class="rpt-content">
                     <p class="txt no-edit"> {{ student.studyGoal }} </p>
                     <textarea cols="30" rows="10" class="txt-area edit" ng-model="student.studyGoal"></textarea>
                 </div>
+                <div class="rpt-title">
+                    <span>발음</span>
+                </div>
+                <div class="rpt-content">
+                    <p class="txt no-edit"> {{ student.firstPronunciationComment }} </p>
+                    <textarea cols="30" rows="10" class="txt-area edit" ng-model="student.firstPronunciationComment"></textarea>
+                </div>
+                <div class="rpt-title">
+                    <span>어휘</span>
+                </div>
+                <div class="rpt-content">
+                    <p class="txt no-edit"> {{ student.firstVocabularyComment }} </p>
+                    <textarea cols="30" rows="10" class="txt-area edit" ng-model="student.firstVocabularyComment"></textarea>
+                </div>
+                <div class="rpt-title">
+                    <span>문법</span>
+                </div>
+                <div class="rpt-content">
+                    <p class="txt no-edit"> {{ student.firstGrammarComment }} </p>
+                    <textarea cols="30" rows="10" class="txt-area edit" ng-model="student.firstGrammarComment"></textarea>
+                </div>
+                <div class="rpt-title">
+                    <span>이해도</span>
+                </div>
+                <div class="rpt-content">
+                    <p class="txt no-edit"> {{ student.firstIntelligibilityComment }} </p>
+                    <textarea cols="30" rows="10" class="txt-area edit" ng-model="student.firstIntelligibilityComment"></textarea>
+                </div>
+                <div class="rpt-title">
+                    <span>최초총평가</span>
+                </div>
+                <div class="rpt-content">
+                    <p class="txt no-edit"> {{ student.firstComment }} </p>
+                    <textarea cols="30" rows="10" class="txt-area edit" ng-model="student.firstComment"></textarea>
+                </div>
             </li>
         </ul>
     </div>
+    <div id="class_info_back" class="pop-background">
+	    <div class="class-info-box more pop">
+			<a href="#" class="pop-box-close-btn" ng-click="initialCtrl.closePopup('INFO');"></a>
+			<p class="title">{{ initialCtrl.classInfo.className }}</p>
+			<div>
+				<ul class="class-info-lst">
+					<li>
+						<span>언어</span>
+						<span>{{ getLanguageLabel(initialCtrl.classInfo.language) }}</span>
+					</li>
+					<li>
+						<span>수업시간</span>
+						<span>{{ initialCtrl.classInfo.classDate }}</span>
+					</li>
+					<li>
+						<span>교육기간</span>
+						<span>{{ initialCtrl.classInfo.startDate + ' ~ ' + initialCtrl.classInfo.endDate }}</span>
+					</li>
+					<li>
+						<span>총수업일</span>
+						<span>{{ initialCtrl.classInfo.dateCount + '일' }}</span>
+					</li>
+					<li>
+						<span>수강인원</span>
+						<span>{{ initialCtrl.classInfo.studentCount + '명' }}</span>
+					</li>
+					<li>
+						<span>담당매니저</span>
+						<span>{{ initialCtrl.classInfo.managerName }}</span>
+					</li>
+					<li>
+						<span>담당강사</span>
+						<span>{{ initialCtrl.classInfo.teacherName }}</span>
+					</li>
+					<li>
+						<span>E-Mail</span>
+						<span>{{ initialCtrl.classInfo.teacherEmail }}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>

@@ -96,9 +96,8 @@ function checkController( $rootScope, $scope, $element, $state, $stateParams, $t
     	RemoteHttp.controller('/manage').url('/get-check-student-list').methods('post').param(param).request().then(function(data){
     		if(data) {
     			vm.students = data;
-    			
-    			visibleLoader(false);
     		}
+    		visibleLoader(false);
     	});
     };
 	

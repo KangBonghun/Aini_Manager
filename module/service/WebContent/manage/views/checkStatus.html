@@ -13,50 +13,94 @@
 		</div>
     </div>
 	
-	<p class="check-status-drag-ps">좌우로 드래그하세요</p>
-    <div class="box-body load-data-wrapper" style="border-top: 1px solid #d2d6de;border-bottom: 1px solid #d2d6de;">
-    	<div class="box-body">
-              <div class="table-responsive" style="border:none;margin-bottom:0;">
-                <table class="table no-margin check-status-table">
-                  <thead>
-<!--                   <tr> -->
-<!--                   	<th rowspan="2">수강생</th> -->
-<!--                     <th colspan="5">출결</th> -->
-<!--                     <th>날짜</th> -->
-<!--                   </tr> -->
-                  <tr>
-                  	<th>수강생</th>
-                  	<th>출석률</th>
-                    <th>출석</th>
-                    <th>결석</th>
-                    <th>업무</th>
-                    <th>교육</th>
-                    <th>휴가</th>
-                    <th>5</th>
-                    <th>12</th>
-                    <th>19</th>
-                    <th>26</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  	<tr>
-                  		<td>강봉훈</td>
-	                  	<td>88%</td>
-	                    <td>2</td>
-	                    <td>1</td>
-	                    <td>0</td>
-	                    <td>0</td>
-	                    <td>0</td>
-	                    <td>O</td>
-	                    <td>O</td>
-	                    <td>O</td>
-	                    <td>O</td>
-                  	</tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+	<p class="check-status-drag-ps" style="display:none;">좌우로 드래그하세요</p>
+    <div class="box-body load-data-wrapper" style="background: inherit;">
+    
+		<div class="class-info-box" style="height:auto;" ng-show="checkStatusCtrl.classInfo && checkStatusCtrl.checkStatusList.length > 0">
+			<p class="title">{{ checkStatusCtrl.classInfo.className }}</p>
+			<div>
+				<ul class="class-info-lst">
+					<li>
+						<span>언어</span>
+						<span>{{ getLanguageLabel(checkStatusCtrl.classInfo.language) }}</span>
+					</li>
+					<li>
+						<span>수업시간</span>
+						<span>{{ checkStatusCtrl.classInfo.classDate }}</span>
+					</li>
+					<li>
+						<span>교육기간</span>
+						<span>{{ checkStatusCtrl.classInfo.startDate + ' ~ ' + checkStatusCtrl.classInfo.endDate }}</span>
+					</li>
+					<li>
+						<span>총수업일</span>
+						<span>{{ checkStatusCtrl.classInfo.dateCount + '일' }}</span>
+					</li>
+					<li>
+						<span>수강인원</span>
+						<span>{{ checkStatusCtrl.classInfo.studentCount + '명' }}</span>
+					</li>
+					<li>
+						<span>담당매니저</span>
+						<span>{{ checkStatusCtrl.classInfo.managerName }}</span>
+					</li>
+					<li>
+						<span>담당강사</span>
+						<span>{{ checkStatusCtrl.classInfo.teacherName }}</span>
+					</li>
+					<li>
+						<span>E-Mail</span>
+						<span>{{ checkStatusCtrl.classInfo.teacherEmail }}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div style="position:relative;">
+			<div class="mask" style="left: -1px;bottom: 2px;top: 1px;transform: rotate(180deg);"></div>
+			<div class="mask" style="right: -1px;bottom: 2px;top: 1px;"></div>
+	        <div class="table-responsive" style="border:none;margin-bottom:0;border-top: 1px solid #e1e1e1;border-bottom: 1px solid #e1e1e1;background-color: #fff;" ng-show="checkStatusCtrl.checkStatusList.length > 0">
+	          <table class="table no-margin check-status-table">
+	            <thead>
+	            <tr>
+	            	<th>수강생</th>
+	            	<th>출석률</th>
+	              <th>출석</th>
+	              <th>지각</th>
+	              <th>결석</th>
+	              <th>업무</th>
+	              <th>교육</th>
+	              <th>휴가</th>
+	              <th ng-repeat="checkDate in checkStatusCtrl.checkDates">{{ checkDate.classDate.substr(6,2) }}</th>
+	            </tr>
+	            </thead>
+	            <tbody>
+	            	<tr ng-repeat="checkStatus in checkStatusCtrl.checkStatusList">
+	            		<td>{{ checkStatus.userName }}</td>
+	             	<td>{{ checkStatusCtrl.getAttendanceRate(checkStatus) + '%' }}</td>
+	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'O') }}</td>
+	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'L') }}</td>
+	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'X') }}</td>
+	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'W') }}</td>
+	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'E') }}</td>
+	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'V') }}</td>
+	               <td ng-repeat="checkDate in checkStatusCtrl.checkDates">{{ checkStatusCtrl.getCheck(checkDate.classDate, checkStatus) }}</td>
+	            	</tr>
+	            </tbody>
+	          </table>
+	        </div>
+        </div>
     </div>
     <div class="no-data" ng-if="!checkStatusCtrl.selectedClassMonth">강의와 날짜를 선택해주세요.</div>
     <div class="no-data" ng-if="checkStatusCtrl.selectedClassId && checkStatusCtrl.selectedClassMonth && checkStatusCtrl.students.length < 1">수강생이 없습니다.</div>
+    <div class="check-legend-wrapper fixed-box-wrapper" ng-show="checkStatusCtrl.checkStatusList.length > 0">
+        <ul>
+			<li class="check-legend-item"><p>O</p><p>출석</p></li>
+			<li class="check-legend-item"><p>L</p><p>지각</p></li>
+			<li class="check-legend-item"><p>X</p><p>결석</p></li>
+			<li class="check-legend-item"><p>W</p><p>업무</p></li>
+			<li class="check-legend-item"><p>E</p><p>교육</p></li>
+			<li class="check-legend-item"><p>V</p><p>휴가</p></li>
+		</ul>
+    </div>
 </div>

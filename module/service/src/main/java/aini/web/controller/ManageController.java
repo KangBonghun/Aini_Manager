@@ -586,7 +586,7 @@ public class ManageController
     }
  
     /**
-     * 강의 정보 저장/수정
+     * 강의 날짜 저장/수정
      * 
      * @param param
      * @return
@@ -692,4 +692,34 @@ public class ManageController
 
         return reportInfo;
     }
+    
+    /**
+     * 출석 현황 목록 조회
+     * 
+     * @param param
+     * @return
+     * 
+     * @author "KangBongHoon"
+     * @create-date : 2017. 9. 24.
+     */
+    @RequestMapping(value = "/get-check-status", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getCheckStatus(@RequestBody Map<String, Object> param)
+    {
+        Map<String, Object> checkStatus = null;
+
+        try
+        {
+            checkStatus = new HashMap<String, Object>();
+            
+            checkStatus.put("checkDates", checkService.getCheckDates(param));
+            checkStatus.put("checkStatusList", checkService.getCheckStatusList(param));
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage(), e);
+        }
+
+        return checkStatus;
+    }    
 }

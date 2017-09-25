@@ -31,7 +31,9 @@
 		LEFT JOIN
 			user u ON uc.user_id = u.user_id
 		LEFT JOIN
-			monthly_report rt ON uc.class_id = rt.class_id AND uc.user_id = rt.user_id AND rt.year = #{year} AND rt.month = #{month} 
+			monthly_report rt ON uc.class_id = rt.class_id AND uc.user_id = rt.user_id AND rt.year = #{year} AND rt.month = #{month}
+		ORDER BY
+			userName 
 	</select>
 	
 	<select id="getReportStudent" parameterType="map" resultType="map">
