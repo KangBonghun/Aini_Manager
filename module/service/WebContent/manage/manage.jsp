@@ -82,7 +82,7 @@
 		<section class="sidebar">
 			<ul class="sidebar-menu">
 				<li class="header">Menu</li>
-				<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER'">
+				<li>
 					<a href="#">
 						<i class="fa fa-calendar-check-o"></i>
 						<span>출석부</span>
@@ -92,7 +92,7 @@
 					</a>
 					<ul class="treeview-menu">
 						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/check"><i class="fa fa-circle-o"></i> <span>출석체크</span></a></li>
-						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER'"><a class="menu-item" href="#/checkStatus"><i class="fa fa-circle-o"></i> <span>월간출석</span></a></li>
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER' || userInfo.userType=='STUDENT'"><a class="menu-item" href="#/checkStatus"><i class="fa fa-circle-o"></i> <span>월간출석</span></a></li>
 					</ul>
 				</li>
 				
@@ -105,9 +105,9 @@
 						</span>
 					</a>
 					<ul class="treeview-menu">
-						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/initial"><i class="fa fa-circle-o"></i> <span>최초평가</span></a></li>
-						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/report"><i class="fa fa-circle-o"></i> <span>월간평가</span></a></li>
-						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/initial"><i class="fa fa-circle-o"></i> <span>최종평가</span></a></li>
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/initial"><i class="fa fa-circle-o"></i> <span>최초 평가</span></a></li>
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/report"><i class="fa fa-circle-o"></i> <span>월간 평가</span></a></li>
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER'"><a class="menu-item" href="#/initial"><i class="fa fa-circle-o"></i> <span>최종 평가</span></a></li>
 					</ul>
 				</li>
 				
@@ -120,8 +120,8 @@
 						</span>
 					</a>
 					<ul class="treeview-menu">
-						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER'"><a class="menu-item" href="#/reportViewMain"><i class="fa fa-circle-o"></i> <span>월간보고서</span></a></li>
-						<li ng-if="userInfo.userType=='STUDENT'"><a href="#/reportView"><i class="fa fa-circle-o"></i> <span>월간보고서</span></a></li>
+						<li ng-if="userInfo.userType=='ADMIN' || userInfo.userType=='TEACHER' || userInfo.userType=='MANAGER'"><a class="menu-item" href="#/reportViewMain"><i class="fa fa-circle-o"></i> <span>월간 보고서</span></a></li>
+						<li ng-if="userInfo.userType=='STUDENT'"><a href="#/reportView"><i class="fa fa-circle-o"></i> <span>월간 보고서</span></a></li>
 					</ul>
 				</li>
 				<li ng-if="userInfo.userType=='ADMIN'"><a class="menu-item" href="#/class"><i class="fa fa-university"></i> <span>강의관리</span></a></li>

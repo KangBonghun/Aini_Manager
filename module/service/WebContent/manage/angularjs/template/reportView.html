@@ -14,7 +14,9 @@
 				<li class="rank">
 					<p>상위 백분율</p>
 					<p style="vertical-align: bottom;font-size: 15px;">
-						<b style="font-size:22px;">{{ vm.reportData.reportInfo.rank || '-' }}</b>%
+<!-- 						<b style="font-size:22px;">{{ vm.reportData.reportInfo.rank || '-' }}</b>% -->
+						<b style="font-size:22px;">{{ calcRankPercentage(vm.reportData.reportInfo.stepScore, vm.reportData.classInfo.language) || '-' }}</b>%
+
 					</p>
 				</li>
 				<li class="level">
@@ -81,12 +83,12 @@
 		</div>
 		<div style="padding-bottom: 10px;margin-bottom: 10px;">
 			<p class="sub-title">스텝</p>
-			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">STEP {{ vm.reportData.reportInfo.step || '-' }}</p>
+			<p style="font-size: 30px;line-height: 30px;color: #FF6B6B;font-weight: 700;">STEP {{ vm.reportData.reportInfo.step || '-' }}</p>
 			<div id="stepChart"></div>
 		</div>
 		<div style="padding-bottom: 10px;margin-bottom: 10px;">
 			<p class="sub-title">점수</p>
-			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">
+			<p style="font-size: 30px;line-height: 30px;color: #FF6B6B;font-weight: 700;">
            		<span>{{ vm.reportData.reportInfo.stepScore || '-' }}</span>
            		<span style="font-size: 20px;font-weight: 400;margin-left: -10px;">/120</span>
            	</p>
@@ -94,6 +96,27 @@
 		</div>
 		<div>
 			<p class="sub-title">월간 스텝</p>
+			<div>
+			    <p class="step-score-desc">매월 발음,어휘,문법,이해도 총 4개의 영역으로 각 25점 총 100점 만점 기준으로 평가가 됩니다. 총점의 기준에 따라서 스텝의 점수가 변동됩니다.</p>	
+			    <table class="step-score-desc">
+			    	<tbody>
+						<tr>
+							<td>스텝</td>
+							<td>100-95</td>
+							<td>94-90</td>
+							<td>89-85</td>
+							<td>84-80</td>
+						</tr>
+						<tr>
+							<td>스텝반영점수</td>
+							<td>2</td>
+							<td>1.5</td>
+							<td>1</td>
+							<td>0.5</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
            	<div id="monthlyStepChart"></div>
 		</div>
 	</li>
@@ -125,6 +148,28 @@
 					</li>
 				</ul>
 			</div>
+		</div>
+		<div class="score-desc">
+    		<table>
+   				<tbody>
+					<tr>
+						<td><span>•</span>발음</td>
+						<td>자음,모음,강세,억양 등을 종합평가한 점수입니다.</td>
+					</tr>
+					<tr>
+						<td><span>•</span>어휘</td>
+						<td>정확성,다양성,응용성,적합성,관용어 표현 등을 종합평가한 점수입니다.</td>
+					</tr>
+					<tr>
+						<td><span>•</span>문법</td>
+						<td>어순,문장의 구성 능력 등을 종합평가한 점수입니다.</td>
+					</tr>
+					<tr>
+						<td><span>•</span>이해도</td>
+						<td>이해정도,묘사능력,단/장문 표현 능력 등을 평가한 점수입니다.</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<div>
 			<p class="sub-title">월간 점수</p>

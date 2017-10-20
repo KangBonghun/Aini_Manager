@@ -23,7 +23,7 @@
     	<div class="no-data" ng-if="!initialCtrl.selectedClassId">강의를 선택해주세요.</div>
     	<div class="no-data" ng-if="initialCtrl.selectedClassId && initialCtrl.students.length < 1">수강생이 없습니다.</div>
         <ul class="rpt-wrapper">
-            <li class="rpt-box" ng-repeat="student in initialCtrl.students">
+            <li class="rpt-box" ng-repeat="student in initialCtrl.students" creation-complete="onCreationCompleteInitial">
                 <div class="rpt-info">
                     <span class="user">{{ student.userName }}</span>
                     <div class="btn_group" style="float: right;">

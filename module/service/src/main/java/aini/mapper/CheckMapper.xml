@@ -60,6 +60,10 @@
 			class_date cd ON c.class_id = cd.class_id AND class_date LIKE CONCAT(#{year},#{month},'%')
 		LEFT JOIN 
 			attendance atd ON uc.user_id = atd.user_id AND cd.class_id = atd.class_id AND cd.class_date = atd.class_date
+		<if test="userType != null and userType == 'STUDENT'">
+			WHERE
+				uc.user_id = #{userId}
+		</if>
 		ORDER BY
 			userName
 	</select>

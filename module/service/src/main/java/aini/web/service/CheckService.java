@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import aini.mapper.CheckMapper;
 import aini.mapper.ReportMapper;
+import aini.util.UserDetailsHelper;
 
 @Service
 public class CheckService

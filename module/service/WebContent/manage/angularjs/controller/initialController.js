@@ -19,6 +19,10 @@ function initialController( $rootScope, $scope, $element, $state, $stateParams, 
         vm.initStepScore();
         
         vm.loadClasses();
+        
+		vm.unbindHandler = $scope.$on('onCreationCompleteInitial',function(){
+			vm.unbindHandler && vm.unbindHandler();
+		});
     };
     
     vm.initStepScore = function() {

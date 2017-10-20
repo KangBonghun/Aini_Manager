@@ -7,7 +7,32 @@ function mainController( $rootScope, $scope, $element, $state, RemoteHttp) {
     $scope.init = function() {
     	RemoteHttp.controller('/manage').url('/get-user-info').methods('get').request().then(function(data){
     		$rootScope.userInfo = $scope.userInfo = data;
+    		
+    		$scope.initState();
     	});
+    };
+    
+    $scope.initState = function() {
+    	
+    	if(!$state.$current.name) {
+    		var type = $rootScope.userInfo.userType;
+        	
+        	switch (type) {
+    		case 'ADMIN':
+    			$state.go('class');
+    			break;
+    		case 'TEACHER':
+    			$state.go('check');
+    			break;
+    		case 'STUDENT':
+    			$state.go('reportView');
+    			break;
+    		case 'MANAGER':
+    			$state.go('reportViewMain');
+    			break;
+    		}
+    	}
+    	
     };
     
     $scope.getTypeLabel = function(type) {
@@ -165,6 +190,14 @@ function mainController( $rootScope, $scope, $element, $state, RemoteHttp) {
 		});
 		
 		return label;
+	};
+	
+	$scope.calcRankPercentage = function(stepScore, type) {
+		var total = distribution(type).reduce(function(a,b){return a+b});
+		
+		var rank = distribution(type).slice((stepScore*2)+1).reduce(function(a,b){return a+b});
+		
+		return ((rank * 100) / total).toFixed(2);
 	};
 	
     

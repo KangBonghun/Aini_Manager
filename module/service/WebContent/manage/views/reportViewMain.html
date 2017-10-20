@@ -21,7 +21,7 @@
                     <span class="user">{{ student.userName }}</span>
                     <div class="btn_group" style="float: right;" ng-if="student.changeDatetime">
 <!--                     	<a class="class-info-edit-btn" ng-click="onPopupReportView(true, student)"></a> -->
-                    	<button type="button" class="edit-btn" ng-click="onPopupReportView(true, student)">더보기</button>
+                    	<button type="button" class="edit-btn" ng-click="reportViewMainCtrl.selectedStudent=student;onPopupReportView(true, student);">더보기</button>
                     </div>
                     <div class="initial-date">
                     	<span>평가시각</span>
@@ -40,7 +40,9 @@
 						<li class="rank">
 							<p>상위 백분율</p>
 							<p style="vertical-align: bottom;font-size: 15px;">
-								<b style="font-size:22px;">{{ student.rank || '-' }}</b>%
+<!-- 								<b style="font-size:22px;">{{ student.rank || '-' }}</b>% -->
+								<b style="font-size:22px;">{{ calcRankPercentage(student.stepScore, student.language) || '-' }}</b>%
+								
 							</p>
 						</li>
 						<li class="level">
@@ -57,7 +59,8 @@
 </div>
 <div id="report_view_box" class="show-hide-box-warpper fixed-box-wrapper" style="background-color:#ececec;"">
 	<div class="header" style="background-color:#ffffff;border-bottom: 1px solid #d2d6de;">
-		<p class="title">{{ reportViewMainCtrl.selectedClassMonth.year + '년 ' + reportViewMainCtrl.selectedClassMonth.month + '월 ' + '보고서' }}</p>
+<!-- 		<p class="title">{{ reportViewMainCtrl.selectedClassMonth.year + '년 ' + reportViewMainCtrl.selectedClassMonth.month + '월 ' + '보고서' }}</p> -->
+		<p class="title">{{ reportViewMainCtrl.selectedStudent.userName + '님의 ' + reportViewMainCtrl.selectedClassMonth.month + '월 보고서' }}</p>
 		<a class="close-btn" ng-click="onPopupReportView(false)" ></a>
 	</div>
 	<report-view-directive class="contents"></report-view-directive>

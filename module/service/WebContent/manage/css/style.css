@@ -744,7 +744,7 @@ color: #555;
 
 .rpt-wrapper .rpt-box .rpt-content .txt {
 	line-height: 1.43em;
-    cursor: pointer;
+/*     cursor: pointer; */
     word-break: break-all;
     color: #666;
     font-size: 0.9em;
@@ -1003,6 +1003,7 @@ color: #555;
     text-align: center;
     line-height: 55px;
     font-size: 20px;
+    font-weight: 700;
 }
 
 .class-info-detail-wrapper .header .do-btn {
@@ -1040,7 +1041,7 @@ color: #555;
 .class-info-detail-wrapper .contents {
     position: absolute;
     padding-bottom: 50px;
-    top: 55px;
+    top: 54px;
     right: 0;
     bottom: 0;
     left: 0;
@@ -1338,7 +1339,6 @@ color: #555;
 
 .check-status-table th:first-child,
 .check-status-table td:first-child {
-	width: 70px;
 	padding-left:15px;
 }
 
@@ -1357,6 +1357,23 @@ color: #555;
 .check-status-table td:nth-child(2) {
 /* 	background: rgba(255, 107, 107, 0.1); */
 	font-weight: 700;
+}
+
+
+.check-status-table td.name,
+.check-status-table td.rate {
+	width: 70px;
+	min-width: 70px;
+}
+
+.check-status-table td.sum {
+	width: 40px;
+	min-width: 40px;
+}
+
+.check-status-table td.day {
+	width: 35px;
+	min-width: 35px;
 }
 
 .check-status-drag-ps {
@@ -1385,6 +1402,65 @@ color: #555;
 	position: absolute;
     width: 15px;
     background: -webkit-gradient(linear,left top,right top,color-stop(0,rgba(255,255,255,0)),color-stop(90%,#fff));
+}
+
+p.step-score-desc {
+	color: #9F9F9F;
+	font-size: 12px;
+}
+
+table.step-score-desc {
+	width: 100%;
+    border-top: 2px solid #B4B4B4;
+	margin-top: 5px;
+	font-size: 13px;
+}
+
+table.step-score-desc tr {
+	border-bottom: 1px solid #DFDFDF;
+	text-align: center;
+	height: 30px;
+}
+
+table.step-score-desc td:first-child {
+	background-color: #F7F7F7;
+	font-weight: 700;
+}
+
+div.score-desc {
+	border-top: 2px solid #B4B4B4;
+    border-bottom: 1px solid #DFDFDF;
+    background-color: #F7F7F7;
+    font-size: 13px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+}
+
+div.score-desc > table {
+	width: 100%;
+}
+
+div.score-desc > table tr > td {
+	padding: 5px 0;
+}
+div.score-desc > table tr > td:first-child {
+	width: 60px;
+    vertical-align: top;
+    font-weight: 700;
+}
+
+div.score-desc > table tr > td:first-child > span {
+	font-size: 10px;
+    color: #C1C1C1;
+    vertical-align: top;
+    width: 10px;
+    display: inline-block;
+}
+
+.stepScoreChartTooltip {
+	-webkit-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
 @media (min-width: 768px) {

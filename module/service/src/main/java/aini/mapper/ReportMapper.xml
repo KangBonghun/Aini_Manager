@@ -25,13 +25,16 @@
 			rt.strength AS strength,
 			rt.weakness AS weakness,
 			rt.attendance AS attendance,
-			rt.change_datetime AS changeDatetime
+			rt.change_datetime AS changeDatetime,
+			c.language AS language
 		FROM
 			(SELECT * FROM user_class WHERE class_id = #{classId} AND user_type = 'STUDENT') uc
 		LEFT JOIN
 			user u ON uc.user_id = u.user_id
 		LEFT JOIN
 			monthly_report rt ON uc.class_id = rt.class_id AND uc.user_id = rt.user_id AND rt.year = #{year} AND rt.month = #{month}
+		LEFT JOIN
+			class c ON uc.class_id = c.class_id
 		ORDER BY
 			userName 
 	</select>

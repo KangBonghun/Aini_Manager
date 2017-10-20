@@ -12,20 +12,19 @@
 		<title>중국어 교육 상담 신청</title>
 		
 		
-		<link rel="stylesheet" href="css/bootstrap.css">
-		<link rel="stylesheet" href="css/common.css">
-		<link rel="stylesheet" href="css/checkbox.css">
+		<link rel="stylesheet" href="/counseling/css/bootstrap.css">
+		<link rel="stylesheet" href="/counseling/css/m-common.css">
+		<link rel="stylesheet" href="/counseling/css/checkbox.css">
 		<!--<link rel="stylesheet" href="css/font-awesome.min.css">-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="css/mobiscroll.custom-2.6.2.min.css"/>
+		<link rel="stylesheet" href="/counseling/css/mobiscroll.custom-2.6.2.min.css"/>
 		
-		<script src="js/tether.min.js"></script>
-		<script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
-		<!--<script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>-->
-		<script src="js/bootstrap.js" type="text/javascript"></script>
-		<script src="js/jquery.validate.min.js" type="text/javascript"></script>
-		<script src="js/mobiscroll.custom-2.6.2.min.js" type="text/javascript"></script>
-		<script src="js/common.js" type="text/javascript"></script>
+		<script src="/counseling/js/tether.min.js"></script>
+		<script src="/counseling/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+		<script src="/counseling/js/bootstrap.js" type="text/javascript"></script>
+		<script src="/counseling/js/jquery.validate.min.js" type="text/javascript"></script>
+		<script src="/counseling/js/mobiscroll.custom-2.6.2.min.js" type="text/javascript"></script>
+		<script src="/counseling/js/m-common.js" type="text/javascript"></script>
 	    <script type="text/javascript">
 		    $(document).ready(function() {
 		    	var msg ='${msg}';
@@ -40,9 +39,9 @@
 	    </script>		
 	</head>
 	<body>
-		<form method="post" id="frmRequest" action="/counseling/request" style="height:100%;">
+		<form method="post" id="frmRequest" action="/m/counseling/request" style="height:100%;">
 			<div id="viewport">
-				<header class="title">
+				<header class="title2">
 					<p>중국어 교육 상담 신청</p>
 					<div class="closer">
 						<a id="btn_close" href="#" class="btn_close"></a>

@@ -8,6 +8,8 @@ function reportViewMainController( $rootScope, $scope, $element, $state, $stateP
     vm.selectedClassId;
     vm.selectedClassMonth;
     
+    vm.selectedStudent;
+    
     /**
      * 초기화
      */

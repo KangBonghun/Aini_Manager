@@ -105,6 +105,8 @@ function checkStatusController( $rootScope, $scope, $element, $state, $statePara
     			classId : vm.selectedClassId,
     			year : vm.selectedClassMonth.year,
     			month : vm.selectedClassMonth.month,
+    			userType: $rootScope.userInfo.userType,
+    			userId : $rootScope.userInfo.userId,
 		};
     	
 		visibleLoader(true);

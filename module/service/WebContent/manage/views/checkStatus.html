@@ -76,15 +76,15 @@
 	            </thead>
 	            <tbody>
 	            	<tr ng-repeat="checkStatus in checkStatusCtrl.checkStatusList">
-	            		<td>{{ checkStatus.userName }}</td>
-	             	<td>{{ checkStatusCtrl.getAttendanceRate(checkStatus) + '%' }}</td>
-	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'O') }}</td>
-	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'L') }}</td>
-	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'X') }}</td>
-	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'W') }}</td>
-	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'E') }}</td>
-	               <td>{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'V') }}</td>
-	               <td ng-repeat="checkDate in checkStatusCtrl.checkDates">{{ checkStatusCtrl.getCheck(checkDate.classDate, checkStatus) }}</td>
+						<td class="name">{{ checkStatus.userName }}</td>
+		             	<td class="rate">{{ checkStatusCtrl.getAttendanceRate(checkStatus) + '%' }}</td>
+		               	<td class="sum">{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'O') }}</td>
+		              	<td class="sum">{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'L') }}</td>
+		              	<td class="sum">{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'X') }}</td>
+		               	<td class="sum">{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'W') }}</td>
+		               	<td class="sum">{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'E') }}</td>
+		               	<td class="sum">{{ checkStatusCtrl.getCheckStatucCount(checkStatus, 'V') }}</td>
+		               	<td ng-repeat="checkDate in checkStatusCtrl.checkDates"  class="day">{{ checkStatusCtrl.getCheck(checkDate.classDate, checkStatus) }}</td>
 	            	</tr>
 	            </tbody>
 	          </table>

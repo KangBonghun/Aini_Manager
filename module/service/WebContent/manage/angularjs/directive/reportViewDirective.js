@@ -149,7 +149,7 @@ ainiApp.directive('reportViewDirective', function() {
         	
         	vm.makeCharts = function() {
         		vm.makeStepChart(vm.reportData.reportInfo.step);
-    			vm.makeStepScoreChart(5);
+    			vm.makeStepScoreChart(vm.reportData.reportInfo.stepScore);
     			vm.makeMonthlyStepChart(vm.reportData.monthlyStep);
     			vm.makeScoreChart(vm.reportData.reportInfo);
     			vm.makeMonthlyScoreChart(vm.reportData.monthlyScore);
@@ -208,18 +208,37 @@ ainiApp.directive('reportViewDirective', function() {
         			    	},
         	            },
         			    onrendered: function () {
-        			    	if(step) {
-        			    		$('#stepChart .c3-event-rect-'+step+'').addClass('region');
-        				        $('#stepChart .c3-circle-'+step+'').addClass('pointer');
-        				        
-        				        var height = d3.select('#stepChart .c3-event-rect.region').attr('height');
-        				        
-        				        d3.select('#stepChart .c3-event-rect.region').attr('y', 1).attr('height', height-2);
-        			    	}
-        			    	
-        			    	$('#stepChart .c3-chart-line.c3-target.c3-target-STEP').parents('.c3-chart').attr('clip-path',null);
+        			    	rendererFunc();
         			    }
         	        });
+        		}
+        		
+        		rendererFunc();
+        		
+        		function rendererFunc() {
+        			var step = vm.reportData.reportInfo.step;
+        			
+        			if(step) {
+        				$('#stepChart .pointer').removeClass('pointer');
+        				$('#stepChart .c3-event-rect.region').remove();
+        				
+				        $('#stepChart .c3-circle-'+step+'').addClass('pointer');
+				        $('#stepChart .c3-circle-'+(step-1)+'').addClass('pointer');
+				        
+				        var clone = $('#stepChart .c3-event-rect-'+(step-1)+'').clone();
+				        clone.addClass('region');
+				        clone.appendTo('#stepChart .c3-event-rects.c3-event-rects-single');
+				        
+				        var rect = d3.select('#stepChart .c3-event-rect.region');
+				        
+				        var height = parseFloat(rect.attr('height'));
+				        var width = parseFloat(rect.attr('width'));
+				        var x = parseFloat(rect.attr('x'));
+				        
+				        rect.attr('y', 1).attr('height', height-2).attr('x', parseInt(x + (width/2)));
+			    	}
+        			
+        			$('#stepChart .c3-chart-line.c3-target.c3-target-STEP').parents('.c3-chart').attr('clip-path',null);
         		}
         	};
         	
@@ -283,30 +302,30 @@ ainiApp.directive('reportViewDirective', function() {
         					},
         				},
         				data: {
-//        					json: {
-//        						data1 : [1,1,2,1,3,4,4,5,5,4,3,4,40,60,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-//  					          	data2 : [0,0,0,0,0,0,0,0,0,0,0,20,40,60,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-//        					},
-//        					types: {
-//					        	  data1: 'area-spline',
-//					        	  data2: 'area-spline',
-//					          },
-//					          colors: {
-//					        	  data1: '#DFDFE3',
-//					        	  data2: '#5ea4ff',
-//					          },
-        					columns: [
-        					          ['data1', 0, 10, 5, 10, 25, 40, 60, 70, 50, 30, 25, 10, 5, 1, 6, 3, 0, 0, 0],
-        					          ['data2', 0, 10, 5, 10, 25, 40, 60, 70, 50, 30, 25, 10, 5, 1, 6, 3, 0, 0, 0],
-        					          ],
-        					          types: {
-        					        	  data1: 'area-spline',
-        					        	  data2: 'area-spline',
-        					          },
-        					          colors: {
-        					        	  data1: '#DFDFE3',
-        					        	  data2: '#5ea4ff',
-        					          },
+        					json: {
+        						data1 : distribution(vm.reportData.classInfo.language),
+        			          	data2 : distribution(vm.reportData.classInfo.language),
+        					},
+        					types: {
+					        	  data1: 'area-spline',
+					        	  data2: 'area-spline',
+					          },
+					          colors: {
+					        	  data1: '#DFDFE3',
+					        	  data2: '#3D8BF7',
+					          },
+//        					columns: [
+//        					          ['data1', 0, 10, 5, 10, 25, 40, 60, 70, 50, 30, 25, 10, 5, 1, 6, 3, 0, 0, 0],
+//        					          ['data2', 0, 10, 5, 10, 25, 40, 60, 70, 50, 30, 25, 10, 5, 1, 6, 3, 0, 0, 0],
+//        					          ],
+//        					          types: {
+//        					        	  data1: 'area-spline',
+//        					        	  data2: 'area-spline',
+//        					          },
+//        					          colors: {
+//        					        	  data1: '#DFDFE3',
+//        					        	  data2: '#5ea4ff',
+//        					          },
         				},
         				oninit: function() {
         					$('#stepScoreChart .c3-chart-lines').after($('#stepScoreChart .c3-event-rects'));
@@ -315,21 +334,54 @@ ainiApp.directive('reportViewDirective', function() {
         					d3.select('#stepScoreChart .c3-chart-line.c3-target.c3-target-data2').attr('clip-path','url(#region)');
         				},
         				onrendered: function () {
-        					if(data) {
-        						$('#stepScoreChart .c3-event-rect-' + data + '').addClass('score-region');
-        						
-        						var rect = d3.select('#stepScoreChart .c3-event-rect.score-region');
-        						
-        						var height = rect.attr('height');
-        						var width = rect.attr('width');
-        						var x = rect.attr('x');
-        						var y = rect.attr('y');
-        						
-        						d3.select('#stepScoreChart .c3-event-rect.score').attr('y', 1).attr('height', height-2);
-        						d3.select('#region rect').attr('x',x-1).attr('y',y).attr('width',parseInt(width)+2).attr('height',height);
-        					}
+        					rendererFunc();
         				}
         			});	
+        		}
+        		
+        		rendererFunc();
+        		
+        		function rendererFunc() {
+        			var data = vm.reportData.reportInfo.stepScore;
+        			
+        			if(data) {
+        				$('#stepScoreChart .score-region').remove();
+        				
+        				var rectClone = $('#stepScoreChart .c3-event-rect-' + data*2 + '').clone();
+        				rectClone.addClass('score-region');
+        				rectClone.appendTo('#stepScoreChart .c3-chart .c3-event-rects.c3-event-rects-single');
+        				
+        				var rect = d3.select('#stepScoreChart .c3-event-rect.score-region');
+        				
+        				var height = parseFloat(rect.attr('height'));
+        				var width = parseFloat(rect.attr('width'));
+        				var x = parseFloat(rect.attr('x'));
+        				var y = parseFloat(rect.attr('y'));
+        				
+        				width = 50;
+        				x = x - 25;
+        				
+        				d3.select('#region rect').attr('x',x).attr('y',y).attr('width',width).attr('height',height);
+        				rect.attr('width', width).attr('x', x);
+        				
+        				
+        				$('#stepScoreChart .c3-xgrid-focus-clone').remove();
+        				
+        				var clone = $('#stepScoreChart line.c3-xgrid-focus').clone();
+        				clone.removeClass('c3-xgrid-focus').addClass('c3-xgrid-focus-clone');
+        				clone.appendTo('g.c3-chart-texts');
+        				
+        				d3.select('#stepScoreChart line.c3-xgrid-focus-clone').attr('x1',x+25).attr('x2',x+25).style('visibility','visible').style('stroke','rgba(255, 84, 98, 1)');
+        				
+        				
+        				
+        				
+        				var tooltipX = ($('#stepScoreChart').width() < x+25+10+90 ? x+25-10-90 : x+25+10).toFixed(2); 
+        				var rankPercent = $scope.calcRankPercentage(vm.reportData.reportInfo.stepScore, vm.reportData.classInfo.language);
+        				
+        				$('.stepScoreChartTooltip').remove();
+        				$('#stepScoreChart').append('<div class="stepScoreChartTooltip" style="position: absolute;pointer-events: none;top: 20%;left: ' + tooltipX + 'px;background-color: #FF3646;border-radius: 15px;padding: 5px 10px;color: white;font-size: 13px;text-align: center;"><span>상위 ' + rankPercent + '%</span></div>');
+        			}
         		}
         	};	
         	
@@ -489,7 +541,7 @@ ainiApp.directive('reportViewDirective', function() {
         				    },
         				    oninit: function() {
         				    	d3.select(chartBindTo + ' .c3-chart-arcs-title').attr('y', -20).attr('fill', '#666666');
-        				    	d3.select(chartBindTo + ' .c3-chart-arcs-title').append('tspan').attr('y', 25).attr('x', 0).attr('style','font-size: 40px;font-weight: 700;vertical-align: bottom;fill: '+ color +';').text(data[type]);
+        				    	d3.select(chartBindTo + ' .c3-chart-arcs-title').append('tspan').attr('y', '10%').attr('x', 0).attr('style','font-size: 40px;font-weight: 700;vertical-align: bottom;fill: '+ color +';').text(data[type]);
         				    },
         		        });
         			}

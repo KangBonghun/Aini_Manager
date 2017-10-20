@@ -474,7 +474,8 @@ public class SendService
             }
             else
             {
-                msg.setText(contentText);
+                msg.setContent(contentText, "text/html; charset=utf-8");
+//                msg.setText(contentText);
             }
             
             Transport.send(msg);
