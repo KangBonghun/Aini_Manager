@@ -1,12 +1,18 @@
-<div id="report_detail_box">
+<div id="report_detail_box" class="report-viewer">
 <div class="no-data" ng-if="!vm.reportData">작성된 보고서가 없습니다.</div>
 <ul class="rpt-wrapper">
-	<li class="rpt-box summary">
-		<p class="title">종합평가</p>
+	<div class="user-info">
+		<div>
+			<p>{{ vm.reportData.reportInfo.userName || '-' }}</p>
+			<p>{{ phoneFormat(vm.reportData.reportInfo.mobileNumber) }}<br>{{ vm.reportData.reportInfo.userId || '-' }}</p>
+		</div>
+	</div>
+	<li class="rpt-box summary" style="margin-top:0px !important;">
+		<p class="title mobile">Summary<label>종합평가</label></p>
 		<div style="margin: 0 -5px;">
 			<ul>
 				<li class="score">
-					<p>Test Score</p>
+					<p>평가 점수</p>
 					<p style="vertical-align: bottom;font-size: 15px;">
 						<b style="font-size:22px">{{ vm.reportData.reportInfo.totalScore || '-' }}</b>/100
 					</p>
@@ -15,7 +21,7 @@
 					<p>상위 백분율</p>
 					<p style="vertical-align: bottom;font-size: 15px;">
 <!-- 						<b style="font-size:22px;">{{ vm.reportData.reportInfo.rank || '-' }}</b>% -->
-						<b style="font-size:22px;">{{ calcRankPercentage(vm.reportData.reportInfo.stepScore, vm.reportData.classInfo.language) || '-' }}</b>%
+						<b style="font-size:22px;">{{ calcRankPercentage(vm.reportData.reportInfo.stepScore, vm.reportData.classInfo.language) }}</b>%
 
 					</p>
 				</li>
@@ -29,127 +35,210 @@
 		</div>
 	</li>
 	<li class="rpt-box class-info">
-		<p class="title">강의 정보</p>
+		<p class="title mobile">Class<label>클래스정보</label></p>
 		<div>
        		<ul class="lst">
        			<li>
 					<span>강의명</span>
-					<span>{{ vm.reportData.classInfo.className }}</span>
+					<span>{{ vm.reportData.classInfo.className || '-' }}</span>
 				</li>
 				<li>
 					<span>언어</span>
-					<span>{{ getLanguageLabel(vm.reportData.classInfo.language) }}</span>
+					<span>{{ getLanguageLabel(vm.reportData.classInfo.language) || '-' }}</span>
 				</li>
 				<li>
 					<span>수업시간</span>
-					<span>{{ vm.reportData.classInfo.classDate }}</span>
+					<span>{{ vm.reportData.classInfo.classDate || '-'  }}</span>
 				</li>
 				<li>
 					<span>교육기간</span>
-					<span>{{ vm.reportData.classInfo.startDate + ' ~ ' + vm.reportData.classInfo.endDate }}</span>
+					<span>{{ (vm.reportData.classInfo.startDate || '-') + ' ~ ' + (vm.reportData.classInfo.endDate || '-') }}</span>
 				</li>
-<!-- 				<li> -->
-<!-- 					<span>총수업일</span> -->
-<!-- 					<span>{{ vm.reportData.classInfo.dateCount + '일' }}</span> -->
-<!-- 				</li> -->
+				<li>
+					<span>총수업일</span>
+					<span>{{ (vm.reportData.classInfo.dateCount || '-') + '일' }}</span>
+				</li>
 <!-- 				<li> -->
 <!-- 					<span>수강인원</span> -->
 <!-- 					<span>{{ vm.reportData.classInfo.studentCount + '명' }}</span> -->
 <!-- 				</li> -->
-<!-- 				<li> -->
-<!-- 					<span>담당매니저</span> -->
-<!-- 					<span>{{ vm.reportData.classInfo.managerName }}</span> -->
-<!-- 				</li> -->
+				<li>
+					<span>담당매니저</span>
+					<span>{{ vm.reportData.classInfo.managerName || '-' }}</span>
+				</li>
 				<li>
 					<span>담당강사</span>
-					<span>{{ vm.reportData.classInfo.teacherName }}</span>
+					<span>{{ vm.reportData.classInfo.teacherName || '-' }}</span>
 				</li>
 				<li>
 					<span>E-Mail</span>
-					<span>{{ vm.reportData.classInfo.teacherEmail }}</span>
+					<span>{{ vm.reportData.classInfo.teacherEmail || '-' }}</span>
 				</li>
 			</ul>
 		</div>
 	</li>
 	<li class="rpt-box goal">
-		<p class="title">학습목표</p>
+		<p class="title mobile">Learning Goal <label>학습목표</p>
 		<div class="contents">
 			<p>{{ vm.reportData.reportInfo.studyGoal || '-' }}</p>
 		</div>
 	</li>
 	<li class="rpt-box step">
 		<div style="margin-bottom:10px;">
-			<p class="title">랭귀지 스텝</p>
+			<p class="title mobile">Aini Language Steps<label>스텝</label></p>
 		</div>
 		<div style="padding-bottom: 10px;margin-bottom: 10px;">
 			<p class="sub-title">스텝</p>
-			<p style="font-size: 30px;line-height: 30px;color: #FF6B6B;font-weight: 700;">STEP {{ vm.reportData.reportInfo.step || '-' }}</p>
+			<p style="font-size: 30px;line-height: 30px;color: #33C8E9;font-weight: 700;">STEP {{ vm.reportData.reportInfo.step || '-' }}</p>
+			<p class="chart-desc">아이니 스텝 그래프</p>
 			<div id="stepChart"></div>
 		</div>
 		<div style="padding-bottom: 10px;margin-bottom: 10px;">
 			<p class="sub-title">점수</p>
-			<p style="font-size: 30px;line-height: 30px;color: #FF6B6B;font-weight: 700;">
+			<p style="font-size: 30px;line-height: 30px;color: #33C8E9;font-weight: 700;">
            		<span>{{ vm.reportData.reportInfo.stepScore || '-' }}</span>
            		<span style="font-size: 20px;font-weight: 400;margin-left: -10px;">/120</span>
            	</p>
+           	<p class="chart-desc">아이니 전체 회원 분포도</p>
            	<div id="stepScoreChart"></div>
 		</div>
-		<div>
-			<p class="sub-title">월간 스텝</p>
-			<div>
-			    <p class="step-score-desc">매월 발음,어휘,문법,이해도 총 4개의 영역으로 각 25점 총 100점 만점 기준으로 평가가 됩니다. 총점의 기준에 따라서 스텝의 점수가 변동됩니다.</p>	
-			    <table class="step-score-desc">
-			    	<tbody>
-						<tr>
-							<td>스텝</td>
-							<td>100-95</td>
-							<td>94-90</td>
-							<td>89-85</td>
-							<td>84-80</td>
-						</tr>
-						<tr>
-							<td>스텝반영점수</td>
-							<td>2</td>
-							<td>1.5</td>
-							<td>1</td>
-							<td>0.5</td>
-						</tr>
-					</tbody>
-				</table>
+		<div class="content-sub-box">
+			<div class="first-test-title">
+				<div>
+					<span>최초평가</span>
+				</div>
+				<div>
+					<span>평가일 </span><span id="bind-firstDate" style="font-weight:normal;">2017-01-01</span>
+				</div>
 			</div>
-           	<div id="monthlyStepChart"></div>
+			<hr>
+			<div class="first-test mobile">
+				<div>
+					<p>STEP <span>{{ vm.reportData.reportInfo.firstStep || '-' }}</span></p>
+					<p><span>{{ vm.reportData.reportInfo.firstStepScore || '-' }}</span><span>/120</span></p>
+				</div>
+				<p>{{ vm.reportData.reportInfo.firstComment || '-' }}</p>
+			</div>
+			<div class="content-monthly-box">
+				<div class="content-monthly-box-title">
+					<p>월간 스텝점수</p>
+				</div>
+				<div id="monthlyStepChart"></div>
+				<div class="step-score-desc">
+					<ul>
+						<li>
+							<p class="step-score-desc">매월 발음,어휘,문법,이해도 총 4개의 영역으로 각 25점 총 100점 만점 기준으로 평가가 됩니다. 총점의 기준에 따라서 스텝의 점수가 변동됩니다.</p>
+							<p class="step-score-desc" style="color: #EB4545;">80점 이하는 스텝 점수에 반영되지 않습니다.</p>
+						</li>
+						<li>
+							<table class="step-score-desc">
+								<tbody>
+									<tr>
+										<td>스텝</td>
+										<td>100-95</td>
+										<td>94-90</td>
+										<td>89-85</td>
+										<td>84-80</td>
+									</tr>
+									<tr>
+										<td>스텝반영점수</td>
+										<td>2</td>
+										<td>1.5</td>
+										<td>1</td>
+										<td>0.5</td>
+									</tr>
+								</tbody>
+							</table>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</li>
 	<li class="rpt-box score">
 		<div style="margin-bottom:10px;">
-			<p class="title">나의 점수</p>
+			<p class="title mobile">Test Score<label>평가 점수</label></p>
 		</div>
 		<div style="padding-bottom: 10px;margin-bottom: 10px;">
-			<p class="sub-title">이번달 점수</p>
-			<p style="font-size: 40px;line-height: 40px;color: #FF6B6B;font-weight: 700;">
-				<span>{{ vm.reportData.reportInfo.totalScore || '-' }}</span>
-           		<span style="font-size: 20px;font-weight: 400;margin-left: -10px;">/100</span>
-           	</p>
-			<div id="tete" style="text-align:center;">
-				<ul style="display: table;width: 100%;">
-					<li style="display: table-cell;width: 50%;">
+			<div style="text-align:center;">
+				<ul class="test-score-mobile">
+					<li style="color: #FF7F67;">
+						<div class="test-score-value">
+							<label>{{ vm.reportData.reportInfo.pronunciation || '-' }}</label> <label>/25</label>
+						</div>
 						<div id="pronunciationChart"></div>
+						<div class="chart-label">
+							<p>Pronunciation</p>
+						</div>
 					</li>
-					<li style="display: table-cell;width: 50%;">
+					<li style="color: #9ACE62;">
+						<div class="test-score-value">
+							<label>{{ vm.reportData.reportInfo.vocabulary || '-' }}</label> <label>/25</label>
+						</div>
 						<div id="vocabularyChart"></div>
+						<div class="chart-label">
+							<p>Vocabulary</p>
+						</div>
 					</li>
 				</ul>
-				<ul style="display: table;width: 100%;">
-					<li style="display: table-cell;width: 50%;">
+				<ul class="test-score-mobile">
+					<li style="color: #33C8E9;">
+						<div class="test-score-value">
+							<label>{{ vm.reportData.reportInfo.grammar || '-' }}</label> <label>/25</label>
+						</div>
 						<div id="grammarChart"></div>
+						<div class="chart-label">
+							<p>Grammar</p>
+						</div>
 					</li>
-					<li style="display: table-cell;width: 50%;">
+					<li style="color: #AB93EB;">
+						<div class="test-score-value">
+							<label>{{ vm.reportData.reportInfo.intelligibility || '-' }}</label> <label>/25</label>
+						</div>
 						<div id="intelligibilityChart"></div>
+						<div class="chart-label">
+							<p>Intelligibility</p>
+						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="score-desc">
+		<img class="brace-img" src="/manage/assets/brace.png" style="padding: 0;height:45px;">
+		<div class="test-score-plus-value">
+			<div>{{ vm.reportData.reportInfo.totalScore || '-' }}</div>
+			<div>
+				<span>Total Score</span><br> <span>/100</span>
+			</div>
+		</div>
+		<div class="content-sub-box">
+			<div class="content-monthly-box">
+				<div class="content-monthly-box-title">
+					<p>월간 점수</p>
+				</div>
+				<div id="monthlyScoreChart"></div>
+				<div class="test-score-desc mobile">
+					<ul>
+						<li>
+							<p style="color: #FF7F67;">Pronunciation</p>
+							<p>자음,모음,강세,억양 등을 종합평가한 점수입니다.</p>
+						</li>
+						<li>
+							<p style="color: #9ACE62;">Vocabulary</p>
+							<p>정확성,다양성,응용성,적합성,관용어 표현 등을 종합평가한 점수입니다.</p>
+						</li>
+						<li>
+							<p style="color: #33C8E9;">Grammar</p>
+							<p>어순,문장의 구성 능력 등을 종합평가한 점수입니다.</p>
+						</li>
+						<li style="margin-bottom:0;">
+							<p style="color: #AB93EB;">Intelligibility</p>
+							<p>이해정도,묘사능력,단/장문 표현 능력 등을 평가한 점수입니다.</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>		
+		<!-- <div class="score-desc">
     		<table>
    				<tbody>
 					<tr>
@@ -170,14 +259,14 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div>
+		</div> -->
+		<!-- <div>
 			<p class="sub-title">월간 점수</p>
 			<div id="monthlyScoreChart"></div>
-		</div>
+		</div> -->
 	</li>
 	<li class="rpt-box comment">
-		<p class="title">강점 및 보완점</p>
+		<p class="title mobile">Strength &amp; Weakness<label>강점 및 보완점</label></p>
 		<div class="strength">
 			<p>강점</p>
 			<p>{{ vm.reportData.reportInfo.strength || '-' }}</p>
@@ -189,10 +278,9 @@
 	</li>
 	<li class="rpt-box attendance">
 		<div style="margin-bottom:10px;">
-			<p class="title">출석율</p>
+			<p class="title mobile">Attendance rate<label>월간 출석율</label></p>
 		</div>
 		<div>
-			<p class="sub-title">월간 출석율</p>
            	<div id="attendanceRateChart"></div>
 		</div>
 	</li>

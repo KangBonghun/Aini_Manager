@@ -246,6 +246,17 @@ public class ReportService
     {
         return sqlSession.getMapper(ReportMapper.class).getReportStudent(param);
     }
+    
+    /**
+     * 월간보고서 조회
+     * 
+     * @param param
+     * @return
+     */
+    public List<Map<String, Object>> getAllReportStudent(Map<String, Object> param)
+    {
+        return sqlSession.getMapper(ReportMapper.class).getAllReportStudent(param);
+    }
 
     /**
      * 최근 6개월 스텝 이력
@@ -354,12 +365,12 @@ public class ReportService
                         }
                         else
                         {
-                            monthlyScore.get(scoreType).add(0);
+                            monthlyScore.get(scoreType).add(null);
                         }
                     }
                     else
                     {
-                        monthlyScore.get(scoreType).add(0);
+                        monthlyScore.get(scoreType).add(null);
                     }
                 }
 

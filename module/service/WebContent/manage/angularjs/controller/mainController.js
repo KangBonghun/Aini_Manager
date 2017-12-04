@@ -90,7 +90,7 @@ function mainController( $rootScope, $scope, $element, $state, RemoteHttp) {
 	
 	$scope.classDateToNewDate = function(classDate) {
 		if(classDate) {
-			return new Date(classDate.substring(0,4), classDate.substring(4,6)-1, classDate.substring(6,8));
+			return stringToDate(classDate);
 		} else {
 			return null;
 		}
@@ -105,46 +105,11 @@ function mainController( $rootScope, $scope, $element, $state, RemoteHttp) {
 	};
 	
 	$scope.getClassDateLabel = function(cls) {
-		var label = '';
-		
-		if('Y' == cls.monday) {
-			label += '월';
-		}
-		if('Y' == cls.tuesday) {
-			label += '화';
-		}
-		if('Y' == cls.wednesday) {
-			label += '수';
-		}
-		if('Y' == cls.thursday) {
-			label += '목';
-		}
-		if('Y' == cls.friday) {
-			label += '금';
-		}
-		if('Y' == cls.saturday) {
-			label += '토';
-		}
-		if('Y' == cls.sunday) {
-			label += '일';
-		}
-		
-		return label;
+		return getClassDateLabel(cls);
 	};
 	
 	$scope.getClassTimeLabel = function(time) {
-		var label = '';
-		
-		try {
-			var hour = time.substring(0, 2);
-			var minute = time.substring(2, 4);
-			
-			label += hour + ':' + minute;
-		} catch (e) {
-//			console.log(e);
-		}
-		
-		return label;
+		return getClassTimeLabel(time);
 	};
 	
 	$scope.language = [{
@@ -193,14 +158,13 @@ function mainController( $rootScope, $scope, $element, $state, RemoteHttp) {
 	};
 	
 	$scope.calcRankPercentage = function(stepScore, type) {
-		var total = distribution(type).reduce(function(a,b){return a+b});
-		
-		var rank = distribution(type).slice((stepScore*2)+1).reduce(function(a,b){return a+b});
-		
-		return ((rank * 100) / total).toFixed(2);
+		return calcRankPercentage(stepScore, type);
 	};
 	
-    
+	$scope.phoneFormat = function(num) {
+		return phoneFormat(num);
+	};
+	
 	$scope.init();
 }
 ainiApp.controller( 'mainController', [

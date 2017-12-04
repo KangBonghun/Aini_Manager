@@ -1,4 +1,4 @@
-var ainiApp = angular.module('ainiApp', ['ui.router','htmlToPdfSave']);
+var ainiApp = angular.module('ainiApp', ['ui.router']);
 
 ainiApp.run( ['$rootScope', '$state', '$stateParams',
    	function ($rootScope, $state, $stateParams) {

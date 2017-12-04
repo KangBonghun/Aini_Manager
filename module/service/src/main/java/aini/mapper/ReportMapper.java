@@ -19,6 +19,8 @@ public interface ReportMapper
 
 	Map<String, Object> getReportStudent(Map<String, Object> param);
 	
+	List<Map<String, Object>> getAllReportStudent(Map<String, Object> param);
+	
 	List<Map<String, Object>> getMonthlyHist(Map<String, Object> param);
 
     List<Map<String, Object>> getClassDateList(Map<String, Object> param);

@@ -1,27 +1,27 @@
 <div class="report-page">
     <div class="form-group select-wrapper">
         <div>
-            <select class="form-control" ng-model="reportViewMainCtrl.selectedClassId" ng-change="reportViewMainCtrl.onChangeClass()" ng-options="class.classId as class.className for class in reportViewMainCtrl.classes">
+            <select class="form-control" ng-model="reportViewCtrl.selectedClassId" ng-change="reportViewCtrl.onChangeClass()" ng-options="class.classId as class.className for class in reportViewCtrl.classes">
 			<option value="" disabled selected hidden>강의 선택</option>
 		</select>
         </div>
-        <div>
-            <select class="form-control" style="border-left: 1px solid #d2d6de;" ng-model="reportViewMainCtrl.selectedClassMonth" ng-change="reportViewMainCtrl.onChangeDate()" ng-options="classMonth as classMonth.label for classMonth in reportViewMainCtrl.classMonths">
+        <!-- <div>
+            <select class="form-control" style="border-left: 1px solid #d2d6de;" ng-model="reportViewCtrl.selectedClassMonth" ng-change="reportViewCtrl.onChangeDate()" ng-options="classMonth as classMonth.label for classMonth in reportViewCtrl.classMonths">
 			<option value="" disabled selected hidden>월 선택</option>
 		</select>
-        </div>
+        </div> -->
     </div>
 
    <div class="box-body load-data-wrapper">
-   		<div class="no-data" ng-if="!reportViewMainCtrl.selectedClassMonth">강의와 날짜를 선택해주세요.</div>
-   		<div class="no-data" ng-if="reportViewMainCtrl.selectedClassId && reportViewMainCtrl.selectedClassMonth && reportViewMainCtrl.students.length < 1">수강생이 없습니다.</div>
+   		<div class="no-data" ng-if="!reportViewCtrl.selectedClassId">강의를 선택해주세요.</div>
+   		<div class="no-data" ng-if="reportViewCtrl.selectedClassId && reportViewCtrl.students.length < 1">보고서가 없습니다.</div>
         <ul class="rpt-wrapper">
-            <li class="rpt-box summary" ng-repeat="student in reportViewMainCtrl.students">
+            <li class="rpt-box summary" ng-repeat="student in reportViewCtrl.students">
                 <div class="rpt-info">
-                    <span class="user">{{ student.userName }}</span>
+                    <span class="user">{{ student.year + '년' + ' ' + student.month + '월' }}</span>
                     <div class="btn_group" style="float: right;" ng-if="student.changeDatetime">
 <!--                     	<a class="class-info-edit-btn" ng-click="onPopupReportView(true, student)"></a> -->
-                    	<button type="button" class="edit-btn" ng-click="reportViewMainCtrl.selectedStudent=student;onPopupReportView(true, student);">더보기</button>
+                    	<button type="button" class="edit-btn" ng-click="reportViewCtrl.selectedStudent=student;onPopupReportView(true, student);">더보기</button>
                     </div>
                     <div class="initial-date">
                     	<span>평가시각</span>
@@ -57,11 +57,11 @@
         </ul>
     </div>
 </div>
-<div id="report_view_box" class="show-hide-box-warpper fixed-box-wrapper">
+<div id="report_view_box" class="show-hide-box-warpper fixed-box-wrapper" style="background-color:#ececec;">
 	<div class="header" style="background-color:#ffffff;border-bottom: 1px solid #d2d6de;">
-<!-- 		<p class="title">{{ reportViewMainCtrl.selectedClassMonth.year + '년 ' + reportViewMainCtrl.selectedClassMonth.month + '월 ' + '보고서' }}</p> -->
-<!-- 		<p class="title">{{ reportViewMainCtrl.selectedStudent.userName + '님의 ' + reportViewMainCtrl.selectedClassMonth.month + '월 보고서' }}</p> -->
-		<p class="title">{{ '교육 향상 분석 ' +  reportViewMainCtrl.selectedClassMonth.year + '년 ' + reportViewMainCtrl.selectedClassMonth.month + '월 ' }}</p>
+<!-- 		<p class="title">{{ reportViewCtrl.selectedClassMonth.year + '년 ' + reportViewCtrl.selectedClassMonth.month + '월 ' + '보고서' }}</p> -->
+<!-- 		<p class="title">{{ reportViewCtrl.selectedStudent.userName + '님의 ' + reportViewCtrl.selectedClassMonth.month + '월 보고서' }}</p> -->
+		<p class="title">교육 향상 분석</p>
 		<a class="close-btn" ng-click="onPopupReportView(false)" ></a>
 	</div>
 	<report-view-directive class="contents"></report-view-directive>

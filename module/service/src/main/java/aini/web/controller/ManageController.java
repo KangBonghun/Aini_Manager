@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,69 @@ public class ManageController
     {
         return "/manage/manage";
     }
+    
+    /**
+     * 보고서 화면 (데스크탑)
+     * 
+     * @param request
+     * @return
+     * 
+     * @author "KangBongHoon"
+     * @create-date : 2017. 9. 6.
+     */
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    public ModelAndView reportPage(HttpServletRequest request)
+    {
+        ModelAndView model = new ModelAndView();
+        
+        String userId = request.getParameter("u");
+        String date = request.getParameter("d");
+        String classId = request.getParameter("c");
+        
+        String year = null;
+        String month = null;
+        
+        try
+        {
+            year = date.substring(0, 4);
+            month = date.substring(4, 6);
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage(), e);
+        }
+        
+        if(userId != null && year != null && month != null && classId != null)
+        {
+            Map<String, Object> param = new HashMap<String, Object>();
+            param.put("userId", userId);
+            param.put("year", year);
+            param.put("month", month);
+            param.put("classId", classId);
+            
+            try
+            {
+                Map<String, Object> reportData = reportService.getReportDetailInfo(param);
+                
+                ObjectMapper mapper = new ObjectMapper();
+                model.addObject("reportData", mapper.writeValueAsString(reportData));
+            }
+            catch (Exception e)
+            {
+                logger.error(e.getMessage(), e);
+            }
+        }
+        else
+        {
+            model.addObject("reportData", null);
+        }
+        
+        model.setViewName("/manage/views/reportForDesktop");
 
+        return model;
+    }
+    
+    
     /**
      * 회원가입 화면
      * 
@@ -390,6 +453,35 @@ public class ManageController
         try
         {
             result = reportService.getReportStudentList(param);
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage(), e);
+        }
+
+        return result;
+    }
+    
+    /**
+     * 특정 학생의 모든 월간 보고서 목록 조회
+     * 
+     * @param param
+     * @return
+     * 
+     * @author "KangBongHoon"
+     * @create-date : 2017. 9. 6.
+     */
+    @RequestMapping(value = "/get-all-report-student", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Map<String, Object>> getAllReportStudent(@RequestBody Map<String, Object> param)
+    {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        
+        param.put("userId", UserDetailsHelper.getInstance().getUserId());
+
+        try
+        {
+            result = reportService.getAllReportStudent(param);
         }
         catch (Exception e)
         {

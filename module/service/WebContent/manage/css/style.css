@@ -828,14 +828,14 @@ color: #555;
 	font-weight: 700;
     font-size: 18px;
     margin-bottom: 10px;
-    color: #555;
+    color: #333;
     height: 25px;
 }
 
 .rpt-wrapper .rpt-box .sub-title {
 	font-weight: 700;
 	font-size: 14px;
-	color: #888888;
+	color: #666;
 }
 
 .rpt-wrapper .rpt-box.summary ul {
@@ -855,13 +855,13 @@ color: #555;
     font-weight: 400;
 }
 .rpt-wrapper .rpt-box.summary ul > li.score {
-    background: #3D8BF7;
+    background: #3E91F9;
 }
 .rpt-wrapper .rpt-box.summary ul > li.rank {
-    background: #22BC44;
+    background: #1FC345;
 }
 .rpt-wrapper .rpt-box.summary ul > li.level {
-    background: #FBAB13;
+    background: #FFB20A;
 }
 
 .rpt-wrapper .rpt-box.class-info .lst,
@@ -870,111 +870,29 @@ color: #555;
 }
 .rpt-wrapper .rpt-box.class-info .lst > li > span:first-child,
 .class-info-lst > li > span:first-child {
-    color: #9F9F9F;
+    color: #999;
 }
 .rpt-wrapper .rpt-box.class-info .lst > li > span:last-child,
 .class-info-lst > li > span:last-child  {
-    color: #666666;
+    color: #666;
     float: right;
 }
 
 .rpt-wrapper .rpt-box.goal .contents {
 	word-break: break-all;
-    color: #9F9F9F;
+    color: #666;
 }
 
 
 .rpt-wrapper .rpt-box.comment > div > p:first-child {
-	color: #9F9F9F;
+	color: #666;
 	font-weight: 700;
 }
 .rpt-wrapper .rpt-box.comment > div > p:last-child {
-	color: #666666;
+	color: #666;
 }
 .rpt-wrapper .rpt-box.comment .strength {
 	margin-bottom: 10px;
-}
-
-
-.c3-xgrid, .c3-ygrid {
-	stroke-dasharray: none !important;	
-}
-.c3-grid line {
-    opacity: 0.5 !important;
-}
-
-#stepChart .region {
-	fill: #FF6B6B;
-    stroke: #FF6B6B;
-    stroke-width: 2;
-    fill-opacity:0.3;
-}
-#stepChart .c3-region.region > rect{
-    fill-opacity:1 !important;
-}
-#stepChart .tick line {
-    display:none;
-}
-#stepChart .tick text {
-    font-weight: 700;
-    fill: #888888;
-}
-#stepChart .c3-axis .domain {
-	display: none;
-}
-#stepChart .c3-circle {
-	r:4;
-}
-#stepChart .pointer {
-	opacity: 1;
-    stroke-width: 3px;
-    stroke: #3D8BF7;
-    r: 5;
-    fill: white !important;
-}
-
-#stepScoreChart .c3-area {
-	opacity: 1;
-}
-
-#stepScoreChart .score-region {
-    stroke: #5ea4ff;
-    stroke-width: 1;
-    fill-opacity:0;
-}
-
-#monthlyStepChart .tick line,
-#monthlyScoreChart .tick line,
-#attendanceRateChart .tick line {
-    display:none;
-}
-
-#monthlyStepChart .c3-axis .domain,
-#monthlyScoreChart .c3-axis .domain,
-#attendanceRateChart .c3-axis .domain {
-	display: none;
-}
-
-#monthlyStepChart .tick text,
-#monthlyScoreChart .tick text,
-#attendanceRateChart .tick text {
-    font-weight: 700;
-    fill: #888888;
-}
-#monthlyStepChart .pointer {
-	opacity: 1;
-    stroke-width: 3px;
-    stroke: #B855FC;
-    r: 5;
-    fill: white !important;
-}
-
-#attendanceRateChart .pointer {
-	opacity: 1;
-    stroke-width: 3px;
-    stroke: #FF6B6B;
-    r: 5;
-    fill: white !important;
 }
 
 .show-hide-box-warpper,
@@ -1041,7 +959,7 @@ color: #555;
 .class-info-detail-wrapper .contents {
     position: absolute;
     padding-bottom: 50px;
-    top: 54px;
+    top: 55px;
     right: 0;
     bottom: 0;
     left: 0;
@@ -1405,7 +1323,7 @@ color: #555;
 }
 
 p.step-score-desc {
-	color: #9F9F9F;
+	color: #999;
 	font-size: 12px;
 }
 
@@ -1420,11 +1338,13 @@ table.step-score-desc tr {
 	border-bottom: 1px solid #DFDFDF;
 	text-align: center;
 	height: 30px;
+	color: #666;
 }
 
 table.step-score-desc td:first-child {
 	background-color: #F7F7F7;
 	font-weight: 700;
+	color: #666;
 }
 
 div.score-desc {
@@ -1457,11 +1377,7 @@ div.score-desc > table tr > td:first-child > span {
     display: inline-block;
 }
 
-.stepScoreChartTooltip {
-	-webkit-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
-	box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
-}
+
 
 @media (min-width: 768px) {
 	.fixed-box-wrapper,
@@ -1477,4 +1393,266 @@ div.score-desc > table tr > td:first-child > span {
 		right: auto;
 		left: auto;
 	} 
+}
+
+#reportView .rpt-box .title {
+    border-bottom: 1px solid #E2E2E2;
+    padding-bottom: 30px;
+    margin-bottom: 15px !important;
+}
+
+.rpt-box .title > label {
+    color: #999;
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: normal;
+}
+.rpt-box .title.mobile > label {
+    font-size: 14px;
+}
+.report-viewer .rpt-wrapper .rpt-box {
+	border-top: none;
+    border-bottom: none;
+	margin: 15px 0px !important;
+}
+.content-sub-box {
+	padding: 10px;
+	color: #666;
+}
+.first-test-title {
+	overflow: hidden;
+    font-size: 15px;
+    color: #33C8E9;
+    font-weight: 700;
+}
+.first-test-title > div:nth-child(1) {
+	float:left;
+}
+.first-test-title > div:nth-child(2) {
+	float:right;
+}
+.first-test-title .vr {
+	display: inline-block; width: 0px; height: 15px; border-right: 1px solid; margin: 0 10px; vertical-align: middle;
+}
+.first-test-title ~ hr {
+	background-color: #E8E8E8; border: 0; height: 1px; margin-top: 5px; margin-bottom: 5px;
+}
+.content-monthly-box {
+	background-color: #fdfdfd; padding: 20px; border: 2px solid #F4F4F4; margin-top: 20px;
+}
+.content-monthly-box-title {
+	margin-bottom: 20px;
+}
+.content-monthly-box-title > p {
+	text-align: center; font-weight: bold; color: #999; font-size: 15px;
+}
+.first-test {
+	overflow: hidden;
+}
+.first-test > div {
+	height: 70px; width: 90px; background: #33C8E9; float: left; text-align: center; padding: 5px; border-radius: 5px;
+}
+.first-test.mobile > div {
+	height: 53px;
+    width: 70px;
+}
+.first-test > div > p {
+	font-size: 20px; font-weight: 700; color: #fff;
+}
+.first-test.mobile > div > p {
+	font-size: 15px;
+}
+.first-test > div > p:last-child > span:last-child {
+	font-size:15px;
+	font-weight: normal;
+}
+.first-test.mobile > div > p:last-child > span:last-child {
+	font-size:13px;
+}
+.first-test > p {
+	float: left; width: calc(100% - 100px); padding-left: 20px;white-space: pre-line;
+}
+.first-test.mobile > p {
+	float: none; width: auto; margin-left: 80px; padding-left: 0;
+}
+.brace-img {
+	height: 100px;width: 100%;padding: 0 50px;
+}
+.test-score-plus-value {
+	text-align: center;
+}
+
+.test-score-plus-value > div:nth-child(1) {
+	display: inline-block; font-size: 60px; font-weight: 900; line-height: 60px;
+}
+.test-score-plus-value > div:nth-child(2) {
+	display: inline-block; text-align: left;
+}
+.test-score-plus-value > div:nth-child(2) > span:nth-child(1) {
+	margin-left: 12px; font-size: 11px; font-weight: 700; color: #666;
+}
+.test-score-plus-value > div:nth-child(2) > span:nth-child(3) {
+	font-size: 37px; line-height: 33px; margin-left: -5px; color: #ccc;
+}
+.test-score-desc {
+	margin-top: 20px; font-size: 13px; overflow: hidden; text-align: center;
+}
+.test-score-desc > ul > li {
+	float: left; width: 25%; padding: 0 20px;
+}
+.test-score-desc > ul > li > p:nth-child(1) {
+	color: #FF7F67; font-weight: 700; border-bottom: 1px solid; margin-bottom: 5px;
+}
+.test-score-desc > ul > li > p:nth-child(2) {
+	color: #999;
+}
+.test-score-desc.mobile {
+	text-align: left;
+}
+.test-score-desc.mobile > ul > li {
+	float: none; width: auto; padding: 0; margin-bottom:20px;
+}
+.chart-desc {
+    text-align: right;
+    color: #999;
+    font-weight: normal;
+    font-size: 10px;
+    margin-bottom: -10px;
+}
+.test-score-value {
+	position: absolute; top: 55px; left: 50%; transform: translateX(-50%);
+}
+.test-score-value > label:nth-child(1) {
+	font-size: 30px; vertical-align: middle; line-height: 30px;
+}
+.test-score-value > label:nth-child(2) {
+	font-weight: normal; margin-left: -5px; vertical-align: sub;
+}
+.test-score .plus {
+	font-size: 30px; font-weight: bold; text-align: center; color: #ECECEC;
+}
+.test-score-mobile .chart-label,
+.test-score .chart-label {
+	font-weight: bold; text-align: center; font-size: 15px;
+}
+.test-score-mobile {
+	display: table;width: 100%;
+}
+.test-score-mobile > li {
+	display: table-cell;width: 50%;
+	position: relative;
+}
+.user-info {
+	width: 100%;
+    height: 100px;
+    padding: 15px;
+    color: #222;
+}
+
+.user-info > div {
+	text-align: center;
+    border: 1px solid #E2E2E2;
+    padding: 10px 0;
+    background-color: #FcFcfc;
+}
+.user-info > div > p:first-child {
+	font-size: 17px;
+    font-weight: bold;
+    color: #333;
+}
+.user-info > div > p:last-child {
+	line-height: 15px;
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+}
+
+#report_view_box.show-hide-box-warpper .title {
+	font-size: 16px;
+}
+
+
+/********************** 차트 **********************/
+
+/* .c3-xgrid, .c3-ygrid { */
+/* 	stroke-dasharray: none !important;	 */
+/* } */
+/* .c3-grid line { */
+/*     opacity: 0.5 !important; */
+/* 	stroke: #e3e3e3; */
+/* 	stroke-dasharray: none !important; */
+/* } */
+
+/* .stepChart .region { */
+/* 	fill: #33C8E9; */
+/*     stroke: #33C8E9; */
+/*     stroke-width: 1px; */
+/*     fill-opacity: 0.2; */
+/* } */
+/* .stepChart .c3-region.region > rect{ */
+/*     fill-opacity:1 !important; */
+/* } */
+
+.tick line {
+    display:none;
+}
+/* .tick text { */
+/*     font-weight: 700; */
+/*     fill: #aaa; */
+/*     font-size: 10px; */
+/* } */
+.c3-axis .domain {
+	display: none;
+}
+/* .stepChart .c3-circle { */
+/* 	r:4; */
+/* } */
+/* .stepChart .pointer { */
+/* 	opacity: 1; */
+/*     stroke-width: 3px; */
+/*     stroke: #FF635C; */
+/*     r: 5; */
+/*     fill: white !important; */
+/* } */
+
+.c3-area {
+	opacity: 1;
+}
+
+/* .stepScoreChart .score-region { */
+/*     stroke: #33C8E9; */
+/*     stroke-width: 1; */
+/*     fill-opacity:0; */
+/* } */
+
+/* .monthlyStepChart .pointer { */
+/* 	opacity: 1; */
+/*     stroke-width: 3px; */
+/*     stroke: #33C8E9; */
+/*     r: 6; */
+/*     fill: white !important; */
+/* } */
+
+/* .monthlyScoreChart .c3-chart .c3-chart-bars { */
+/* 	opacity: 0.9; */
+/* } */
+.attendanceRateChart .pointer {
+	opacity: 1;
+    stroke-width: 3px;
+    stroke: #FF6B6B;
+    r: 6;
+    fill: white !important;
+}
+
+/* .c3-texts .c3-text { */
+/* 	transform: translateY(-5px); */
+/* } */
+.c3-chart-arc path {
+	stroke-width: 0;
+}
+
+.chart-tooltip {
+	-webkit-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
 }

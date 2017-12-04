@@ -7,6 +7,7 @@
 			uc.first_evaluation_date AS firstEvaluationDate,
 			uc.first_step_score AS firstStepScore,
 			uc.first_step AS firstStep,
+			uc.first_comment AS firstComment,
 			uc.user_id AS userId,
 			IFNULL(u.user_name, uc.user_id) AS userName,
 			u.user_type AS userType, 
@@ -46,6 +47,7 @@
 			uc.first_evaluation_date AS firstEvaluationDate,
 			uc.first_step_score AS firstStepScore,
 			uc.first_step AS firstStep,
+			uc.first_comment AS firstComment,
 			uc.user_id AS userId,
 			IFNULL(u.user_name, uc.user_id) AS userName,
 			u.user_type AS userType, 
@@ -64,15 +66,60 @@
 			rt.strength AS strength,
 			rt.weakness AS weakness,
 			rt.attendance AS attendance,
-			rt.change_datetime AS changeDatetime
+			rt.change_datetime AS changeDatetime,
+			c.language AS language
 		FROM
 			(SELECT * FROM user_class WHERE class_id = #{classId} AND user_type = 'STUDENT') uc
 		LEFT JOIN
 			user u ON uc.user_id = u.user_id
 		LEFT JOIN
 			monthly_report rt ON uc.class_id = rt.class_id AND uc.user_id = rt.user_id AND rt.year = #{year} AND rt.month = #{month}
+		LEFT JOIN
+			class c ON uc.class_id = c.class_id
 		WHERE
 			rt.user_id = #{userId}
+	</select>
+	
+	<select id="getAllReportStudent" parameterType="map" resultType="map">
+		SELECT
+			uc.class_id AS classId,
+			uc.study_goal AS studyGoal,
+			uc.first_evaluation_date AS firstEvaluationDate,
+			uc.first_step_score AS firstStepScore,
+			uc.first_step AS firstStep,
+			uc.first_comment AS firstComment,
+			uc.user_id AS userId,
+			IFNULL(u.user_name, uc.user_id) AS userName,
+			u.user_type AS userType, 
+			u.mobile_number AS mobileNumber, 
+			u.email AS email, 
+			u.association_id AS associationId, 
+			rt.year AS year,
+			rt.month AS month,
+			rt.step_score AS stepScore,
+			rt.step AS step,
+			rt.pronunciation AS pronunciation,
+			rt.grammar AS grammar,
+			rt.vocabulary AS vocabulary,
+			rt.intelligibility AS intelligibility,
+			rt.total_score AS totalScore,
+			rt.strength AS strength,
+			rt.weakness AS weakness,
+			rt.attendance AS attendance,
+			rt.change_datetime AS changeDatetime,
+			c.language AS language
+		FROM
+			(SELECT * FROM user_class WHERE class_id = #{classId} AND user_type = 'STUDENT') uc
+		LEFT JOIN
+			user u ON uc.user_id = u.user_id
+		LEFT JOIN
+			monthly_report rt ON uc.class_id = rt.class_id AND uc.user_id = rt.user_id
+		LEFT JOIN
+			class c ON uc.class_id = c.class_id
+		WHERE
+			rt.user_id = #{userId}
+		ORDER BY
+			rt.year DESC, rt.month DESC
 	</select>
 	
 	<update id="updateReportStudent" parameterType="map">

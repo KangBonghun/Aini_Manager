@@ -303,6 +303,11 @@ function pad(n, width) {
   return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
 }
 
+/**
+ * 로딩화면을 띄운다.
+ * 
+ * @param visible
+ */
 function visibleLoader(visible) {
 	if(visible) {
 		$('#loader').addClass('is-active');
@@ -311,6 +316,12 @@ function visibleLoader(visible) {
 	}
 }
 
+/**
+ * 저장완료 Alert를 띄운다.
+ * 
+ * @param callback
+ * @param duration
+ */
 function showCompleteAlert(callback, duration) {
 	$('#saveCompleteAlert').fadeIn(10,function() {
 		setTimeout(function() {
@@ -321,6 +332,12 @@ function showCompleteAlert(callback, duration) {
     });
 }
 
+/**
+ * 언어에 따른 분포도를 반환한다.
+ * 
+ * @param type
+ * @returns {Array}
+ */
 function distribution(type) {
 	if(['EN','JA'].indexOf(type) > -1) {
 		return [0, 0, 0, 0, 0, 0, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12.5, 12, 11, 10, 9, 8, 7, 6, 6.5, 7, 7.5, 8, 9, 10, 11, 12, 13, 14, 15.5, 17, 18.5, 20, 21.5, 23, 24.5, 26, 27.5, 29, 30.5, 32, 33.5, 35, 36.5, 38, 39.5, 41, 42.5, 44, 45.5, 47, 48.5, 50, 51.5, 53, 54.5, 56, 57.5, 59, 60.5, 62, 63.5, 65, 66.5, 68, 69.5, 71, 73, 75, 77, 79, 81, 83, 85, 87, 87.5, 88, 88.5, 89, 89.5, 90, 90, 89.5, 89, 88.5, 88, 87.5, 87, 86.5, 86, 85.5, 85, 84, 83, 82, 81, 80, 79, 78, 77, 76, 75, 73.5, 72, 70.5, 69, 67.5, 66, 64.5, 63, 61.5, 60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 34, 32, 30, 29.5, 29, 28.5, 28, 27.5, 27, 26.5, 26, 25.5, 25, 23.5, 22, 20.5, 19, 17.5, 16, 14.5, 13, 12.5, 12, 11.5, 11, 10.5, 10, 10, 10, 10, 9.5, 9.5, 9, 9, 9, 9.5, 9.5, 9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 4, 4, 3.5, 3.5, 3.5, 3, 3, 2.5, 2, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10, 11, 12, 12, 11, 10, 9, 8, 7, 6, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -328,4 +345,197 @@ function distribution(type) {
 		return [0, 0, 0.5, 1, 2, 3, 4, 5.5, 7, 8.5, 10, 12, 14, 16.5, 19, 22, 25, 29, 33, 38, 43, 49, 55, 62, 69, 75, 80, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 93.5, 93.5, 93.5, 93.5, 93.5, 93.5, 93, 93.5, 93, 92.5, 92, 91.5, 91, 90.5, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80, 79, 78, 77, 76, 75, 74, 73, 72, 71, 69.5, 68, 66.5, 65, 63.5, 62, 60.5, 59, 57.5, 56, 54.5, 52.5, 50.5, 48.5, 46.5, 44.5, 42.5, 40.5, 38.5, 37, 35.5, 34, 32.5, 31.5, 30.5, 29.5, 28.5, 28, 27.5, 27, 26.5, 26, 25.5, 25, 24.5, 24, 23, 22, 21, 20, 18.5, 17, 15.5, 14, 13, 12, 11.5, 11, 10.5, 10, 10, 10, 9.5, 9.5, 9.5, 9, 9, 9, 8.5, 8.5, 8.5, 8.5, 8, 8, 8, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7, 7, 7, 6.5, 6.5, 6, 6, 5.5, 5.5, 5, 5, 4.5, 4.5, 4.5, 4, 4, 4, 4, 3.5, 3.5, 3.5, 3, 3, 3, 3, 2.5, 2.5, 2.5, 2, 2, 2, 2, 1.5, 1.5, 1.5, 1.5, 1, 1, 1, 1, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	}
 	
+}
+
+/**
+ * 모바일인지 확인한다.
+ * 
+ * @returns {Boolean}
+ */
+function checkMobile() {
+	var filter = "win16|win32|win64|mac|macintel";
+	
+	return false;
+	
+	if ( navigator.platform ) {
+		if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+
+/**
+ * 문자열을 날짜로 변환한다.
+ * 
+ * @param strDate
+ * @returns {Date}
+ */
+function stringToDate(strDate) {
+	var date = null;
+	
+	try {
+		date = new Date(strDate.substring(0,4), strDate.substring(4,6)-1, strDate.substring(6,8));
+	} catch (e) {
+		// TODO: handle exception
+	}
+	
+	return date;
+}
+
+/**
+ * 전화번호 형식을 변환한다.
+ * 
+ * 01012345678 -> 010-1234-5678
+ * 
+ * @param num
+ * @returns {String}
+ */
+function phoneFormat(num){
+	var phone = '-';
+	
+	try {
+		phone = num.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+	} catch (e) {
+		// TODO: handle exception
+	}
+    
+	return phone;
+} 
+
+/**
+ * 수업일을 구한다.
+ * 
+ * @param cls
+ * @returns {String}
+ */
+function getClassDateLabel(cls) {
+	var label = '';
+	
+	if('Y' == cls.monday) {
+		label += '월';
+	}
+	if('Y' == cls.tuesday) {
+		label += '화';
+	}
+	if('Y' == cls.wednesday) {
+		label += '수';
+	}
+	if('Y' == cls.thursday) {
+		label += '목';
+	}
+	if('Y' == cls.friday) {
+		label += '금';
+	}
+	if('Y' == cls.saturday) {
+		label += '토';
+	}
+	if('Y' == cls.sunday) {
+		label += '일';
+	}
+	
+	return label;
+}
+
+/**
+ * 시간 형식을 변환한다.
+ * 
+ * 1155 -> 11:55
+ * 
+ * @param time
+ * @returns {String}
+ */
+function getClassTimeLabel(time) {
+	var label = '-';
+	
+	try {
+		var hour = time.substring(0, 2);
+		var minute = time.substring(2, 4);
+		
+		label = hour + ':' + minute;
+	} catch (e) {
+//		console.log(e);
+	}
+	
+	return label;
+};
+
+/**
+ * 상위 백분율을 구한다.
+ * 
+ * @param stepScore
+ * @param type
+ * @returns
+ */
+function calcRankPercentage(stepScore, type) {
+	if(stepScore && type) {
+		try {
+			var total = distribution(type).reduce(function(a,b){return a+b});
+			
+			var rank = distribution(type).slice((stepScore*2)+1).reduce(function(a,b){return a+b});
+			
+			return ((rank * 100) / total).toFixed(2);
+		} catch (e) {
+			return '-';
+		}
+	} else {
+		return '-';
+	}
+};
+
+/**
+ * 스텝에 따른 구간 점수를 구한다.
+ * 
+ * @param stepScore
+ * @returns 
+ */
+function calcScoreRangeForStep(stepScore) {
+	var range = [ 0, 119 ];
+
+	if (stepScore < 16) {
+		range = [ 0, 15 ];
+	} else if (stepScore < 31) {
+		range = [ 15, 30 ];
+	} else if (stepScore < 46) {
+		range = [ 30, 45 ];
+	} else if (stepScore < 61) {
+		range = [ 45, 60 ];
+	} else if (stepScore < 76) {
+		range = [ 60, 75 ];
+	} else if (stepScore < 91) {
+		range = [ 75, 90 ];
+	} else if (stepScore < 106) {
+		range = [ 90, 105 ];
+	} else if (stepScore < 121) {
+		range = [ 105, 119 ];
+	}
+
+	return range;
+};
+
+/**
+ * 
+ * @param arr
+ * @param year
+ * @param month
+ */
+function getChartCategories(size, year, month) {
+	var categories = [];
+	
+	try {
+		var date = new Date(year, month);
+
+		for (var i = 1; i<=size; i++) {
+			date.setMonth(date.getMonth() - 1);
+
+			categories.push(date.getMonth() + 1 + '월');
+		}
+		
+		categories.reverse();
+	} catch (e) {
+		console.log(e);
+	}
+
+	return categories;
 }
