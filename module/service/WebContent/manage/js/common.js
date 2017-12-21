@@ -355,8 +355,6 @@ function distribution(type) {
 function checkMobile() {
 	var filter = "win16|win32|win64|mac|macintel";
 	
-	return false;
-	
 	if ( navigator.platform ) {
 		if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
 			return true;

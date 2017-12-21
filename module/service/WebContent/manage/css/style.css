@@ -832,6 +832,12 @@ color: #555;
     height: 25px;
 }
 
+#report_detail_box .rpt-wrapper .rpt-box .title {
+	border-bottom: 1px solid #E2E2E2;
+    padding-bottom: 30px;
+    margin-bottom: 15px !important;
+}
+
 .rpt-wrapper .rpt-box .sub-title {
 	font-weight: 700;
 	font-size: 14px;

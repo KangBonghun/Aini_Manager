@@ -34,21 +34,21 @@
 						<li class="score">
 							<p>Test Score</p>
 							<p style="vertical-align: bottom;font-size: 15px;">
-								<b style="font-size:22px">{{ student.totalScore || '-' }}</b>/100
+								<b style="font-size:20px">{{ student.totalScore || '-' }}</b>/100
 							</p>
 						</li>
 						<li class="rank">
 							<p>상위 백분율</p>
 							<p style="vertical-align: bottom;font-size: 15px;">
 <!-- 								<b style="font-size:22px;">{{ student.rank || '-' }}</b>% -->
-								<b style="font-size:22px;">{{ calcRankPercentage(student.stepScore, student.language) }}</b>%
+								<b style="font-size:20px;">{{ calcRankPercentage(student.stepScore, student.language) }}</b>%
 								
 							</p>
 						</li>
 						<li class="level">
 							<p>스텝</p>
 							<p style="vertical-align: bottom;font-size: 15px;">
-								<b style="font-size:21px;">STEP {{ student.step || '-' }}</b>
+								<b style="font-size:20px;">STEP {{ student.step || '-' }}</b>
 							</p>
 						</li>
 					</ul>
